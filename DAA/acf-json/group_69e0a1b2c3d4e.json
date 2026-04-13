@@ -1,0 +1,79 @@
+{
+    "key": "group_69e0a1b2c3d4e",
+    "title": "Team Member Grid Block",
+    "fields": [
+        {
+            "key": "field_69e0a1b2c3d4f",
+            "label": "Team Member Category",
+            "name": "team_member_category",
+            "aria-label": "",
+            "type": "taxonomy",
+            "instructions": "Select which team member category to display.",
+            "required": 1,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "taxonomy": "team-member-category",
+            "field_type": "select",
+            "allow_null": 0,
+            "add_term": 0,
+            "save_terms": 0,
+            "load_terms": 0,
+            "return_format": "id",
+            "multiple": 0,
+            "allow_in_bindings": 0
+        },
+        {
+            "key": "field_69e0a1b2c3d50",
+            "label": "Layout",
+            "name": "grid_layout",
+            "aria-label": "",
+            "type": "select",
+            "instructions": "Choose how team members are displayed.",
+            "required": 1,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "choices": {
+                "photo_grid": "Photo Grid",
+                "contact_cards": "Contact Cards"
+            },
+            "default_value": "photo_grid",
+            "return_format": "value",
+            "multiple": 0,
+            "allow_null": 0,
+            "ui": 1,
+            "ajax": 0,
+            "placeholder": "",
+            "allow_in_bindings": 0
+        }
+    ],
+    "location": [
+        [
+            {
+                "param": "block",
+                "operator": "==",
+                "value": "acf\/team-member-grid"
+            }
+        ]
+    ],
+    "menu_order": 0,
+    "position": "normal",
+    "style": "default",
+    "label_placement": "top",
+    "instruction_placement": "label",
+    "hide_on_screen": "",
+    "active": true,
+    "description": "",
+    "show_in_rest": 0,
+    "display_title": "",
+    "allow_ai_access": false,
+    "ai_description": "",
+    "modified": 1776000000
+}

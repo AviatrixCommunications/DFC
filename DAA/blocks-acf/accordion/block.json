@@ -1,0 +1,38 @@
+{
+    "name": "accordion",
+    "title": "Accordion",
+    "description": "Expandable FAQ-style accordion with details blocks",
+    "category": "aviatrix-blocks",
+    "icon": "list-view",
+    "keywords": [
+        "accordion",
+        "faq",
+        "details",
+        "expand",
+        "collapse",
+        "toggle"
+    ],
+    "style": "file:./style.css",
+    "acf": {
+        "mode": "preview",
+        "renderTemplate": "accordion.php"
+    },
+    "supports": {
+        "anchor": true,
+        "jsx": true,
+        "align": false,
+        "color": {
+            "text": false,
+            "background": true
+        },
+        "spacing": false
+    },
+    "example": {
+        "attributes": {
+            "mode": "preview",
+            "data": {
+                "is_preview": true
+            }
+        }
+    }
+}

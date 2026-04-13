@@ -1,0 +1,64 @@
+@use '../../sass/settings/variables' as *;
+@use '../../sass/settings/mixins' as *;
+
+// ── Frontend ─────────────────────────────────────────────────────────────────
+
+.aviatrix-block--tabs {
+    &.has-background {
+        padding: $space-80 0;
+    }
+
+    .tabs__list {
+        display: flex;
+        flex-wrap: wrap;
+        gap: $space-16;
+        margin-bottom: $space-64;
+    }
+
+    .tabs__tab {
+        &[aria-selected="true"] {
+            background-color: $brand-red;
+            text-decoration-color: inherit;
+        }
+    }
+
+    .tabs__panel {
+        > h2, > h3, > h4, > h5, > h6 {
+            margin-bottom: $space-24;
+            &:last-child {
+                margin-bottom: 0;
+            }
+        }
+        .tabs__panel-label {
+            + .aviatrix-block {
+                margin-top: 0;
+            }
+        }
+        .aviatrix-block.has-background {
+            padding: $space-48;
+        }
+    }
+}
+
+// ── Editor ───────────────────────────────────────────────────────────────────
+// Each acf/tab block shows a button-styled label heading with content below.
+
+.editor-styles-wrapper .aviatrix-block--tabs {
+    .tabs__panel {
+        margin-bottom: $space-24;
+    }
+
+    // Style the tab label heading to look like a tab button.
+    .tabs__panel-label {
+        display: inline-block !important;
+        background: $brand-white;
+        border: 1px solid $brand-red;
+        padding: 20px !important;
+        font-size: $text-16 !important;
+        font-weight: 600;
+        font-family: $base-font;
+        text-decoration: underline;
+        text-decoration-color: transparent;
+        margin-bottom: $space-16 !important;
+    }
+}

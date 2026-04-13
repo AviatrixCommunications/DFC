@@ -1,0 +1,29 @@
+{
+    "name": "blog-featured",
+    "title": "Blog Featured",
+    "description": "Featured content block with image, heading, text, and button.",
+    "category": "aviatrix-blocks",
+    "icon": "align-pull-left",
+    "keywords": [
+        "blog",
+        "featured",
+        "event",
+        "announcement"
+    ],
+    "style": "file:./style.css",
+    "acf": {
+        "mode": "preview",
+        "renderTemplate": "blog-featured.php"
+    },
+    "supports": {
+        "anchor": true,
+        "jsx": true,
+        "multiple": false,
+        "align": false,
+        "color": {
+            "text": false,
+            "background": true
+        },
+        "spacing": false
+    }
+}

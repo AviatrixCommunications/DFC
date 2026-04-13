@@ -1,0 +1,46 @@
+/*
+ * Editor overrides — hide button style & width controls.
+ * Enqueued via enqueue_block_editor_assets so these target
+ * the sidebar inspector and toolbar directly.
+ */
+
+/* Hide the entire Settings panel that contains the Width control */
+.components-tools-panel:has([aria-label="Width"]) {
+    display: none !important;
+}
+
+/* Note: Fill/Outline button styles are removed and replaced with
+   Primary/Secondary/Text via blocks-core/button/editor.js */
+
+/* Disable fade-in animations in the editor so block previews stay visible.
+   ACF re-renders previews via AJAX — without this, new DOM elements start
+   at opacity:0 and never get .is-visible from the IntersectionObserver. */
+.editor-styles-wrapper .js-fadein,
+.editor-styles-wrapper .js-fadein-up,
+.js-fadein,
+.js-fadein-up {
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
+    animation: none !important;
+}
+
+/* Hero: constrain deco icons to the content column area in editor preview */
+.hero__deco-wrap {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 50%;
+    height: 100%;
+    pointer-events: none;
+}
+
+/* Hero: show eyebrow icon in editor (frontend uses PHP render_block filter) */
+.hero__eyebrow::before {
+    content: "";
+    display: inline-block;
+    width: 27px;
+    height: 24px;
+    flex-shrink: 0;
+    background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='27' height='24' viewBox='0 0 27 24' fill='none'%3E%3Crect x='9' width='9' height='8' fill='%23EA563A'/%3E%3Crect x='9' y='8' width='9' height='8' fill='%23F58D70'/%3E%3Crect x='9' y='16' width='9' height='8' fill='%23EA563A'/%3E%3Crect y='8' width='9' height='8' fill='%23F58D70' fill-opacity='0.75'/%3E%3Crect x='18' y='8' width='9' height='8' fill='%235A0000'/%3E%3C/svg%3E") no-repeat center / contain;
+}
