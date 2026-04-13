@@ -1,0 +1,155 @@
+// Breakpoints
+$breakpoints: (
+  "horizontal": (
+    "xs": 375px,
+    "sm": 500px,
+    "md": 782px,  // matches WP core column stacking breakpoint
+    "lg": 1024px,
+    "xl": 1140px,
+    "xxl": 1248px,
+    "xxxl": 1448px,
+  ),
+  "vertical": (
+    "xs": 300px,
+    "sm": 450px,
+    "md": 600px,
+    "lg": 750px,
+    "xl": 900px,
+    "xxl": 1100px,
+  ),
+);
+
+// Base
+$base-font                    : "Noto Sans", Arial, sans-serif;
+$second-font                  : "Noto Sans", Arial, sans-serif;
+$base-font-heading            : $second-font;
+$base-font-size               : 16px;
+$base-font-weight             : 400;
+$base-font-heading-weight     : 300;
+$base-line-height             : 1.6875;
+
+// Brand
+$brand-white                  : var(--wp--preset--color--white);
+$brand-black                  : var(--wp--preset--color--black);
+$brand-red                    : var(--wp--preset--color--red);
+$brand-accessible-red         : var(--wp--preset--color--accessible-red);
+$brand-medium-grey            : var(--wp--preset--color--medium-grey);
+$brand-light-grey             : var(--wp--preset--color--light-grey);
+$brand-grey-tone              : var(--wp--preset--color--grey-tone);
+$brand-dark-grey-tone         : var(--wp--preset--color--dark-grey-tone);
+$brand-very-light-grey        : var(--wp--preset--color--very-light-grey);
+
+// Color list to use in utility classes
+$colors: (
+  "white"                     : $brand-white,
+  "black"                     : $brand-black,
+  "red"                       : $brand-red,
+  "accessible-red"            : $brand-accessible-red,
+  "medium-grey"               : $brand-medium-grey,
+  "light-grey"                : $brand-light-grey,
+  "grey-tone"                 : $brand-grey-tone,
+  "dark-grey-tone"            : $brand-dark-grey-tone,
+  "very-light-grey"           : $brand-very-light-grey,
+);
+
+$brand-primary                : $brand-red;
+$brand-secondary              : $brand-black;
+$brand-tertiary               : $brand-medium-grey;
+
+// Typography
+$text-color                   : $brand-black;
+$heading-color                : $text-color;
+$text-placeholder-color       : $text-color;
+$text-gray                    : $brand-black;
+$link-color                   : $brand-black;
+$link-hover-color             : $brand-black;
+
+// Typography sizing
+
+$text-base                    : 1rem;     // 16px
+$text-14                      : 0.875rem; // 14px
+$text-16                      : $text-base;
+$text-18                      : 1.125rem; // 18px
+$text-20                      : 1.25rem;  // 20px
+$text-24                      : 1.5rem;   // 24px
+$text-28                      : 1.75rem;  // 28px
+$text-32                      : 2rem;     // 32px
+$text-36                      : 2.25rem;  // 36px
+$text-52                      : 3.25rem;  // 52px
+$text-58                      : 3.625rem; // 58px
+
+$mobile-h1                    : $text-36;
+$mobile-h2                    : $text-28;
+$mobile-h3                    : $text-20;
+$mobile-h4                    : $text-18;
+$mobile-h5                    : $text-18;
+$mobile-h6                    : $text-18;
+$mobile-p                     : $text-base;
+
+
+$h1                           : $text-58;
+$h2                           : $text-36;
+$h3                           : $text-24;
+$h4                           : $text-20;
+$h5                           : $text-18;
+$h6                           : $text-18;
+$p-lg                         : $text-24;
+$p                            : $text-16;
+$p-sm                         : $text-14;
+$quote                        : $text-36;
+
+// Line Heights
+
+$line-height-xxs              : 0.85;
+$line-height-xs               : 1;
+$line-height-sm               : 1.2;
+$line-height-md               : 1.4;
+
+// Letter Spacing
+$letter-spacing-lg            : 0.04em;
+$letter-spacing-md            : -0.02em;
+$letter-spacing-sm            : -0.04em;
+$letter-spacing-xs            : -0.06em;
+
+// Spacing
+$space-4                      : 4px;
+$space-8                      : 8px;
+$space-16                     : var(--wp--preset--spacing--1); // 16px
+$space-24                     : 24px; 
+$space-32                     : var(--wp--preset--spacing--2); // 32px
+$space-48                     : var(--wp--preset--spacing--3); // clamp(32px, 4.5vw, 48px)
+$space-64                     : var(--wp--preset--spacing--4); // clamp(48px, 6vw, 64px)
+$space-80                     : clamp(64px, 7vw, 80px);
+$space-96                     : var(--wp--preset--spacing--5); // clamp(64px, 8vw, 96px)
+$space-128                    : clamp(96px, 11vw, 128px);
+$space-144                    : clamp(96px, 11vw, 144px);
+
+//-- Wrapper
+$wrapper-padding              : $space-24;
+
+// Bg Colors
+$bg-color                     : $brand-white;
+$bg-footer                    : $brand-black;
+
+// Borders
+$border-color                 : $brand-black;
+$hr-color                     : $border-color;
+
+// Header
+$header-height-desktop        : 98px;
+$header-height-mobile         : 98px;
+
+// Transitions
+$link-transition              : all 0.15s ease-in-out;
+$base-transition              : all 0.25s ease-in-out;
+$base-transition-timing       : 0.25s;
+$base-transition-easing       : ease-in-out;
+
+// Border radius
+$border-radius                : 0px;
+$border-radius-lg             : 10px;
+$border-radius-xl             : 30px;
+
+// Shadows
+$shadow                       : 0 0 10px 0 rgba(0, 0, 0, 0.17);
+

@@ -1,0 +1,87 @@
+@use '../settings/variables' as *;
+@use '../settings/mixins' as *;
+
+* {
+
+  &,
+  &:after,
+  &:before {
+    box-sizing: border-box;
+  }
+}
+
+html {
+  font-size: $base-font-size;
+  -ms-overflow-style: scrollbar;
+  -webkit-tap-highlight-color: transparent;
+}
+
+body {
+  font-family: $base-font;
+  font-size: $text-base;
+  font-weight: $base-font-weight;
+  line-height: $base-line-height;
+  color: $text-color;
+  background-color: $brand-very-light-grey;
+  text-rendering: optimizeSpeed;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-font-smoothing: antialiased;
+}
+
+main{
+  min-height: 50vh;
+}
+
+ol,
+ul {
+  margin: 0;
+  padding: 0;
+  list-style-type: none;
+}
+
+p,
+blockquote {
+  margin: 0;
+  padding: 0;
+
+  &:last-child {
+    margin-bottom: 0;
+  }
+}
+.main a:not([class]) {
+  text-decoration: underline;
+  transition: $base-transition;
+  &:hover,
+  &:focus {
+    text-decoration-color: transparent;
+  }
+}
+
+a:not([class]) {
+  text-decoration: none;
+  color: inherit;
+
+  &:focus:not(:focus-visible) {
+    outline: 0;
+  }
+
+  &:focus-visible {
+    outline: 2px solid;
+    outline-offset: 2px;
+  }
+}
+
+hr {
+  margin-top: 20px;
+  margin-bottom: 20px;
+  border: 0;
+  border-top: 1px solid $hr-color;
+}
+
+::-webkit-input-placeholder,
+::-moz-placeholder,
+:-ms-input-placeholder,
+::-ms-input-placeholder,
+::placeholder {
+  color: $text-placeholder-color;
+}

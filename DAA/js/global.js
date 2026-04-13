@@ -1,0 +1,25 @@
+import initMobileNav from './modules/mobile-nav';
+import initAccordion from './modules/accordion';
+import initSliders from './modules/sliders';
+import initVideoPlayer from './modules/video-player';
+import initBlogFilter from './modules/blog-filter';
+import initSpeakerTabs from './modules/speaker-tabs';
+import initFadeIn from './modules/fade-in';
+import initCountUp from './modules/count-up';
+import initPanelSlider from './modules/panel-slider';
+import initLoginMenu from './modules/login-menu';
+import initSearch from './modules/search';
+import initAlertBanner from './modules/alert-banner';
+
+initMobileNav();
+initAccordion();
+initSliders();
+initVideoPlayer();
+initBlogFilter();
+initSpeakerTabs();
+initFadeIn();
+initCountUp();
+initPanelSlider();
+initLoginMenu();
+initSearch();
+initAlertBanner();

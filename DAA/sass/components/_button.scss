@@ -1,0 +1,125 @@
+@use '../settings/variables' as *;
+@use '../settings/mixins' as *;
+
+$excluded-classes: ".dropdown-toggle, .hamburger, .search-submit, .components-button, .mce-btn button, .wp-switch-editor, .acf-button, .button--text-arrow, .button--search, .button--search-close, .site-search__submit, .alert-close, .blog-listing__cat-btn";
+
+.button,
+button:not(#{$excluded-classes}),
+input[type="button"],
+input[type="reset"],
+input[type="submit"],
+.wp-block-button__link,
+.wp-element-button {
+  background: $brand-red;
+  cursor: pointer;
+  padding: 16px;
+  text-align: center;
+  transition: $base-transition;
+  user-select: none;
+  border-radius: 0;
+  border: 0;
+  color: $brand-black;
+  font-size: 0.9375rem;
+  display: inline-block;
+  text-decoration: none;
+  font-family: $base-font;
+  align-items: center;
+  position: relative;
+  font-weight: 500;
+  text-decoration: underline;
+  text-decoration-color: transparent;
+  &:hover,
+  &:focus {
+    transform: scale(1.05);
+    text-decoration-color: inherit;
+    opacity: 1;
+  }
+
+  &[disabled] {
+    opacity: 0.2;
+    cursor: not-allowed;
+    pointer-events: none;
+  }
+
+  &:focus:not(:focus-visible) {
+    outline: 0;
+  }
+
+  &:focus-visible {
+    outline: 1px solid;
+  }
+}
+
+.button--text {
+  text-decoration: underline;
+  transition: $link-transition;
+  color: $brand-red !important;
+  display: inline-block !important;
+  font-size: $text-16;
+  padding: 0 !important;
+  border: 0 !important;
+  text-decoration-color: currentColor !important;
+  &:hover,
+  &:focus {
+    text-decoration-color: transparent !important;
+    background-color: transparent !important;
+  }
+  &--white {
+    color: $brand-white;
+  }
+}
+
+.is-style-text-button .wp-element-button {
+  padding: 0 !important;
+  border-radius: 0;
+  color: $brand-dark-grey-tone !important;
+  background-color: transparent !important;
+  font-size: $text-16 !important;
+  font-weight: 500;
+  display: inline-flex;
+  align-items: center;
+  text-decoration: underline;
+  transition: $link-transition;
+  text-decoration-color: transparent;
+  border: 0;
+  &:after {
+    content: '';
+    height: 24px;
+    width: 26px;
+    display: block;
+    background-image: url("data:image/svg+xml,%3Csvg width='27' height='24' viewBox='0 0 27 24' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Crect width='26.2401' height='24' fill='%23790009'/%3E%3Cpath d='M5.4668 12H20.7735' stroke='white' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3Cpath d='M13.1201 5L20.7735 12L13.1201 19' stroke='white' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+    background-size: 100%;
+    background-repeat: no-repeat;
+    margin-left: 15px;
+    margin-top: 2px;
+  }
+  &:hover,
+  &:focus {
+    text-decoration-color: currentColor;
+  }
+}
+
+.is-style-outline .wp-block-button__link {
+  border: 1px solid $brand-black !important;
+}
+
+#wpadminbar #adminbarsearch .adminbar-button {
+  display: none !important;
+}
+
+.button-group {
+  display: flex;
+  flex-flow: wrap;
+  margin-bottom: calc(-1 * #{$space-16});
+  align-items: center;
+  margin-right: calc(-1 * #{$space-64});
+  max-width: 100%;
+  .button,
+  .button--text {
+    margin-bottom: $space-16;
+    margin-right: $space-64;
+  }
+  .button--text {
+    color: $brand-white;
+  }
+}

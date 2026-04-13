@@ -1,0 +1,183 @@
+@use '../settings/variables' as *;
+@use '../settings/mixins' as *;
+@use '../settings/functions' as *;
+
+// Fixed wrapper for alert banner + header
+.site-top {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 1000;
+}
+
+.admin-bar .site-top {
+  top: var(--wp-admin--admin-bar--height, 32px);
+}
+
+.header {
+  width: 100%;
+  padding: $space-16 0;
+  background: linear-gradient(180deg, #000 0%, #2B2B2B 100%);
+  box-shadow: 0 4px 10px 0 rgba(0, 0, 0, 0.25);
+  &__components {
+    position: relative;
+    .button {
+      &:hover,
+      &:focus {
+        transform: none;
+      }
+      &:focus-visible {
+        outline-color: $brand-white;
+      }
+    }
+    @include media-above('xl') {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: $space-24;
+    }
+  }
+  &__logo {
+    height: 66px;
+    width: auto;
+    display: block;
+    a {
+      display: inline-block;
+      height: 100%;
+      &:focus-visible {
+        outline-color: $brand-white;
+      }
+    }
+    svg,
+    img {
+      height: 100%;
+      width: auto;
+    }
+  }
+  &__menu {
+    display: none;
+    @include media-above('xl') {
+      display: flex;
+      flex: 1 1 auto;
+      align-items: center;
+      justify-content: flex-end;
+    }
+  }
+}
+
+// Desktop search panel
+.site-search {
+  position: absolute;
+  top: 82px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100vw;
+  background-color: #E7E4E4;
+  padding: 40px $wrapper-padding;
+  z-index: 100;
+  box-shadow: 0 4px 4px 0 rgba(0, 0, 0, 0.25);
+
+  &[hidden] {
+    display: none;
+  }
+
+  &__inner {
+    text-align: center;
+  }
+
+  &__form {
+    width: 100%;
+    max-width: 760px;
+    margin: 0 auto;
+  }
+
+  &__heading {
+    font-size: $text-20;
+    font-weight: 500;
+    color: $brand-black;
+    margin-bottom: $space-24;
+  }
+
+  &__field {
+    display: flex;
+    align-items: center;
+    background-color: $brand-white;
+    border: 1px solid $brand-black;
+    border-radius: 100px;
+    input[type="search"] {
+      &:focus-visible {
+        outline-color: $brand-black !important;
+      }
+    }
+  }
+
+  &__input {
+    flex: 1;
+    border: none !important;
+    background: none !important;
+    padding: 12px $space-24 !important;
+    font-family: $base-font;
+    font-size: $text-16;
+    color: $brand-black;
+    min-width: 0;
+    border-top-left-radius: 100px;
+    border-bottom-left-radius: 100px;
+    &:focus-visble {
+      outline-color: $brand-light-grey;
+    }
+  }
+
+  input:focus-visble {
+    outline-color: $brand-light-grey;
+  }
+
+  &__submit {
+    flex-shrink: 0;
+    width: 53px;
+    height: 53px;
+    border-radius: 50%;
+    border: none;
+    background-color: $brand-red;
+    color: $brand-white;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: $link-transition;
+    padding: 0;
+    svg {
+      path {
+        fill: $brand-black;
+      }
+    }
+    &:hover,
+    &:focus {
+      background-color: $brand-accessible-red;
+    }
+
+    &:focus-visible {
+      outline: 2px solid $brand-black;
+      outline-offset: 2px;
+    }
+  }
+
+  @include media-below('xl') {
+    display: none !important;
+  }
+}
+
+// Toggle icon swap when search is open
+.nav__search-toggle {
+  .nav__search-icon--close {
+    display: none;
+  }
+  &[aria-expanded="true"] {
+    .nav__search-icon--search {
+      display: none;
+    }
+    .nav__search-icon--close {
+      display: block;
+    }
+  }
+}

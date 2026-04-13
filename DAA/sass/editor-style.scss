@@ -1,0 +1,99 @@
+// //
+// // Core
+// // --------------------------------------------------
+
+@use 'core/reset';
+@use 'core/fonts';
+@use 'core/form-elements';
+@use 'core/base';
+
+// //
+// // 3rd Party
+// // --------------------------------------------------
+
+@use 'external/hamburgers/hamburgers';
+
+// //
+// // Utilities
+// // --------------------------------------------------
+
+@use 'utilities/animations';
+@use 'utilities/bg-color';
+@use 'utilities/color';
+@use 'utilities/responsive';
+@use 'utilities/misc';
+
+
+// //
+// // Components
+// // --------------------------------------------------
+
+@use 'components/archive';
+@use 'components/button';
+@use 'components/footer';
+@use 'components/header';
+@use 'components/typography';
+@use 'components/nav';
+@use 'components/wrapper';
+@use 'components/content';
+@use 'components/alert-banner';
+@use 'components/post';
+@use 'components/post-item';
+@use 'components/blog';
+
+// ACF block styles are co-located with their blocks in blocks-acf/*/style.scss
+// and loaded per-page via block.json "style" field.
+
+// Custom editor styles
+
+h1 {
+    font-size: 5rem;
+}
+
+// Restore spacing between paragraphs and lists in the editor
+// (killed by _base.scss: p, ol, ul { margin: 0 })
+.wp-block-paragraph,
+.wp-block-list {
+    margin-bottom: var(--wp--style--block-gap, 24px);
+    &:last-child {
+        margin-bottom: 0;
+    }
+}
+
+.is-root-container {
+    margin-top: 40px;
+    > .wp-block-paragraph,
+    > .wp-block-heading,
+    > .wp-block-image,
+    > .wp-block-gallery,
+    > .wp-block-quote,
+    > .wp-block-list,
+    > .wp-block-preformatted,
+    > .wp-block-pullquote,
+    > .wp-block-table {
+        margin-bottom: 30px;
+        a {
+            text-decoration: underline;
+        }
+    }
+    .wp-block-heading {
+        margin-bottom: 30px;
+    }
+    .wp-block-details {
+        p:first-child {
+            margin-top: 20px;
+        }
+    }
+    .wp-block-list-item {
+        > div {
+            display: inline;
+        }
+    }
+}
+
+// Background Content: elevate image placeholder above content so it's clickable
+.aviatrix-block--background-content {
+    .background-content__image.wp-block-image:has(.components-placeholder) {
+        z-index: 3;
+    }
+}
