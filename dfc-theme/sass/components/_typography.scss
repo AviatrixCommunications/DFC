@@ -1,0 +1,140 @@
+@use '../settings/variables' as *;
+@use '../settings/mixins' as *;
+
+// ============================================================
+// TYPOGRAPHY
+// ============================================================
+
+body {
+  font-family: var(#{$font-body-var});
+  font-size: $base-font-size;
+  font-weight: $base-font-weight;
+  line-height: $base-line-height;
+  color: $text-color;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+// ── Headings ──────────────────────────────────────────────────
+
+h1, .h1,
+h2, .h2,
+h3, .h3,
+h4, .h4,
+h5, .h5,
+h6, .h6 {
+  font-family: var(#{$font-heading-var});
+  color: $heading-color;
+  margin-top: 0;
+}
+
+h1, .h1 {
+  font-size: $mobile-h1;
+  font-weight: 600;
+  line-height: $line-height-h2; // tighter on mobile
+
+  @include breakpoint(md) {
+    font-size: $h1;
+    line-height: $line-height-h1;
+  }
+}
+
+h2, .h2 {
+  font-size: $mobile-h2;
+  font-weight: 500;
+  line-height: $line-height-h2;
+
+  @include breakpoint(md) {
+    font-size: $h2;
+  }
+}
+
+h3, .h3 {
+  font-size: $mobile-h3;
+  font-weight: 500;
+  line-height: $line-height-h3;
+
+  @include breakpoint(md) {
+    font-size: $h3;
+  }
+}
+
+h4, .h4 {
+  font-size: $mobile-h4;
+  font-weight: 500;
+  line-height: $line-height-h3;
+
+  @include breakpoint(md) {
+    font-size: $h4;
+  }
+}
+
+h5, .h5,
+h6, .h6 {
+  font-size: $h5;
+  font-weight: 600;
+  line-height: $line-height-h3;
+}
+
+// ── Body text ─────────────────────────────────────────────────
+
+p {
+  margin-top: 0;
+  margin-bottom: $space-16;
+}
+
+.text--large {
+  font-size: $p-lg;
+  line-height: $line-height-body-lg;
+}
+
+.text--small {
+  font-size: $p-sm;
+}
+
+// ── Links ─────────────────────────────────────────────────────
+
+a {
+  color: $link-color;
+  text-decoration: underline;
+  transition: $link-transition;
+
+  &:hover,
+  &:focus-visible {
+    color: $link-hover-color;
+    text-decoration: none;
+  }
+
+  &:focus-visible {
+    outline: 2px solid $hex-red;
+    outline-offset: 2px;
+  }
+}
+
+// ── Lists ─────────────────────────────────────────────────────
+
+ul, ol {
+  padding-left: 24px;
+  margin-top: 0;
+  margin-bottom: $space-16;
+
+  li {
+    margin-bottom: 0.5em;
+    line-height: $base-line-height;
+  }
+}
+
+// ── Misc ──────────────────────────────────────────────────────
+
+strong, b {
+  font-weight: 600;
+}
+
+blockquote {
+  font-size: $text-20;
+  line-height: $line-height-body-lg;
+  font-style: italic;
+  margin: $space-32 0;
+  padding-left: $space-24;
+  border-left: 4px solid $hex-red;
+}

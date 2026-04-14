@@ -1,0 +1,185 @@
+@use '../settings/variables' as *;
+@use '../settings/mixins' as *;
+
+// ============================================================
+// FOOTER
+// ============================================================
+
+.footer {
+  margin-top: auto;
+
+  // ── Top section (black bg) ──────────────────────────────────
+  &__top {
+    background-color: $hex-black;
+    padding: $space-80 0 $space-48;
+  }
+
+  &__top-inner {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: $space-40;
+
+    @include breakpoint(md) {
+      grid-template-columns: auto 1fr auto;
+      gap: $space-64;
+    }
+  }
+
+  // Logo
+  &__logo {
+    display: block;
+    text-decoration: none;
+
+    &:focus-visible {
+      outline: 2px solid $hex-red;
+      outline-offset: 4px;
+    }
+
+    &-img {
+      max-width: 220px;
+      height: auto;
+    }
+  }
+
+  // Contact info
+  &__contact {
+    color: $hex-white;
+
+    p {
+      margin-bottom: 0;
+      display: flex;
+      gap: 8px;
+      align-items: center;
+      line-height: 42px;
+    }
+
+    strong {
+      font-weight: 600;
+      white-space: nowrap;
+    }
+
+    a {
+      color: $hex-white;
+      text-decoration: underline;
+
+      &:hover {
+        text-decoration: none;
+      }
+
+      &:focus-visible {
+        outline: 2px solid $hex-red;
+        outline-offset: 2px;
+      }
+    }
+  }
+
+  // Social media icons
+  &__social {
+    margin-top: $space-24;
+  }
+
+  // Right column (external links + partner logos)
+  &__links {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+
+    a {
+      color: $hex-red;
+      text-decoration: underline;
+      font-size: $text-16;
+      line-height: 42px;
+
+      &:hover {
+        text-decoration: none;
+      }
+
+      &:focus-visible {
+        outline: 2px solid $hex-red;
+        outline-offset: 2px;
+      }
+    }
+  }
+
+  &__partners {
+    display: flex;
+    gap: $space-16;
+    align-items: center;
+    margin-top: $space-24;
+
+    img {
+      max-height: 40px;
+      width: auto;
+    }
+  }
+
+  // ── Bottom section (light grey bg, legal links) ─────────────
+  &__bottom {
+    background-color: $hex-light-grey;
+    padding: 16px 0;
+
+    .wrapper {
+      display: flex;
+      flex-wrap: wrap;
+      gap: $space-40;
+
+      @include breakpoint-down(md) {
+        flex-direction: column;
+        gap: $space-16;
+      }
+    }
+
+    a {
+      color: $hex-black;
+      font-weight: 600;
+      text-decoration: underline;
+      font-size: $text-16;
+      line-height: 24px;
+
+      &:hover {
+        text-decoration: none;
+      }
+
+      &:focus-visible {
+        outline: 2px solid $hex-red;
+        outline-offset: 2px;
+      }
+    }
+  }
+}
+
+// ── Social media nav ──────────────────────────────────────────
+.nav--social {
+  ul {
+    display: flex;
+    gap: 16px;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  a {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background-color: rgba($hex-white, 0.15);
+    transition: $base-transition;
+
+    &:hover {
+      background-color: rgba($hex-white, 0.3);
+    }
+
+    &:focus-visible {
+      outline: 2px solid $hex-red;
+      outline-offset: 2px;
+    }
+
+    img, svg {
+      width: 20px;
+      height: 20px;
+    }
+  }
+}

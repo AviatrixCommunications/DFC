@@ -1,0 +1,95 @@
+@use '../settings/variables' as *;
+@use '../settings/mixins' as *;
+
+.notification-banner {
+  color: $brand-black;
+  font-weight: 600;
+  overflow: hidden;
+  height: 0;
+  font-size: $text-14;
+  @include media-above('md') {
+    font-size: $text-16;
+  }
+}
+
+.site-banner {
+  overflow: hidden;
+  padding: 8px 0;
+  .wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: $space-16;
+    width: 100%;
+    &:before,
+    &:after {
+      content: none;
+    }
+    @include media-above('md') {
+      gap: $space-32;
+    }
+  }
+  & + & {
+    border-top: 2px solid rgba(255, 255, 255, 0.3);
+  }
+
+  p:last-child {
+    margin-bottom: 0;
+  }
+
+  a:not(.button) {
+    text-decoration: underline;
+    transition: $link-transition;
+    color: $brand-black;
+
+    &:hover,
+    &:focus {
+      text-decoration-color: transparent;
+    }
+  }
+}
+
+.banner-content {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: $space-24;
+  width: 100%;
+
+  @include media-below('md') {
+    flex-direction: column;
+    gap: $space-8;
+  }
+
+  .button {
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+}
+
+.alert-close {
+  height: 44px;
+  width: 44px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  cursor: pointer;
+  background-color: transparent;
+  border: 0;
+  padding: 0;
+
+  svg {
+    fill: $brand-black;
+  }
+
+  &:hover,
+  &:focus {
+    background-color: transparent;
+    border: 0;
+  }
+
+  &:focus-visible {
+    outline: 2px solid $brand-black;
+  }
+}

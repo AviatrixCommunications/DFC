@@ -1,0 +1,71 @@
+@use '../settings/variables' as *;
+@use '../settings/mixins' as *;
+
+// ============================================================
+// HEADER
+// ============================================================
+
+.header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 100;
+  height: $header-height-desktop;
+  background-color: $hex-black;
+  border-bottom: 1px solid $hex-light-grey;
+
+  &__components {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 100%;
+  }
+
+  &__logo {
+    flex-shrink: 0;
+
+    a {
+      display: block;
+      text-decoration: none;
+
+      &:focus-visible {
+        outline: 2px solid $hex-red;
+        outline-offset: 4px;
+      }
+    }
+
+    &-img {
+      height: 50px;
+      width: auto;
+    }
+  }
+
+  &__menu {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  &__cta {
+    flex-shrink: 0;
+  }
+}
+
+// ── Site top (pushes content below fixed header) ──────────────
+.site-top {
+  position: relative;
+  z-index: 100;
+}
+
+// Space for the fixed header
+.main {
+  margin-top: $header-height-desktop;
+}
+
+// ── Alert banner adjustment ───────────────────────────────────
+body.has-notification-banner {
+  .header {
+    // Alert pushes header down
+  }
+}
