@@ -1,0 +1,11 @@
+{
+    "name": "acf/hotel-accordion",
+    "title": "Hotel Accordion",
+    "description": "Grey background section with hotel listings in accordion format.",
+    "category": "aviatrix-blocks",
+    "icon": "building",
+    "keywords": ["hotel", "accordion", "amenities", "lodging"],
+    "acf": { "mode": "preview", "renderTemplate": "hotel-accordion.php" },
+    "supports": { "align": false, "anchor": true, "jsx": true },
+    "style": "file:./style.css"
+}

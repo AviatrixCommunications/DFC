@@ -1,0 +1,56 @@
+{
+    "key": "group_dfc_services_tabs",
+    "title": "Services Tabs",
+    "fields": [
+        {
+            "key": "field_dfc_service_tabs",
+            "label": "Tabs",
+            "name": "service_tabs",
+            "type": "repeater",
+            "layout": "block",
+            "button_label": "Add Tab",
+            "min": 2,
+            "max": 4,
+            "sub_fields": [
+                {
+                    "key": "field_dfc_st_tab_label",
+                    "label": "Tab Label",
+                    "name": "tab_label",
+                    "type": "text",
+                    "placeholder": "e.g., Aircraft Services"
+                },
+                {
+                    "key": "field_dfc_st_tab_image",
+                    "label": "Image",
+                    "name": "tab_image",
+                    "type": "image",
+                    "return_format": "array",
+                    "preview_size": "medium"
+                },
+                {
+                    "key": "field_dfc_st_tab_heading",
+                    "label": "Content Heading",
+                    "name": "tab_heading",
+                    "type": "text"
+                },
+                {
+                    "key": "field_dfc_st_tab_content",
+                    "label": "Content",
+                    "name": "tab_content",
+                    "type": "wysiwyg",
+                    "toolbar": "full",
+                    "media_upload": 0
+                },
+                {
+                    "key": "field_dfc_st_tab_button",
+                    "label": "Button (Optional)",
+                    "name": "tab_button",
+                    "type": "link",
+                    "return_format": "array"
+                }
+            ]
+        }
+    ],
+    "location": [[{ "param": "block", "operator": "==", "value": "acf/services-tabs" }]],
+    "active": true
+}

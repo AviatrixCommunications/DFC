@@ -1,0 +1,34 @@
+{
+    "key": "group_dfc_icon_list",
+    "title": "Icon List",
+    "fields": [
+        {
+            "key": "field_dfc_icon_items",
+            "label": "Items",
+            "name": "icon_items",
+            "type": "repeater",
+            "layout": "table",
+            "button_label": "Add Item",
+            "sub_fields": [
+                {
+                    "key": "field_dfc_il_icon",
+                    "label": "Icon",
+                    "name": "icon",
+                    "type": "image",
+                    "return_format": "array",
+                    "preview_size": "thumbnail",
+                    "wrapper": { "width": "20" }
+                },
+                {
+                    "key": "field_dfc_il_text",
+                    "label": "Text",
+                    "name": "text",
+                    "type": "text",
+                    "wrapper": { "width": "80" }
+                }
+            ]
+        }
+    ],
+    "location": [[{ "param": "block", "operator": "==", "value": "acf/icon-list" }]],
+    "active": true
+}

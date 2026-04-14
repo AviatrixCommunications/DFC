@@ -1,0 +1,19 @@
+{
+    "key": "group_dfc_image_slider",
+    "title": "Image Slider",
+    "fields": [
+        {
+            "key": "field_dfc_slider_images",
+            "label": "Images",
+            "name": "slider_images",
+            "type": "gallery",
+            "return_format": "array",
+            "preview_size": "medium",
+            "min": 1,
+            "max": 12,
+            "instructions": "First image displays large. Remaining images appear as clickable thumbnails below."
+        }
+    ],
+    "location": [[{ "param": "block", "operator": "==", "value": "acf/image-slider" }]],
+    "active": true
+}

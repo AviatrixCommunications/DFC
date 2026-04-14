@@ -1,0 +1,151 @@
+@use '../../sass/settings/variables' as *;
+@use '../../sass/settings/mixins' as *;
+
+.aviatrix-block--weather-info-bar {
+  width: 100%;
+}
+
+.info-bar {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  min-height: 160px;
+
+  @include breakpoint-down(lg) {
+    grid-template-columns: 1fr;
+  }
+
+  &__col {
+    padding: 24px 40px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+
+    @include breakpoint-down(lg) {
+      padding: 24px;
+    }
+  }
+
+  // Weather column (grey bg)
+  &__col--weather {
+    background-color: $hex-light-grey;
+    color: $hex-black;
+  }
+
+  // Fuel prices column (black bg)
+  &__col--fuel {
+    background-color: $hex-black;
+    color: $hex-white;
+  }
+
+  // Services column (red bg)
+  &__col--services {
+    background-color: $hex-red;
+    color: $hex-black;
+  }
+
+  &__title {
+    font-family: var(#{$font-heading-var});
+    font-size: $text-24;
+    font-weight: 500;
+    line-height: $line-height-h3;
+    margin: 0 0 8px;
+  }
+
+  &__desc {
+    font-size: $text-16;
+    line-height: $line-height-body;
+    margin: 0 0 8px;
+  }
+
+  &__fuel-prices {
+    display: flex;
+    gap: 24px;
+    margin-bottom: 8px;
+  }
+
+  &__fuel-price {
+    font-size: $text-24;
+    font-weight: 600;
+    margin: 0;
+    line-height: 1.3;
+  }
+
+  &__link {
+    font-size: $text-16;
+    text-decoration: underline;
+    transition: $link-transition;
+
+    &:hover {
+      text-decoration: none;
+    }
+
+    &:focus-visible {
+      outline: 2px solid currentColor;
+      outline-offset: 2px;
+    }
+  }
+
+  // Inherit column text colors for links
+  &__col--fuel &__link { color: $hex-white; }
+  &__col--services &__link { color: $hex-black; }
+}
+
+// Weather widget specifics
+.weather-widget {
+  &__badge {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 12px;
+    background-color: $hex-dark-grey-tone;
+    border-radius: 20px;
+    padding: 4px 16px;
+    width: fit-content;
+    color: $hex-white;
+  }
+
+  &__label {
+    font-size: $text-14;
+    font-weight: 600;
+  }
+
+  &__icon {
+    display: flex;
+    width: 24px;
+    height: 24px;
+
+    svg {
+      width: 100%;
+      height: 100%;
+    }
+  }
+
+  &__data {
+    display: flex;
+    align-items: baseline;
+    gap: 16px;
+    margin-bottom: 4px;
+  }
+
+  &__temp {
+    font-size: $text-48;
+    font-weight: 700;
+    line-height: 1;
+  }
+
+  &__condition {
+    font-size: $text-24;
+    font-weight: 600;
+  }
+
+  &__meta {
+    display: flex;
+    justify-content: space-between;
+  }
+
+  &__feels,
+  &__date {
+    font-size: 13px;
+    font-weight: 600;
+  }
+}

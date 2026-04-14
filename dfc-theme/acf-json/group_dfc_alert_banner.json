@@ -1,0 +1,102 @@
+{
+    "key": "group_dfc_alert_banner",
+    "title": "DFC Alert Banner",
+    "fields": [
+        {
+            "key": "field_dfc_bar_alerts",
+            "label": "Alerts",
+            "name": "bar_alerts",
+            "type": "repeater",
+            "instructions": "Add alert banners that display at the top of the site.",
+            "layout": "block",
+            "button_label": "Add Alert",
+            "sub_fields": [
+                {
+                    "key": "field_dfc_display_alert",
+                    "label": "Display",
+                    "name": "display_alert",
+                    "type": "select",
+                    "choices": {
+                        "off": "Off",
+                        "on": "Always On",
+                        "schedule": "Scheduled"
+                    },
+                    "default_value": "off",
+                    "wrapper": { "width": "25" }
+                },
+                {
+                    "key": "field_dfc_alert_severity",
+                    "label": "Severity",
+                    "name": "alert_severity",
+                    "type": "select",
+                    "choices": {
+                        "info": "Informational",
+                        "urgent": "Urgent"
+                    },
+                    "default_value": "info",
+                    "wrapper": { "width": "25" }
+                },
+                {
+                    "key": "field_dfc_display_frequency",
+                    "label": "Display Frequency",
+                    "name": "display_frequency",
+                    "type": "select",
+                    "choices": {
+                        "always": "Every page load",
+                        "session": "Once per session",
+                        "once": "Once (cookie-based)"
+                    },
+                    "default_value": "always",
+                    "wrapper": { "width": "25" }
+                },
+                {
+                    "key": "field_dfc_alert_start_date",
+                    "label": "Start Date",
+                    "name": "alert_start_date",
+                    "type": "date_picker",
+                    "display_format": "m/d/Y",
+                    "return_format": "Ymd",
+                    "conditional_logic": [
+                        [{ "field": "field_dfc_display_alert", "operator": "==", "value": "schedule" }]
+                    ],
+                    "wrapper": { "width": "25" }
+                },
+                {
+                    "key": "field_dfc_alert_end_date",
+                    "label": "End Date",
+                    "name": "alert_end_date",
+                    "type": "date_picker",
+                    "display_format": "m/d/Y",
+                    "return_format": "Ymd",
+                    "conditional_logic": [
+                        [{ "field": "field_dfc_display_alert", "operator": "==", "value": "schedule" }]
+                    ],
+                    "wrapper": { "width": "25" }
+                },
+                {
+                    "key": "field_dfc_alert_content",
+                    "label": "Alert Content",
+                    "name": "alert_content",
+                    "type": "wysiwyg",
+                    "toolbar": "basic",
+                    "media_upload": 0,
+                    "tabs": "visual"
+                },
+                {
+                    "key": "field_dfc_alert_button",
+                    "label": "Alert Button (Optional)",
+                    "name": "alert_button",
+                    "type": "link",
+                    "return_format": "array"
+                }
+            ]
+        }
+    ],
+    "location": [
+        [{ "param": "options_page", "operator": "==", "value": "dfc-alert-banner" }]
+    ],
+    "menu_order": 1,
+    "position": "normal",
+    "style": "default",
+    "active": true
+}

@@ -1,0 +1,196 @@
+{
+    "key": "group_dfc_theme_options",
+    "title": "DFC Theme Options",
+    "fields": [
+        {
+            "key": "field_dfc_header_tab",
+            "label": "Header",
+            "type": "tab",
+            "placement": "left"
+        },
+        {
+            "key": "field_dfc_header_button",
+            "label": "Header CTA Button",
+            "name": "header_button",
+            "type": "link",
+            "instructions": "Primary call-to-action button in the header navigation. Defaults to FlightBridge if left empty.",
+            "return_format": "array"
+        },
+        {
+            "key": "field_dfc_footer_tab",
+            "label": "Footer",
+            "type": "tab",
+            "placement": "left"
+        },
+        {
+            "key": "field_dfc_footer_logo",
+            "label": "Footer Logo",
+            "name": "footer_logo",
+            "type": "image",
+            "return_format": "array",
+            "preview_size": "medium",
+            "instructions": "Stacked version of the DFC logo for the footer. If empty, falls back to the site Custom Logo."
+        },
+        {
+            "key": "field_dfc_airport_address",
+            "label": "Address",
+            "name": "airport_address",
+            "type": "text",
+            "default_value": "2700 International Drive, West Chicago, IL 60185"
+        },
+        {
+            "key": "field_dfc_address_link",
+            "label": "Address Link (Maps URL)",
+            "name": "airport_address_link",
+            "type": "url"
+        },
+        {
+            "key": "field_dfc_footer_email",
+            "label": "Email",
+            "name": "footer_email",
+            "type": "email",
+            "default_value": "dfcfuel@dupageflightcenter.com"
+        },
+        {
+            "key": "field_dfc_footer_phone",
+            "label": "Phone Number",
+            "name": "footer_phone",
+            "type": "text",
+            "default_value": "(630) 208-5600"
+        },
+        {
+            "key": "field_dfc_footer_toll_free",
+            "label": "Toll Free Phone Number",
+            "name": "footer_toll_free",
+            "type": "text",
+            "default_value": "(800) 208-5690"
+        },
+        {
+            "key": "field_dfc_footer_fax",
+            "label": "Fax Number",
+            "name": "footer_fax",
+            "type": "text",
+            "default_value": "(630) 443-9077"
+        },
+        {
+            "key": "field_dfc_social_tab",
+            "label": "Social Media",
+            "type": "tab",
+            "placement": "left"
+        },
+        {
+            "key": "field_dfc_facebook_link",
+            "label": "Facebook URL",
+            "name": "facebook_link",
+            "type": "url"
+        },
+        {
+            "key": "field_dfc_instagram_link",
+            "label": "Instagram URL",
+            "name": "instagram_link",
+            "type": "url"
+        },
+        {
+            "key": "field_dfc_twitter_link",
+            "label": "X (Twitter) URL",
+            "name": "twitter_link",
+            "type": "url"
+        },
+        {
+            "key": "field_dfc_links_tab",
+            "label": "External Links",
+            "type": "tab",
+            "placement": "left"
+        },
+        {
+            "key": "field_dfc_employment_link",
+            "label": "Employment Opportunities URL",
+            "name": "employment_link",
+            "type": "url"
+        },
+        {
+            "key": "field_dfc_daa_link",
+            "label": "DuPage Airport Authority URL",
+            "name": "daa_link",
+            "type": "url",
+            "default_value": "https://www.dupageairport.com/"
+        },
+        {
+            "key": "field_dfc_plgc_link",
+            "label": "Prairie Landing Golf Club URL",
+            "name": "plgc_link",
+            "type": "url",
+            "default_value": "https://www.prairielanding.com/"
+        },
+        {
+            "key": "field_dfc_partners_tab",
+            "label": "Partner Logos",
+            "type": "tab",
+            "placement": "left"
+        },
+        {
+            "key": "field_dfc_partner_logos",
+            "label": "Footer Partner Logos",
+            "name": "partner_logos",
+            "type": "repeater",
+            "instructions": "Logos displayed in the footer (e.g., Paragon Aviation, Phillips 66). Client can add, remove, or update these.",
+            "layout": "block",
+            "button_label": "Add Partner Logo",
+            "sub_fields": [
+                {
+                    "key": "field_dfc_pl_name",
+                    "label": "Partner Name",
+                    "name": "partner_name",
+                    "type": "text",
+                    "wrapper": { "width": "30" }
+                },
+                {
+                    "key": "field_dfc_pl_logo",
+                    "label": "Logo Image",
+                    "name": "partner_logo",
+                    "type": "image",
+                    "return_format": "array",
+                    "preview_size": "thumbnail",
+                    "instructions": "Upload the partner logo (PNG or SVG, white version for dark background).",
+                    "wrapper": { "width": "35" }
+                },
+                {
+                    "key": "field_dfc_pl_url",
+                    "label": "Partner URL",
+                    "name": "partner_url",
+                    "type": "url",
+                    "wrapper": { "width": "35" }
+                }
+            ]
+        },
+        {
+            "key": "field_dfc_newsletter_tab",
+            "label": "Newsletter",
+            "type": "tab",
+            "placement": "left"
+        },
+        {
+            "key": "field_dfc_newsletter_form_id",
+            "label": "Gravity Form ID",
+            "name": "newsletter_gravity_form_id",
+            "type": "number",
+            "instructions": "Enter the Gravity Forms form ID for the newsletter signup."
+        }
+    ],
+    "location": [
+        [
+            {
+                "param": "options_page",
+                "operator": "==",
+                "value": "acf-options"
+            }
+        ]
+    ],
+    "menu_order": 0,
+    "position": "normal",
+    "style": "default",
+    "label_placement": "top",
+    "instruction_placement": "label",
+    "active": true,
+    "show_in_rest": 0
+}

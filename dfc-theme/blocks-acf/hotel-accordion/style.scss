@@ -1,0 +1,39 @@
+@use '../../sass/settings/variables' as *;
+@use '../../sass/settings/mixins' as *;
+
+.aviatrix-block--hotel-accordion {
+  background-color: $hex-light-grey;
+  padding: clamp(48px, 6vw, 80px) 0;
+
+  .hotel-accordion__intro {
+    text-align: center;
+    max-width: 1206px;
+    margin: 0 auto 32px;
+    padding: 0 24px;
+
+    h2 {
+      font-family: var(#{$font-heading-var});
+      font-size: $h2;
+      font-weight: 500;
+      margin: 0 0 16px;
+    }
+
+    p { margin: 0; }
+  }
+
+  .hotel-accordion__items {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  // Override accordion styles for hotel context
+  .aviatrix-block--accordion {
+    .accordion__header {
+      border-bottom-color: $hex-red;
+    }
+  }
+}

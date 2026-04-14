@@ -1,0 +1,565 @@
+/* ============================================================
+   DFC SEARCH — AJAX Dropdown + Results Page
+   ============================================================ */
+
+/* ── AJAX Search Panel (header dropdown) ───────────────────── */
+
+.dfc-search-panel {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    background: #F1F1F1;
+    border-top: 1px solid #D3D3D3;
+    z-index: 200;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+}
+
+.dfc-search-panel__inner {
+    max-width: 700px;
+    margin: 0 auto;
+    padding: 32px 24px;
+}
+
+.dfc-search-panel__heading {
+    font-family: var(--dfc-font-heading);
+    font-size: 1.25rem;
+    font-weight: 500;
+    color: #000;
+    margin: 0 0 16px;
+}
+
+/* ── Search Form ───────────────────────────────────────────── */
+
+.dfc-search-form__field {
+    display: flex;
+    max-width: 600px;
+    background: #fff;
+    border: 1px solid #D3D3D3;
+}
+
+.dfc-search-form__input {
+    flex: 1;
+    border: none;
+    padding: 12px 16px;
+    font-family: var(--dfc-font-body);
+    font-size: 1rem;
+    color: #000;
+    outline: none;
+    background: transparent;
+    min-height: 47px;
+}
+
+.dfc-search-form__input::placeholder {
+    color: #757575;
+}
+
+.dfc-search-form__input:focus-visible {
+    box-shadow: inset 0 0 0 2px #EF3340;
+}
+
+.dfc-search-form__submit {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 47px;
+    height: 47px;
+    border: none;
+    background: #EF3340;
+    color: #000;
+    cursor: pointer;
+    flex-shrink: 0;
+    transition: background 150ms ease;
+}
+
+.dfc-search-form__submit:hover {
+    background: #d42b38;
+}
+
+.dfc-search-form__submit:focus-visible {
+    outline: 2px solid #000;
+    outline-offset: -2px;
+}
+
+.dfc-search-form__submit svg {
+    width: 18px;
+    height: 18px;
+}
+
+/* ── AJAX Results Dropdown ─────────────────────────────────── */
+
+.dfc-search-results {
+    margin-top: 16px;
+    max-height: 400px;
+    overflow-y: auto;
+    scrollbar-width: thin;
+}
+
+.dfc-search-results__group-label {
+    display: block;
+    font-family: var(--dfc-font-body);
+    font-size: 0.6875rem;
+    font-weight: 700;
+    color: #757575;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    padding: 12px 0 4px;
+    border-bottom: 1px solid #D3D3D3;
+}
+
+.dfc-search-results__list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.dfc-search-results__item a {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 10px 8px;
+    text-decoration: none;
+    color: #000;
+    border-radius: 4px;
+    transition: background 120ms ease;
+}
+
+.dfc-search-results__item a:hover {
+    background: #D3D3D3;
+}
+
+.dfc-search-results__item a:focus-visible {
+    outline: 2px solid #EF3340;
+    outline-offset: -2px;
+    background: #D3D3D3;
+}
+
+.dfc-search-results__item-icon {
+    flex-shrink: 0;
+    width: 20px;
+    height: 20px;
+    color: #757575;
+}
+
+.dfc-search-results__item-text {
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+}
+
+.dfc-search-results__item-title {
+    font-size: 0.9375rem;
+    font-weight: 600;
+    line-height: 1.3;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.dfc-search-results__item-type {
+    font-size: 0.6875rem;
+    font-weight: 600;
+    color: #757575;
+    letter-spacing: 0.02em;
+}
+
+.dfc-search-results__footer {
+    padding: 12px 0;
+    border-top: 1px solid #D3D3D3;
+    margin-top: 8px;
+}
+
+.dfc-search-results__footer a {
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: #EF3340;
+    text-decoration: underline;
+}
+
+.dfc-search-results__footer a:hover {
+    text-decoration: none;
+}
+
+.dfc-search-results__footer a:focus-visible {
+    outline: 2px solid #EF3340;
+    outline-offset: 2px;
+}
+
+.dfc-search-results__status {
+    font-size: 0.875rem;
+    color: #757575;
+    padding: 16px 0;
+    margin: 0;
+}
+
+/* ── Fuel Price Quick-Look Card ───────────────────────────── */
+
+.dfc-search-fuel-card {
+    margin-bottom: 16px;
+    padding-bottom: 8px;
+}
+
+.dfc-search-fuel-card__inner {
+    display: flex;
+    gap: 16px;
+    margin-top: 12px;
+}
+
+.dfc-search-fuel-card__item {
+    flex: 1;
+    background: #000;
+    color: #fff;
+    padding: 16px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.dfc-search-fuel-card__label {
+    font-size: 0.875rem;
+    font-weight: 600;
+}
+
+.dfc-search-fuel-card__price {
+    font-size: 1.5rem;
+    font-weight: 700;
+}
+
+.dfc-search-fuel-card__date {
+    font-size: 0.75rem;
+    color: #757575;
+    margin: 8px 0 4px;
+}
+
+.dfc-search-fuel-card__link {
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: #EF3340;
+    text-decoration: underline;
+}
+
+.dfc-search-fuel-card__link:hover {
+    text-decoration: none;
+}
+
+/* ── Search Results Page ───────────────────────────────────── */
+
+.dfc-search-page__header {
+    background: #000;
+    padding: 3rem 1.5rem 2.5rem;
+    text-align: center;
+}
+
+.dfc-search-page__inner {
+    max-width: 50rem;
+    margin: 0 auto;
+    padding: 0 1.5rem;
+}
+
+.dfc-search-page__header .dfc-search-page__inner {
+    padding: 0;
+}
+
+.dfc-search-page__title {
+    font-family: var(--dfc-font-heading);
+    font-size: 2.25rem;
+    font-weight: 600;
+    color: #fff;
+    margin: 0 0 0.5rem;
+    line-height: 1.2;
+}
+
+.dfc-search-page__summary {
+    font-family: var(--dfc-font-body);
+    font-size: 1rem;
+    color: rgba(255, 255, 255, 0.8);
+    margin: 0 0 1.5rem;
+}
+
+.dfc-search-page__form-wrap {
+    display: flex;
+    max-width: 36rem;
+    margin: 0 auto;
+    overflow: hidden;
+    background: #fff;
+}
+
+.dfc-search-page__form-wrap form {
+    display: flex;
+    width: 100%;
+}
+
+.dfc-search-page__input {
+    flex: 1;
+    border: none;
+    padding: 0.875rem 1.5rem;
+    font-family: var(--dfc-font-body);
+    font-size: 1rem;
+    color: #000;
+    outline: none;
+    background: transparent;
+    min-height: 2.75rem;
+}
+
+.dfc-search-page__input::placeholder {
+    color: #757575;
+}
+
+.dfc-search-page__submit {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 3rem;
+    height: 3rem;
+    margin: 0.125rem;
+    border: none;
+    background: #EF3340;
+    color: #000;
+    cursor: pointer;
+    flex-shrink: 0;
+    transition: background 150ms ease;
+}
+
+.dfc-search-page__submit:hover {
+    background: #d42b38;
+}
+
+.dfc-search-page__submit:focus-visible {
+    outline: 2px solid #EF3340;
+    outline-offset: 2px;
+}
+
+.dfc-search-page__count {
+    font-size: 0.875rem;
+    color: #757575;
+    padding: 1.5rem 0 0.75rem;
+    border-bottom: 1px solid #D3D3D3;
+    margin-bottom: 0;
+}
+
+.dfc-search-page__results {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.dfc-search-page__result {
+    border-bottom: 1px solid #D3D3D3;
+}
+
+.dfc-search-page__result-link {
+    display: flex;
+    gap: 1.25rem;
+    padding: 1.25rem 0;
+    text-decoration: none;
+    color: inherit;
+    transition: background 150ms ease;
+    border-radius: 0.5rem;
+}
+
+.dfc-search-page__result-link:hover {
+    background: #F1F1F1;
+    padding-left: 1rem;
+    padding-right: 1rem;
+    margin-left: -1rem;
+    margin-right: -1rem;
+}
+
+.dfc-search-page__result-link:focus-visible {
+    outline: 2px solid #EF3340;
+    outline-offset: 2px;
+}
+
+.dfc-search-page__result-thumb {
+    flex-shrink: 0;
+    width: 8rem;
+    height: 5.5rem;
+    overflow: hidden;
+    background: #F1F1F1;
+}
+
+.dfc-search-page__result-thumb img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.dfc-search-page__result-body {
+    flex: 1;
+    min-width: 0;
+}
+
+.dfc-search-page__result-type {
+    display: inline-block;
+    font-size: 0.6875rem;
+    font-weight: 700;
+    color: #EF3340;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    margin-bottom: 0.25rem;
+}
+
+.dfc-search-page__result-title {
+    font-family: var(--dfc-font-body);
+    font-size: 1.125rem;
+    font-weight: 600;
+    color: #000;
+    line-height: 1.3;
+    margin: 0 0 0.375rem;
+}
+
+.dfc-search-page__result-link:hover .dfc-search-page__result-title {
+    color: #EF3340;
+}
+
+.dfc-search-page__result-excerpt {
+    font-size: 0.875rem;
+    color: #757575;
+    line-height: 1.6;
+    margin: 0;
+}
+
+.dfc-search-page__pagination {
+    padding: 2rem 0 3rem;
+}
+
+.dfc-search-page__pagination ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+}
+
+.dfc-search-page__pagination a,
+.dfc-search-page__pagination span {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 2.75rem;
+    min-height: 2.75rem;
+    padding: 0.5rem 0.875rem;
+    font-size: 0.875rem;
+    font-weight: 600;
+    text-decoration: none;
+    transition: background 150ms ease, color 150ms ease;
+}
+
+.dfc-search-page__pagination a {
+    color: #000;
+    background: #F1F1F1;
+}
+
+.dfc-search-page__pagination a:hover {
+    background: #EF3340;
+    color: #000;
+}
+
+.dfc-search-page__pagination a:focus-visible {
+    outline: 2px solid #EF3340;
+    outline-offset: 2px;
+}
+
+.dfc-search-page__pagination span.current {
+    background: #EF3340;
+    color: #000;
+}
+
+.dfc-search-page__no-results {
+    text-align: center;
+    padding: 3rem 1rem;
+}
+
+.dfc-search-page__no-results h2 {
+    font-family: var(--dfc-font-heading);
+    font-size: 1.5rem;
+    margin: 0 0 0.75rem;
+}
+
+.dfc-search-page__no-results p {
+    font-size: 1rem;
+    color: #757575;
+    line-height: 1.6;
+    max-width: 32rem;
+    margin: 0 auto;
+}
+
+/* ── 404 Page ──────────────────────────────────────────────── */
+
+.error-404__header {
+    background: #000;
+    border-bottom: 5px solid #EF3340;
+    padding: 48px 0;
+    text-align: center;
+}
+
+.error-404__title {
+    font-family: var(--dfc-font-heading);
+    color: #fff;
+    font-size: 3.5rem;
+    font-weight: 600;
+    margin: 0;
+}
+
+.error-404__content {
+    max-width: 40rem;
+    margin: 0 auto;
+    padding: 48px 24px 96px;
+    text-align: center;
+}
+
+.error-404__search-field {
+    display: flex;
+    max-width: 32rem;
+    margin: 24px auto;
+    gap: 8px;
+}
+
+.error-404__search-field input {
+    flex: 1;
+    height: 47px;
+    padding: 8px 16px;
+    border: 1px solid #D3D3D3;
+    font-size: 1rem;
+}
+
+.error-404__search-field input:focus-visible {
+    outline: 2px solid #EF3340;
+    outline-offset: -2px;
+}
+
+/* ── Responsive ────────────────────────────────────────────── */
+
+@media (max-width: 767px) {
+    .dfc-search-page__header {
+        padding: 2rem 1rem;
+    }
+
+    .dfc-search-page__title {
+        font-size: 1.75rem;
+    }
+
+    .dfc-search-page__result-link {
+        flex-direction: column;
+        gap: 0.75rem;
+    }
+
+    .dfc-search-page__result-thumb {
+        width: 100%;
+        height: 10rem;
+    }
+
+    .error-404__title {
+        font-size: 2.25rem;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .dfc-search-page__result-link,
+    .dfc-search-page__submit,
+    .dfc-search-results__item a {
+        transition: none;
+    }
+}

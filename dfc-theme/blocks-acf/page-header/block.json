@@ -1,0 +1,22 @@
+{
+    "name": "acf/page-header",
+    "title": "Page Header",
+    "description": "Black header bar with page title and optional description. Auto-inserted on pages.",
+    "category": "aviatrix-blocks",
+    "icon": "heading",
+    "keywords": ["header", "title", "page"],
+    "acf": {
+        "mode": "preview",
+        "renderTemplate": "page-header.php"
+    },
+    "supports": {
+        "align": false,
+        "anchor": true,
+        "jsx": true,
+        "color": {
+            "background": false,
+            "text": false
+        }
+    },
+    "style": "file:./style.css"
+}

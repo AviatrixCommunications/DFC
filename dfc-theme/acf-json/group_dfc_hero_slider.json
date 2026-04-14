@@ -1,0 +1,74 @@
+{
+    "key": "group_dfc_hero_slider",
+    "title": "Hero Slider",
+    "fields": [
+        {
+            "key": "field_dfc_hero_slides",
+            "label": "Slides",
+            "name": "hero_slides",
+            "type": "repeater",
+            "layout": "block",
+            "button_label": "Add Slide",
+            "min": 1,
+            "max": 10,
+            "sub_fields": [
+                {
+                    "key": "field_dfc_hs_slide_type",
+                    "label": "Slide Type",
+                    "name": "slide_type",
+                    "type": "select",
+                    "choices": { "image": "Image", "video": "Video" },
+                    "default_value": "image",
+                    "wrapper": { "width": "25" }
+                },
+                {
+                    "key": "field_dfc_hs_overlay_opacity",
+                    "label": "Overlay Opacity (%)",
+                    "name": "overlay_opacity",
+                    "type": "range",
+                    "min": 0,
+                    "max": 90,
+                    "step": 5,
+                    "default_value": 0,
+                    "wrapper": { "width": "25" }
+                },
+                {
+                    "key": "field_dfc_hs_image",
+                    "label": "Image",
+                    "name": "image",
+                    "type": "image",
+                    "return_format": "array",
+                    "preview_size": "medium",
+                    "conditional_logic": [[{ "field": "field_dfc_hs_slide_type", "operator": "==", "value": "image" }]]
+                },
+                {
+                    "key": "field_dfc_hs_video_url",
+                    "label": "Video URL (MP4)",
+                    "name": "video_url",
+                    "type": "url",
+                    "conditional_logic": [[{ "field": "field_dfc_hs_slide_type", "operator": "==", "value": "video" }]]
+                },
+                {
+                    "key": "field_dfc_hs_video_poster",
+                    "label": "Video Poster Image",
+                    "name": "video_poster",
+                    "type": "image",
+                    "return_format": "array",
+                    "preview_size": "medium",
+                    "conditional_logic": [[{ "field": "field_dfc_hs_slide_type", "operator": "==", "value": "video" }]]
+                },
+                {
+                    "key": "field_dfc_hs_video_description",
+                    "label": "Video Description (Accessibility)",
+                    "name": "video_description",
+                    "type": "text",
+                    "instructions": "Describe what the video shows for screen reader users. Required for WCAG compliance.",
+                    "placeholder": "e.g. Aerial view of DuPage Airport at sunset",
+                    "conditional_logic": [[{ "field": "field_dfc_hs_slide_type", "operator": "==", "value": "video" }]]
+                }
+            ]
+        }
+    ],
+    "location": [[{ "param": "block", "operator": "==", "value": "acf/hero-slider" }]],
+    "active": true
+}

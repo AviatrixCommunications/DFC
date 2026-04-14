@@ -1,0 +1,33 @@
+{
+    "key": "group_dfc_split_callout",
+    "title": "Split Content Callout",
+    "fields": [
+        {
+            "key": "field_dfc_sc_image",
+            "label": "Image",
+            "name": "callout_image",
+            "type": "image",
+            "return_format": "array",
+            "preview_size": "medium"
+        },
+        {
+            "key": "field_dfc_sc_icon",
+            "label": "Icon (Optional)",
+            "name": "callout_icon",
+            "type": "image",
+            "return_format": "array",
+            "preview_size": "thumbnail",
+            "instructions": "Small icon displayed above the heading. e.g., Customs badge."
+        },
+        {
+            "key": "field_dfc_sc_image_position",
+            "label": "Image Position",
+            "name": "image_position",
+            "type": "select",
+            "choices": { "left": "Image Left", "right": "Image Right" },
+            "default_value": "left"
+        }
+    ],
+    "location": [[{ "param": "block", "operator": "==", "value": "acf/split-content-callout" }]],
+    "active": true
+}

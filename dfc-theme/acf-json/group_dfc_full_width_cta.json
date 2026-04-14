@@ -1,0 +1,27 @@
+{
+    "key": "group_dfc_full_width_cta",
+    "title": "Full-Width CTA",
+    "fields": [
+        {
+            "key": "field_dfc_fwc_bg_image",
+            "label": "Background Image",
+            "name": "background_image",
+            "type": "image",
+            "return_format": "array",
+            "preview_size": "medium"
+        },
+        {
+            "key": "field_dfc_fwc_overlay",
+            "label": "Overlay Darkness (%)",
+            "name": "overlay_opacity",
+            "type": "range",
+            "min": 0,
+            "max": 95,
+            "step": 5,
+            "default_value": 75,
+            "instructions": "How dark the overlay should be. 0 = no overlay, 75 = standard."
+        }
+    ],
+    "location": [[{ "param": "block", "operator": "==", "value": "acf/full-width-cta" }]],
+    "active": true
+}

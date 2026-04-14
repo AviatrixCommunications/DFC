@@ -1,0 +1,11 @@
+{
+    "name": "acf/fuel-pricing-table",
+    "title": "Fuel Pricing Table",
+    "description": "Renders full fuel pricing tables from ACF options page.",
+    "category": "aviatrix-blocks",
+    "icon": "editor-table",
+    "keywords": ["fuel", "pricing", "table", "jet", "avgas"],
+    "acf": { "mode": "preview", "renderTemplate": "fuel-pricing-table.php" },
+    "supports": { "align": false, "anchor": true, "jsx": false },
+    "style": "file:./style.css"
+}

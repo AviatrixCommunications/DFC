@@ -1,0 +1,11 @@
+{
+    "name": "acf/icon-list",
+    "title": "Icon List",
+    "description": "Vertical list of icons with descriptions. Used for passenger services.",
+    "category": "aviatrix-blocks",
+    "icon": "list-view",
+    "keywords": ["icon", "list", "services", "amenities"],
+    "acf": { "mode": "preview", "renderTemplate": "icon-list.php" },
+    "supports": { "align": false, "anchor": true, "jsx": false },
+    "style": "file:./style.css"
+}

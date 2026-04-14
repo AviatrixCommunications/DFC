@@ -1,0 +1,15 @@
+{
+    "key": "group_dfc_newsletter_block",
+    "title": "Newsletter Signup Block",
+    "fields": [
+        {
+            "key": "field_dfc_nb_form_id",
+            "label": "Gravity Form ID",
+            "name": "gravity_form_id",
+            "type": "number",
+            "instructions": "ID of the Gravity Form to embed. Leave empty to use the global setting."
+        }
+    ],
+    "location": [[{ "param": "block", "operator": "==", "value": "acf/newsletter-signup" }]],
+    "active": true
+}

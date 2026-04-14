@@ -1,0 +1,22 @@
+{
+    "name": "acf/hero-slider",
+    "title": "Hero Slider",
+    "description": "Full-width hero section with support for images, video, or multiple slides.",
+    "category": "aviatrix-blocks",
+    "icon": "format-image",
+    "keywords": ["hero", "slider", "banner", "video"],
+    "acf": {
+        "mode": "preview",
+        "renderTemplate": "hero-slider.php"
+    },
+    "supports": {
+        "align": ["full"],
+        "anchor": true,
+        "jsx": false,
+        "color": {
+            "background": false,
+            "text": false
+        }
+    },
+    "style": "file:./style.css"
+}

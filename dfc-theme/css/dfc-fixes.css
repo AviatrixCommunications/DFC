@@ -1,0 +1,947 @@
+/* ── ALERT BANNER — Override SASS height:0 ──────────────────── */
+/* The compiled SASS sets .notification-banner { height: 0; overflow: hidden; }
+   which was designed for JS slideDown reveal. We want it visible immediately. */
+.notification-banner {
+    height: auto !important;
+    overflow: visible !important;
+}
+
+/* ============================================================
+   DFC VISUAL FIXES — v3
+   ============================================================ */
+
+/* ── 1. HEADER — ORIGINAL FIGMA SIZING ─────────────────────── */
+
+.header {
+    background: #000;
+    position: relative;
+    z-index: 100;
+}
+
+.header__components {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 96px;
+    gap: 16px;
+}
+
+/* Logo back to Figma size */
+.header__logo-img {
+    max-width: 284px;
+    height: auto;
+}
+
+.header__menu {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+
+.nav--main .nav__list {
+    display: flex;
+    align-items: center;
+    margin: 0;
+    padding: 0;
+}
+
+.nav--main .nav__list > .menu-item {
+    margin-right: 0;
+    padding: 0;
+    border: none;
+}
+
+/* Nav items — Figma spacing restored */
+.nav--main .nav__list > .menu-item > a {
+    color: #fff;
+    font-family: 'Open Sans', sans-serif;
+    font-size: 16px;
+    font-weight: 500;
+    text-decoration: none;
+    padding: 12px 16px;
+    white-space: nowrap;
+    transition: all 0.15s ease;
+    border-radius: 0;
+}
+
+/* Nav hover: RED underline — using border-bottom for visibility */
+.nav--main .nav__list > .menu-item > a:hover {
+    color: #fff;
+    background: transparent;
+    border-bottom: 3px solid #EF3340;
+    padding-bottom: 9px;
+}
+
+/* Nav focus: square red outline only */
+.nav--main .nav__list > .menu-item > a:focus-visible {
+    outline: 2px solid #EF3340;
+    outline-offset: 2px;
+    color: #fff;
+    background: transparent;
+    border-radius: 0;
+}
+
+.nav--main .nav__list > .current-menu-item > a {
+    border-bottom: 3px solid #EF3340;
+    padding-bottom: 9px;
+}
+
+/* ── 2. HEADER CTA BUTTON ───────────────────────────────────── */
+
+.header__cta {
+    background: #EF3340;
+    color: #000;
+    font-size: 15px;
+    font-weight: 600;
+    padding: 10px 20px;
+    height: 46px;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    white-space: nowrap;
+    transition: all 0.15s ease;
+    border-radius: 0;
+    border: none;
+    flex-shrink: 0;
+}
+
+.header__cta:hover {
+    background: #fff;
+    color: #000;
+    text-decoration: underline;
+}
+
+.header__cta:focus-visible {
+    outline: 2px solid #fff;
+    outline-offset: 2px;
+    border-radius: 0;
+}
+
+/* ── 3. SEARCH ICON BUTTON ──────────────────────────────────── */
+
+.button--search {
+    color: #fff;
+    padding: 8px;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+.button--search:hover {
+    color: #EF3340;
+}
+
+.button--search:focus-visible {
+    outline: 2px solid #EF3340;
+    outline-offset: 2px;
+}
+
+.nav__search-icon {
+    width: 22px;
+    height: 21px;
+}
+
+/* ── 4. SEARCH PANEL — CENTERED, CLEAN ─────────────────────── */
+
+.dfc-search-panel {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    background: #F1F1F1;
+    z-index: 200;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+    padding: 32px 24px;
+    text-align: center;
+}
+
+.dfc-search-panel__inner {
+    max-width: 600px;
+    margin: 0 auto;
+    text-align: center;
+}
+
+.dfc-search-panel__heading {
+    font-family: 'Open Sans', sans-serif;
+    font-size: 1.5rem;
+    font-weight: 500;
+    color: #000;
+    margin: 0 0 20px;
+}
+
+/* Search input + button: same height, no focus clipping */
+.dfc-search-form__field {
+    display: flex;
+    max-width: 500px;
+    margin: 0 auto;
+    border: 1px solid #D3D3D3;
+    border-radius: 0;
+    background: #fff;
+}
+
+.dfc-search-form__field:focus-within {
+    border-color: #EF3340;
+    box-shadow: 0 0 0 1px #EF3340;
+}
+
+.dfc-search-form__input {
+    flex: 1;
+    border: none !important;
+    padding: 0 20px !important;
+    font-family: 'Open Sans', sans-serif;
+    font-size: 1rem;
+    color: #000;
+    outline: none !important;
+    background: transparent !important;
+    height: 50px !important;
+    line-height: 50px;
+    border-radius: 0 !important;
+    box-shadow: none !important;
+    margin: 0 !important;
+}
+
+.dfc-search-form__input::placeholder {
+    color: #757575;
+}
+
+.dfc-search-form__input:focus,
+.dfc-search-form__input:focus-visible {
+    /* Focus is indicated by the parent :focus-within border.
+       Add a subtle inner indicator so the input itself passes WCAG 2.4.7. */
+    outline: 2px solid transparent !important;
+    box-shadow: inset 0 0 0 2px #EF3340 !important;
+    border: none !important;
+}
+
+.dfc-search-form__submit {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 50px;
+    min-height: 50px;
+    align-self: stretch;
+    border: none;
+    background: #EF3340;
+    color: #fff;
+    cursor: pointer;
+    flex-shrink: 0;
+    transition: background 150ms ease;
+    border-radius: 0;
+    margin: 0;
+    padding: 0;
+}
+
+.dfc-search-form__submit:hover {
+    background: #d42b38;
+}
+
+.dfc-search-form__submit:focus-visible {
+    outline: 2px solid #000;
+    outline-offset: -2px;
+}
+
+.dfc-search-form__submit svg {
+    width: 20px;
+    height: 20px;
+}
+
+/* ── 5. ALERT BANNER — PUSHES HEADER DOWN, NOT COVERS ──────── */
+
+.site-top {
+    display: flex;
+    flex-direction: column;
+}
+
+.notification-banner {
+    position: relative;
+    z-index: 200;
+    width: 100%;
+    /* No absolute positioning — sits in normal flow above header */
+}
+
+.notification-banner[aria-hidden="true"] {
+    display: none;
+}
+
+.notification-banner[aria-hidden="false"],
+.notification-banner:not([aria-hidden]) {
+    display: block;
+}
+
+.site-banner {
+    padding: 12px 0;
+    font-size: 14px;
+    line-height: 1.5;
+}
+
+.site-banner .wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+}
+
+.banner-content {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    flex: 1;
+    justify-content: center;
+}
+
+.banner-content p {
+    margin: 0;
+}
+
+/* Alert button — underline + white bg on hover */
+.banner-content .button {
+    background: #EF3340;
+    color: #000;
+    border: none;
+    padding: 6px 16px;
+    font-weight: 600;
+    font-size: 14px;
+    text-decoration: none;
+    border-radius: 0;
+    transition: all 0.15s ease;
+}
+
+.banner-content .button:hover {
+    background: #fff;
+    color: #000;
+    text-decoration: underline;
+}
+
+.alert-close {
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    padding: 8px;
+    flex-shrink: 0;
+}
+
+.alert-close:focus-visible {
+    outline: 2px solid #000;
+    outline-offset: 2px;
+}
+
+/* ── 6. FOOTER HOVER — RED ON HOVER ─────────────────────────── */
+
+.footer__top {
+    background: #000;
+    padding: clamp(48px, 6vw, 80px) 0 clamp(32px, 4vw, 48px);
+}
+
+.footer__top a {
+    color: #fff;
+    transition: color 0.15s ease;
+}
+
+.footer__top a:hover {
+    color: #EF3340;
+    text-decoration: underline;
+}
+
+.footer__top a:focus-visible {
+    color: #EF3340;
+    outline: 2px solid #EF3340;
+    outline-offset: 2px;
+}
+
+.footer__contact strong {
+    color: #fff;
+}
+
+.footer__links a {
+    color: #EF3340;
+}
+
+.footer__links a:hover {
+    color: #fff;
+    text-decoration: underline;
+}
+
+.footer__links a:focus-visible {
+    color: #fff;
+    outline: 2px solid #fff;
+    outline-offset: 2px;
+}
+
+.footer__top-inner {
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    gap: clamp(32px, 4vw, 64px);
+}
+
+@media (max-width: 1024px) {
+    .footer__top-inner {
+        grid-template-columns: 1fr 1fr;
+    }
+}
+
+@media (max-width: 782px) {
+    .footer__top-inner {
+        grid-template-columns: 1fr;
+        gap: 32px;
+    }
+}
+
+/* ── 7. FOOTER LEGAL BAR — MORE TOP PADDING ─────────────────── */
+
+.footer__bottom {
+    background: #D3D3D3;
+    padding: 24px 0;
+}
+
+.footer__bottom ul,
+.footer__bottom .menu {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 40px;
+}
+
+.footer__bottom li {
+    display: inline-flex;
+}
+
+.footer__bottom a {
+    color: #000;
+    font-weight: 600;
+    font-size: 16px;
+    text-decoration: underline;
+}
+
+.footer__bottom a:hover {
+    text-decoration: none;
+}
+
+@media (max-width: 782px) {
+    .footer__bottom ul,
+    .footer__bottom .menu {
+        flex-direction: column;
+        gap: 8px;
+    }
+}
+
+/* ── 8. SOCIAL ICONS — RED BG, GREY HOVER ──────────────────── */
+
+.nav--social ul {
+    display: flex;
+    gap: 12px;
+    list-style: none;
+    padding: 0;
+    margin: 16px 0 0;
+}
+
+.nav--social a {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: #EF3340;
+    color: #fff;
+    transition: background 0.15s ease;
+    text-decoration: none;
+}
+
+.nav--social a:hover {
+    background: #757575;
+    color: #fff;
+}
+
+.nav--social a:focus-visible {
+    background: #fff;
+    color: #EF3340;
+    outline: 2px solid #EF3340;
+    outline-offset: 2px;
+}
+
+.nav--social svg {
+    width: 18px;
+    height: 18px;
+    fill: currentColor;
+}
+
+/* ── 9. NEWSLETTER — BUTTON RIGHT, TITLE 2 LINES ────────────── */
+
+.newsletter {
+    background: #EF3340;
+    padding: 48px 0;
+}
+
+.newsletter__inner {
+    display: flex;
+    gap: 40px;
+    align-items: flex-start;
+    flex-wrap: wrap;
+}
+
+.newsletter__heading {
+    flex: 0 0 auto;
+    max-width: 400px;
+    min-width: 300px;
+}
+
+.newsletter__title {
+    font-family: 'Open Sans', sans-serif;
+    font-size: clamp(28px, 3.5vw, 36px);
+    font-weight: 500;
+    line-height: 1.25;
+    color: #000;
+    margin: 0;
+}
+
+.newsletter__form {
+    flex: 1;
+    min-width: 300px;
+}
+
+/* Gravity Forms overrides — stronger specificity */
+.newsletter .gform_wrapper,
+.newsletter .gform-theme {
+    margin: 0 !important;
+    max-width: none !important;
+}
+
+.newsletter .gform_wrapper .gform_body,
+.newsletter .gform-theme .gform-body {
+    margin: 0;
+}
+
+.newsletter .gform_wrapper .gform_fields,
+.newsletter .gform-theme .gform_fields {
+    display: flex !important;
+    gap: 12px !important;
+    flex-wrap: wrap;
+    padding: 0 !important;
+    margin: 0 !important;
+    grid-column-gap: 12px !important;
+    grid-row-gap: 12px !important;
+}
+
+.newsletter .gform_wrapper .gfield,
+.newsletter .gform-theme .gfield {
+    flex: 1;
+    min-width: 160px;
+    margin: 0 !important;
+    padding: 0 !important;
+}
+
+.newsletter .gform_wrapper .gfield_label,
+.newsletter .gform-theme .gfield_label,
+.newsletter .gform-theme .gform-field-label {
+    display: none !important;
+}
+
+/* Name field sub-fields inline */
+.newsletter .ginput_complex.ginput_container--name,
+.newsletter .ginput_container_name {
+    display: flex !important;
+    gap: 12px !important;
+}
+
+.newsletter .ginput_complex .name_first,
+.newsletter .ginput_complex .name_last {
+    flex: 1 !important;
+    padding: 0 !important;
+}
+
+.newsletter .gform_wrapper input[type="text"],
+.newsletter .gform_wrapper input[type="email"],
+.newsletter .gform-theme input[type="text"],
+.newsletter .gform-theme input[type="email"] {
+    width: 100% !important;
+    height: 47px !important;
+    padding: 10px 12px !important;
+    border: none !important;
+    background: #fff !important;
+    font-family: 'Open Sans', sans-serif !important;
+    font-size: 14px !important;
+    color: #000 !important;
+    margin: 0 !important;
+    border-radius: 0 !important;
+    box-shadow: none !important;
+}
+
+.newsletter .gform_wrapper input[type="text"]:focus,
+.newsletter .gform_wrapper input[type="email"]:focus,
+.newsletter .gform-theme input[type="text"]:focus,
+.newsletter .gform-theme input[type="email"]:focus {
+    outline: 2px solid #000 !important;
+    outline-offset: -2px !important;
+    box-shadow: none !important;
+}
+
+/* Subscribe button — RIGHT ALIGNED */
+.newsletter .gform_wrapper .gform_footer,
+.newsletter .gform_wrapper .gform-footer,
+.newsletter .gform-theme .gform_footer,
+.newsletter .gform-theme .gform-footer {
+    margin: 12px 0 0 !important;
+    padding: 0 !important;
+    display: flex !important;
+    justify-content: flex-end !important;
+}
+
+.newsletter .gform_wrapper input[type="submit"],
+.newsletter .gform_wrapper .gform_button,
+.newsletter .gform_wrapper .gform-button,
+.newsletter .gform-theme input[type="submit"],
+.newsletter .gform-theme .gform_button,
+.newsletter .gform-theme .gform-button {
+    background: #fff !important;
+    color: #000 !important;
+    border: none !important;
+    border-radius: 0 !important;
+    font-family: 'Open Sans', sans-serif !important;
+    font-size: 15px !important;
+    font-weight: 600 !important;
+    padding: 12px 24px !important;
+    height: 47px !important;
+    cursor: pointer !important;
+    transition: background 0.15s ease;
+    text-shadow: none !important;
+    box-shadow: none !important;
+}
+
+.newsletter .gform_wrapper input[type="submit"]:hover,
+.newsletter .gform-theme input[type="submit"]:hover {
+    background: #F1F1F1 !important;
+    text-decoration: underline !important;
+}
+
+.newsletter .gform_wrapper input[type="submit"]:focus-visible,
+.newsletter .gform-theme input[type="submit"]:focus-visible {
+    outline: 2px solid #000 !important;
+    outline-offset: 2px !important;
+    box-shadow: none !important;
+}
+
+.newsletter__disclaimer {
+    font-size: 12px;
+    color: #000;
+    margin-top: 12px;
+    text-align: right;
+    clear: both;
+}
+
+@media (max-width: 1024px) {
+    .newsletter__inner {
+        flex-direction: column;
+    }
+    .newsletter__heading {
+        max-width: none;
+        min-width: auto;
+    }
+}
+
+/* ── 10. PAGE HEADER HOMEPAGE — HIDE ────────────────────────── */
+
+.home .aviatrix-block--page-header {
+    display: none;
+}
+
+/* ── 10a. HEADER / CONTENT FLUSH ALIGNMENT ────────────────────
+   Use padding-top on .main instead of margin-top so the page-header
+   hero image can extend behind the fixed nav (top 96px hidden,
+   rest visible). Pages without a hero still start below the nav. */
+
+.main {
+    margin-top: 0 !important;
+    padding-top: 96px;
+}
+
+/* Pull the page-header block up into the padding so hero sits behind nav */
+.dfc-page-content > .aviatrix-block--page-header:first-child {
+    margin-top: -96px !important;
+}
+
+/* ── 10b. CONSISTENT PAGE SPACING ─────────────────────────────
+   No gap between nav and page-header hero/title.
+   Content blocks contained within max-width.
+   Consistent bottom spacing before footer. */
+
+/* Main content wrapper — flush top, breathing room at bottom */
+.main {
+    padding-bottom: clamp(48px, 6vw, 80px);
+}
+.dfc-page-content {
+    margin: 0;
+    padding: 0;
+}
+.dfc-page-content > *:first-child {
+    margin-top: 0 !important;
+}
+
+/* Page header: zero spacing above it */
+.aviatrix-block--page-header {
+    margin-top: 0 !important;
+    margin-bottom: 0 !important;
+}
+
+/* Space between page header and the content after it */
+.aviatrix-block--page-header + * {
+    margin-top: clamp(48px, 6vw, 80px) !important;
+}
+
+/* Homepage: no bottom padding */
+.home .main {
+    padding-bottom: 0;
+}
+
+/* ── Content containment — keep loose blocks within max-width ─ */
+.dfc-page-content > *:not(.aviatrix-block):not(.alignfull):not(.alignwide) {
+    max-width: 1248px;
+    margin-left: auto;
+    margin-right: auto;
+    padding-left: 24px;
+    padding-right: 24px;
+}
+
+/* Full-width ACF blocks break out */
+.dfc-page-content > .aviatrix-block,
+.dfc-page-content > .alignfull {
+    max-width: none;
+    padding-left: 0;
+    padding-right: 0;
+}
+
+/* ── 11. MOBILE BREAKPOINT — 1200px ─────────────────────────── */
+
+.hamburger {
+    display: none;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    color: #fff;
+}
+
+@media (max-width: 1280px) {
+    .nav--main {
+        display: none !important;
+    }
+    .header__cta {
+        display: none !important;
+    }
+    .button--search {
+        display: none !important;
+    }
+    .hamburger {
+        display: flex !important;
+    }
+}
+
+/* ── 12. PARTNER LOGOS ──────────────────────────────────────── */
+
+.footer__partners {
+    display: flex;
+    gap: 16px;
+    align-items: center;
+    margin-top: 24px;
+    flex-wrap: wrap;
+}
+
+.footer__partners a {
+    display: inline-flex;
+}
+
+.footer__partners a:hover {
+    opacity: 0.8;
+}
+
+.footer__partners img {
+    max-height: 40px;
+    width: auto;
+}
+
+/* ── 13. WRAPPER ────────────────────────────────────────────── */
+
+.wrapper {
+    max-width: 1248px;
+    margin: 0 auto;
+    padding: 0 24px;
+}
+
+.wrapper--xl {
+    max-width: 1440px;
+}
+
+/* ── 14. GLOBAL — NO ROUNDED CORNERS ────────────────────────── */
+
+.button,
+.wp-block-button__link,
+input[type="text"],
+input[type="email"],
+input[type="search"],
+input[type="password"],
+input[type="submit"],
+textarea,
+select {
+    border-radius: 0 !important;
+}
+
+/* ── 15. GLOBAL FOCUS — SQUARE RED, NO PURPLE ───────────────── */
+
+*:focus-visible {
+    outline-color: #EF3340;
+}
+
+a:focus-visible,
+button:focus-visible,
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible {
+    outline: 2px solid #EF3340;
+    outline-offset: 2px;
+    border-radius: 0;
+    box-shadow: none;
+}
+
+.wp-element-button:focus-visible,
+.wp-block-button__link:focus-visible {
+    outline: 2px solid #EF3340 !important;
+    outline-offset: 2px !important;
+    box-shadow: none !important;
+}
+
+/* ── 16. MOBILE FIXES ───────────────────────────────────────── */
+
+/* Prevent horizontal scroll — use clip instead of hidden to avoid
+   clipping focus outlines and breaking scroll accessibility (WCAG 2.4.7) */
+html, body {
+    overflow-x: clip;
+    max-width: 100vw;
+}
+
+/* Mobile header — smaller logo, tighter layout */
+@media (max-width: 1280px) {
+    .header__logo-img {
+        max-width: 200px;
+    }
+    .header__components {
+        height: 72px;
+        gap: 8px;
+    }
+}
+
+@media (max-width: 768px) {
+    .header__logo-img {
+        max-width: 180px;
+    }
+    .header__components {
+        height: 64px;
+        padding: 0;
+    }
+
+    /* Alert bar: sits above header in flow, not covering */
+    .notification-banner {
+        position: relative;
+        z-index: 200;
+    }
+
+    .site-banner .wrapper {
+        flex-wrap: wrap;
+        text-align: center;
+        justify-content: center;
+        gap: 8px;
+        padding: 8px 16px;
+    }
+
+    .banner-content {
+        flex-direction: column;
+        gap: 8px;
+    }
+
+    .alert-close {
+        position: absolute;
+        top: 4px;
+        right: 4px;
+    }
+
+    .site-banner {
+        position: relative;
+    }
+
+    /* Newsletter section */
+    .newsletter {
+        padding: 32px 0;
+    }
+
+    .newsletter__heading {
+        min-width: auto;
+        max-width: none;
+    }
+
+    .newsletter__title {
+        font-size: 24px;
+    }
+
+    .newsletter .gform_wrapper .gform_fields,
+    .newsletter .gform-theme .gform_fields {
+        flex-direction: column;
+    }
+
+    .newsletter .ginput_complex.ginput_container--name,
+    .newsletter .ginput_container_name {
+        flex-direction: column !important;
+    }
+
+    /* Footer: single column on mobile */
+    .footer__top {
+        padding: 32px 0 24px;
+    }
+
+    .footer__contact p {
+        font-size: 14px;
+        line-height: 1.5;
+        margin: 0 0 8px;
+    }
+
+    .footer__links {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+    }
+
+    .footer__partners {
+        margin-top: 16px;
+    }
+
+    /* Footer bottom legal bar */
+    .footer__bottom {
+        padding: 16px 0;
+    }
+}
+
+@media (max-width: 480px) {
+    .header__logo-img {
+        max-width: 160px;
+    }
+
+    /* Search panel on very small screens */
+    .dfc-search-panel {
+        padding: 24px 16px;
+    }
+
+    .dfc-search-panel__heading {
+        font-size: 1.125rem;
+    }
+}
+
+/* ── 17. REDUCED MOTION ─────────────────────────────────────── */
+
+@media (prefers-reduced-motion: reduce) {
+    * {
+        transition-duration: 0s !important;
+        animation-duration: 0s !important;
+    }
+}

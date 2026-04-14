@@ -1,0 +1,23 @@
+{
+    "key": "group_dfc_weather_info_bar",
+    "title": "Weather & Info Bar",
+    "fields": [
+        {
+            "key": "field_dfc_wib_services_desc",
+            "label": "Services Description",
+            "name": "services_description",
+            "type": "text",
+            "default_value": "Utilize the link below to access our FlightBridge booking page.",
+            "instructions": "Text for the 'Request for Services' column."
+        },
+        {
+            "key": "field_dfc_wib_services_link",
+            "label": "Services Link",
+            "name": "services_link",
+            "type": "link",
+            "return_format": "array"
+        }
+    ],
+    "location": [[{ "param": "block", "operator": "==", "value": "acf/weather-info-bar" }]],
+    "active": true
+}

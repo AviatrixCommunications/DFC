@@ -1,0 +1,11 @@
+{
+    "name": "acf/services-tabs",
+    "title": "Services Tabs",
+    "description": "Tabbed content block with image and text. Used for Aircraft/Concierge services toggle.",
+    "category": "aviatrix-blocks",
+    "icon": "table-row-after",
+    "keywords": ["tabs", "services", "toggle"],
+    "acf": { "mode": "preview", "renderTemplate": "services-tabs.php" },
+    "supports": { "align": false, "anchor": true, "jsx": true },
+    "style": "file:./style.css"
+}

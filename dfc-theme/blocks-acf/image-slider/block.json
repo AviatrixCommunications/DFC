@@ -1,0 +1,11 @@
+{
+    "name": "acf/image-slider",
+    "title": "Image Slider",
+    "description": "Image carousel with one large image and thumbnail row. Arrow navigation.",
+    "category": "aviatrix-blocks",
+    "icon": "images-alt2",
+    "keywords": ["slider", "carousel", "gallery", "images"],
+    "acf": { "mode": "preview", "renderTemplate": "image-slider.php" },
+    "supports": { "align": false, "anchor": true, "jsx": false },
+    "style": "file:./style.css"
+}

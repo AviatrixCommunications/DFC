@@ -1,0 +1,11 @@
+{
+    "name": "acf/newsletter-signup",
+    "title": "Newsletter Signup",
+    "description": "Red banner with newsletter form (Gravity Forms / Constant Contact).",
+    "category": "aviatrix-blocks",
+    "icon": "email",
+    "keywords": ["newsletter", "signup", "email", "subscribe"],
+    "acf": { "mode": "preview", "renderTemplate": "newsletter-signup.php" },
+    "supports": { "align": ["full"], "anchor": true, "jsx": false },
+    "style": "file:./style.css"
+}

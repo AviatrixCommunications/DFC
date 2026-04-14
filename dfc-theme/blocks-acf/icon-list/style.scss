@@ -1,0 +1,39 @@
+@use '../../sass/settings/variables' as *;
+@use '../../sass/settings/mixins' as *;
+
+.aviatrix-block--icon-list {
+  .icon-list__items {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+  }
+
+  .icon-list__item {
+    display: flex;
+    align-items: flex-start;
+    gap: 16px;
+    padding: 12px 0;
+  }
+
+  .icon-list__icon {
+    flex-shrink: 0;
+    width: 25px;
+    height: 25px;
+    color: $hex-black;
+    margin-top: 2px;
+
+    img, svg {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+    }
+  }
+
+  .icon-list__text {
+    font-size: $text-16;
+    line-height: $line-height-body;
+  }
+}

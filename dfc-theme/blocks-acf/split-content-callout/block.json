@@ -1,0 +1,11 @@
+{
+    "name": "acf/split-content-callout",
+    "title": "Split Content Callout",
+    "description": "50/50 image and centered content with optional icon. Used for Customs, Airfield Info.",
+    "category": "aviatrix-blocks",
+    "icon": "columns",
+    "keywords": ["split", "callout", "50-50", "image"],
+    "acf": { "mode": "preview", "renderTemplate": "split-content-callout.php" },
+    "supports": { "align": ["full"], "anchor": true, "jsx": true },
+    "style": "file:./style.css"
+}

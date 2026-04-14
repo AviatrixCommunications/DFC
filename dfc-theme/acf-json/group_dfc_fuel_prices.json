@@ -1,0 +1,213 @@
+{
+    "key": "group_dfc_fuel_prices",
+    "title": "Fuel Price Data",
+    "fields": [
+        {
+            "key": "field_dfc_fuel_effective_date",
+            "label": "Effective Date",
+            "name": "fuel_effective_date",
+            "type": "date_picker",
+            "display_format": "F d, Y",
+            "return_format": "Y-m-d",
+            "instructions": "The date this pricing takes effect."
+        },
+        {
+            "key": "field_dfc_jet_fuel_tab",
+            "label": "Jet Fuel",
+            "type": "tab",
+            "placement": "left"
+        },
+        {
+            "key": "field_dfc_jet_fuel_retail_pretax",
+            "label": "Jet Fuel Retail Pre-Tax Price",
+            "name": "jet_fuel_retail_pretax",
+            "type": "text",
+            "wrapper": { "width": "50" }
+        },
+        {
+            "key": "field_dfc_jet_fuel_retail_aftertax",
+            "label": "Jet Fuel Retail After-Tax Price",
+            "name": "jet_fuel_retail_aftertax",
+            "type": "text",
+            "wrapper": { "width": "50" }
+        },
+        {
+            "key": "field_dfc_jet_fuel_tiers",
+            "label": "Jet Fuel Pricing Tiers",
+            "name": "jet_fuel_tiers",
+            "type": "repeater",
+            "instructions": "Add pricing tiers (e.g., Itinerant, Paragon Members, Based Customers, High Volume).",
+            "layout": "block",
+            "button_label": "Add Tier",
+            "sub_fields": [
+                {
+                    "key": "field_dfc_jft_tier_label",
+                    "label": "Tier Name",
+                    "name": "tier_label",
+                    "type": "text",
+                    "instructions": "e.g., Itinerant Customers, Paragon Members, Based Customers"
+                },
+                {
+                    "key": "field_dfc_jft_rows",
+                    "label": "Volume Levels",
+                    "name": "rows",
+                    "type": "repeater",
+                    "layout": "table",
+                    "button_label": "Add Volume Level",
+                    "sub_fields": [
+                        {
+                            "key": "field_dfc_jft_gallons",
+                            "label": "Gallons",
+                            "name": "gallons",
+                            "type": "text",
+                            "placeholder": "e.g., 300-600 gallons"
+                        },
+                        {
+                            "key": "field_dfc_jft_discount",
+                            "label": "Discount",
+                            "name": "discount",
+                            "type": "text",
+                            "placeholder": "e.g., $0.11"
+                        },
+                        {
+                            "key": "field_dfc_jft_pretax",
+                            "label": "Pre-Tax Price",
+                            "name": "pretax_price",
+                            "type": "text",
+                            "placeholder": "e.g., $7.76"
+                        },
+                        {
+                            "key": "field_dfc_jft_aftertax",
+                            "label": "After-Tax Price",
+                            "name": "aftertax_price",
+                            "type": "text",
+                            "placeholder": "e.g., $8.28"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "key": "field_dfc_jet_fuel_footnotes",
+            "label": "Jet Fuel Footnotes",
+            "name": "jet_fuel_footnotes",
+            "type": "textarea",
+            "rows": 3
+        },
+        {
+            "key": "field_dfc_avgas_tab",
+            "label": "AvGas",
+            "type": "tab",
+            "placement": "left"
+        },
+        {
+            "key": "field_dfc_avgas_retail_pretax",
+            "label": "AvGas Retail Pre-Tax Price",
+            "name": "avgas_retail_pretax",
+            "type": "text",
+            "wrapper": { "width": "50" }
+        },
+        {
+            "key": "field_dfc_avgas_retail_aftertax",
+            "label": "AvGas Retail After-Tax Price",
+            "name": "avgas_retail_aftertax",
+            "type": "text",
+            "wrapper": { "width": "50" }
+        },
+        {
+            "key": "field_dfc_avgas_tiers",
+            "label": "AvGas Pricing Tiers",
+            "name": "avgas_tiers",
+            "type": "repeater",
+            "layout": "block",
+            "button_label": "Add Tier",
+            "sub_fields": [
+                {
+                    "key": "field_dfc_avt_tier_label",
+                    "label": "Tier Name",
+                    "name": "tier_label",
+                    "type": "text"
+                },
+                {
+                    "key": "field_dfc_avt_rows",
+                    "label": "Volume Levels",
+                    "name": "rows",
+                    "type": "repeater",
+                    "layout": "table",
+                    "button_label": "Add Volume Level",
+                    "sub_fields": [
+                        {
+                            "key": "field_dfc_avt_gallons",
+                            "label": "Gallons",
+                            "name": "gallons",
+                            "type": "text"
+                        },
+                        {
+                            "key": "field_dfc_avt_discount",
+                            "label": "Discount",
+                            "name": "discount",
+                            "type": "text"
+                        },
+                        {
+                            "key": "field_dfc_avt_pretax",
+                            "label": "Pre-Tax Price",
+                            "name": "pretax_price",
+                            "type": "text"
+                        },
+                        {
+                            "key": "field_dfc_avt_aftertax",
+                            "label": "After-Tax Price",
+                            "name": "aftertax_price",
+                            "type": "text"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "key": "field_dfc_avgas_footnotes",
+            "label": "AvGas Footnotes",
+            "name": "avgas_footnotes",
+            "type": "textarea",
+            "rows": 3
+        },
+        {
+            "key": "field_dfc_homepage_tab",
+            "label": "Homepage Display",
+            "type": "tab",
+            "placement": "left"
+        },
+        {
+            "key": "field_dfc_homepage_jet_a_price",
+            "label": "Homepage Jet A Display Price",
+            "name": "homepage_jet_a_price",
+            "type": "text",
+            "instructions": "Shown on the homepage info bar. e.g., $5.60",
+            "placeholder": "$5.60",
+            "wrapper": { "width": "33" }
+        },
+        {
+            "key": "field_dfc_homepage_avgas_price",
+            "label": "Homepage AvGas Display Price",
+            "name": "homepage_avgas_price",
+            "type": "text",
+            "placeholder": "$6.40",
+            "wrapper": { "width": "33" }
+        },
+        {
+            "key": "field_dfc_fuel_page_link",
+            "label": "Fuel Prices Page Link",
+            "name": "fuel_prices_page_link",
+            "type": "page_link",
+            "instructions": "Link to the full fuel pricing page.",
+            "wrapper": { "width": "33" }
+        }
+    ],
+    "location": [
+        [{ "param": "options_page", "operator": "==", "value": "dfc-fuel-prices" }]
+    ],
+    "menu_order": 0,
+    "position": "normal",
+    "style": "default",
+    "active": true
+}

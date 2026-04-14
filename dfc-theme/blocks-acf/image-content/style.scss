@@ -1,0 +1,92 @@
+@use '../../sass/settings/variables' as *;
+@use '../../sass/settings/mixins' as *;
+
+.aviatrix-block--image-content {
+    .image-content__columns.wp-block-columns {
+        gap: 0 !important;
+        margin-bottom: 0;
+        flex-wrap: wrap;
+
+        @include media-above("md") {
+            flex-wrap: nowrap;
+            align-items: center !important;
+            gap: $space-24 !important;
+        }
+    }
+
+    &.is-style-half-image-right,
+    &.is-style-third-image-right,
+    &.is-style-quarter-image-right {
+        .image-content__columns.wp-block-columns {
+            @include media-above("md") {
+                flex-direction: row-reverse;
+            }
+        }
+    }
+
+    // Third image: 33% image / 67% content
+    &.is-style-third-image-left,
+    &.is-style-third-image-right {
+        .image-content__image.wp-block-column {
+            @include media-above("md") {
+                flex: 0 0 33.33% !important;
+            }
+        }
+        .image-content__content.wp-block-column {
+            @include media-above("md") {
+                flex: 0 0 calc(66.67% - #{$space-80}) !important;
+            }
+        }
+    }
+
+    // Quarter image: 25% image / 75% content
+    &.is-style-quarter-image-left,
+    &.is-style-quarter-image-right {
+        .image-content__image.wp-block-column {
+            @include media-above("md") {
+                flex: 0 0 25% !important;
+            }
+        }
+        .image-content__content.wp-block-column {
+            @include media-above("md") {
+                flex: 0 0 calc(75% - #{$space-80}) !important;
+            }
+        }
+    }
+
+    &.has-background {
+        padding: $space-64 0;
+    }
+    &:last-child {
+        margin-bottom: $space-32 !important;
+    }
+}
+
+.image-content__image.wp-block-column {
+    padding: 0;
+
+    .wp-block-image {
+        img {
+            display: block;
+            width: 100%;
+            height: auto;
+            object-fit: contain;
+        }
+    }
+}
+
+.image-content__content.wp-block-column {
+    padding-top: $space-24;
+    @include media-above("md") {
+        padding-top: 0;
+    }
+
+    .wp-block-buttons {
+        margin-block-start: $space-24;
+        gap: $space-16;
+    }
+}
+
+.wp-block-heading + .aviatrix-block--image-content{
+    margin-top: 0 !important;
+}
