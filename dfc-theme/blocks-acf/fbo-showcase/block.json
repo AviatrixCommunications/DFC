@@ -1,0 +1,18 @@
+{
+    "name": "acf/fbo-showcase",
+    "title": "FBO Showcase",
+    "description": "Full-width dark section with heading and two-image collage. Used for the Executive FBO area on the homepage.",
+    "category": "aviatrix-blocks",
+    "icon": "images-alt2",
+    "keywords": ["fbo", "showcase", "images", "collage"],
+    "acf": {
+        "mode": "preview",
+        "renderTemplate": "fbo-showcase.php"
+    },
+    "supports": {
+        "align": ["full"],
+        "anchor": true,
+        "jsx": true
+    },
+    "style": "file:./style.css"
+}

@@ -655,9 +655,15 @@
    hero image can extend behind the fixed nav (top 96px hidden,
    rest visible). Pages without a hero still start below the nav. */
 
+/* Non-homepage pages: pad top so content sits below fixed nav */
 .main {
     margin-top: 0 !important;
     padding-top: 96px;
+}
+
+/* Homepage: no top padding — hero extends behind nav via front-page.scss */
+body.home .main {
+    padding-top: 0 !important;
 }
 
 /* Pull the page-header block up into the padding so hero sits behind nav */
@@ -944,4 +950,37 @@ html, body {
         transition-duration: 0s !important;
         animation-duration: 0s !important;
     }
+}
+
+/* ── 18. FOOTER CONTACT TIGHTENING ─────────────────────────── */
+/* Figma: 42px line-height rows, no margins between contact items */
+
+.footer__contact p {
+    margin: 0 !important;
+    padding: 0;
+    line-height: 42px;
+}
+
+/* ── 19. WEATHER/FUEL/SERVICES BAR — COLOR FIXES ──────────── */
+/* Global h3 { color: black } overrides parent color inheritance.
+   Force the correct text colors for each column. */
+
+.info-bar__col--fuel .info-bar__title,
+.info-bar__col--fuel .info-bar__fuel-price,
+.info-bar__col--fuel .info-bar__fuel-prices {
+    color: #fff !important;
+}
+
+.info-bar__col--services .info-bar__title,
+.info-bar__col--services .info-bar__desc {
+    color: #000;
+}
+
+/* ── 20. SERVICES TABS — BUTTON WIDTH FIX ─────────────────── */
+/* CTA button inside tab panels should be content-width, not full */
+
+.services-tabs__content .button {
+    display: inline-flex !important;
+    width: auto !important;
+    align-self: flex-start;
 }

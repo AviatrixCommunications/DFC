@@ -1,0 +1,98 @@
+@use '../../sass/settings/variables' as *;
+@use '../../sass/settings/mixins' as *;
+
+.aviatrix-block--fbo-showcase {
+  position: relative;
+  background-color: $hex-black;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  padding: clamp(60px, 7vw, 96px) 0 clamp(60px, 7vw, 80px);
+
+  .fbo-showcase__overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(180deg, rgba(0, 0, 0, 0.85) 0%, rgba(40, 40, 40, 0.75) 100%);
+    pointer-events: none;
+  }
+
+  .fbo-showcase__inner {
+    position: relative;
+    z-index: 1;
+  }
+
+  .fbo-showcase__heading {
+    text-align: center;
+    margin-bottom: clamp(32px, 4vw, 60px);
+  }
+
+  // Heading typography — matches Figma H2 token, white on dark bg
+  h2 {
+    font-family: var(#{$font-heading-var});
+    font-size: $mobile-h2;
+    font-weight: 500;
+    color: $hex-white;
+    line-height: $line-height-h2;
+    margin: 0;
+
+    @include breakpoint(md) {
+      font-size: $h2;
+    }
+  }
+
+  // ---------- Image collage ----------
+  .fbo-showcase__images {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 24px;
+
+    @include breakpoint(md) {
+      // Figma: large 784px, small 385px → ~67% / 33%
+      grid-template-columns: 67fr 33fr;
+      gap: 32px;
+      align-items: stretch;
+    }
+  }
+
+  .fbo-showcase__image-large,
+  .fbo-showcase__image-small {
+    overflow: hidden;
+
+    img {
+      display: block;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+  }
+
+  .fbo-showcase__image-large {
+    // Desktop: landscape ratio matching Figma 784×416
+    @include breakpoint(md) {
+      aspect-ratio: 784 / 416;
+    }
+  }
+
+  .fbo-showcase__image-small {
+    // Mobile: keep reasonable height
+    aspect-ratio: 385 / 414;
+
+    @include breakpoint(md) {
+      aspect-ratio: auto; // stretch to match large image height
+    }
+  }
+
+  // ---------- Editor placeholder ----------
+  .fbo-showcase__placeholder {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+    min-height: 200px;
+    background: rgba(255, 255, 255, 0.08);
+    color: rgba(255, 255, 255, 0.5);
+    font-size: $text-14;
+    border: 1px dashed rgba(255, 255, 255, 0.2);
+  }
+}

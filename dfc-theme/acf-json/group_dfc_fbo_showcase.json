@@ -1,0 +1,35 @@
+{
+    "key": "group_dfc_fbo_showcase",
+    "title": "FBO Showcase",
+    "fields": [
+        {
+            "key": "field_dfc_fbo_bg_image",
+            "label": "Background Image",
+            "name": "background_image",
+            "type": "image",
+            "return_format": "array",
+            "preview_size": "medium",
+            "instructions": "Optional dark background image. Falls back to solid black with gradient overlay."
+        },
+        {
+            "key": "field_dfc_fbo_image_large",
+            "label": "Large Image",
+            "name": "image_large",
+            "type": "image",
+            "return_format": "array",
+            "preview_size": "medium",
+            "instructions": "Primary image (left side). Recommended: 784×416 or similar landscape ratio."
+        },
+        {
+            "key": "field_dfc_fbo_image_small",
+            "label": "Small Image",
+            "name": "image_small",
+            "type": "image",
+            "return_format": "array",
+            "preview_size": "medium",
+            "instructions": "Secondary image (right side). Recommended: ~385×414 or similar portrait/square ratio."
+        }
+    ],
+    "location": [[{ "param": "block", "operator": "==", "value": "acf/fbo-showcase" }]],
+    "active": true
+}

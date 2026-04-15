@@ -3,11 +3,13 @@
  * Services Tabs Block
  *
  * Two-tab toggle with image + content. Used on homepage for Aircraft/Concierge services.
- * ACF fields: tabs (repeater) with tab_label, tab_image, tab_content (inner blocks)
+ * ACF fields: decorative_image (optional), tabs (repeater) with tab_label, tab_image, tab_content
  */
 
 $tabs = get_field('service_tabs');
 if (!$tabs) $tabs = [];
+
+$deco_image = get_field('decorative_image');
 
 $base_class = 'aviatrix-block aviatrix-block--services-tabs';
 $attrs = get_block_wrapper_attributes(['class' => $base_class]);
@@ -20,6 +22,11 @@ $template = [
 
 <?php if ($is_preview) : ?>
     <section <?php echo $attrs; ?>>
+        <?php if ( $deco_image ) : ?>
+            <div class="services-tabs__deco" aria-hidden="true">
+                <img src="<?php echo esc_url( $deco_image['url'] ); ?>" alt="" role="presentation" loading="lazy" />
+            </div>
+        <?php endif; ?>
         <div class="services-tabs__intro">
             <InnerBlocks template="<?php echo esc_attr(wp_json_encode($template)); ?>" />
         </div>
@@ -30,6 +37,13 @@ $template = [
         // Unique prefix per block instance to avoid ID collisions
         $uid = 'st-' . ( $block['id'] ?? wp_unique_id( 'services-tabs-' ) );
         ?>
+
+        <?php if ( $deco_image ) : ?>
+            <div class="services-tabs__deco" aria-hidden="true">
+                <img src="<?php echo esc_url( $deco_image['url'] ); ?>" alt="" role="presentation" loading="lazy" />
+            </div>
+        <?php endif; ?>
+
         <div class="services-tabs__intro js-fadein-up">
             <?php echo $content; ?>
         </div>

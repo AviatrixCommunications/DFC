@@ -28,13 +28,16 @@ $attrs = get_block_wrapper_attributes( [ 'class' => $base_class ] );
         <!-- Column 1: Weather -->
         <div class="info-bar__col info-bar__col--weather weather-widget" aria-label="Current airport weather">
             <div class="weather-widget__badge">
-                <span class="weather-widget__icon" aria-hidden="true">
-                    <svg viewBox="0 0 24 24" fill="currentColor" width="24" height="24"><circle cx="12" cy="12" r="5"/></svg>
+                <span class="weather-widget__badge-icon" aria-hidden="true">
+                    <svg viewBox="0 0 24 24" fill="currentColor" width="20" height="20"><path d="M21 16v-2l-8-5V3.5c0-.83-.67-1.5-1.5-1.5S10 2.67 10 3.5V9l-8 5v2l8-2.5V19l-2 1.5V22l3.5-1 3.5 1v-1.5L13 19v-5.5l8 2.5z"/></svg>
                 </span>
                 <span class="weather-widget__label">DuPage Airport Weather</span>
             </div>
             <div class="weather-widget__data">
                 <span class="weather-widget__temp" aria-label="Temperature">--°F</span>
+                <span class="weather-widget__icon" aria-hidden="true">
+                    <svg viewBox="0 0 24 24" fill="currentColor" width="41" height="41"><circle cx="12" cy="12" r="5"/></svg>
+                </span>
                 <span class="weather-widget__condition">Loading...</span>
             </div>
             <div class="weather-widget__meta">

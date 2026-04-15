@@ -3,6 +3,15 @@
     "title": "Services Tabs",
     "fields": [
         {
+            "key": "field_dfc_st_deco_image",
+            "label": "Decorative Background Image",
+            "name": "decorative_image",
+            "type": "image",
+            "return_format": "array",
+            "preview_size": "medium",
+            "instructions": "Optional half-plane silhouette that peeks in from the right edge. SVG or PNG. Purely decorative — hidden on mobile."
+        },
+        {
             "key": "field_dfc_service_tabs",
             "label": "Tabs",
             "name": "service_tabs",
