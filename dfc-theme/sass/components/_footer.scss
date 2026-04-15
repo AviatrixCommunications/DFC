@@ -45,22 +45,27 @@
   &__contact {
     color: $hex-white;
 
+    // Each contact row: label + value on same line, 42px tall, no margins
     p {
-      margin-bottom: 0;
+      margin: 0 !important; // Override global p margin-bottom
+      padding: 0;
       display: flex;
       gap: 8px;
       align-items: center;
       line-height: 42px;
+      font-size: $text-16;
     }
 
     strong {
       font-weight: 600;
       white-space: nowrap;
+      line-height: 24px;
     }
 
     a {
       color: $hex-white;
       text-decoration: underline;
+      line-height: 42px;
 
       &:hover {
         text-decoration: none;

@@ -37,5 +37,6 @@
 @use 'components/wrapper';
 @use 'components/content';
 @use 'components/alert-banner';
+@use 'components/front-page';
 // ACF block styles are co-located with their blocks in blocks-acf/*/style.scss
 // and loaded per-page via block.json "style" field.
