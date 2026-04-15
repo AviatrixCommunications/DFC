@@ -1,8 +1,0 @@
-@use '../settings/variables' as *;
-@use '../settings/mixins' as *;
-
-@each $name, $color in $colors {
-  .u-color-#{$name} {
-    color: $color;
-  }
-}
