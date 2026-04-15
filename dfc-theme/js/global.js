@@ -17,6 +17,7 @@ import './modules/services-tabs';
 import './modules/weather-widget';
 import './modules/hero-slider';
 import './modules/fuel-calculator';
+import './modules/airplane-parallax';
 
 // Initialize DAA-ported modules that export init functions
 initMobileNav();

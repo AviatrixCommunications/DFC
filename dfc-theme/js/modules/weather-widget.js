@@ -3,7 +3,9 @@
  *
  * Fetches weather data from the cached REST endpoint (Weatherbit.io)
  * and renders it in the homepage weather bar.
- * Client-side fetch keeps WP Engine page cache intact.
+ *
+ * Icons: Basmilius Meteocons — outlined, animated SVGs.
+ * https://github.com/basmilius/weather-icons
  */
 
 (function () {
@@ -32,39 +34,66 @@
             if (feelsEl) feelsEl.textContent = 'Feels like ' + (data.feels_like || '--');
             if (dateEl)  dateEl.textContent  = data.date || '';
 
-            // Weatherbit icon mapping
             if (iconEl && data.icon) {
-                iconEl.innerHTML = getWeatherIcon(data.icon);
+                var iconName = mapWeatherbitToMeteocon(data.icon);
+                var iconUrl = 'https://basmilius.github.io/weather-icons/production/line/svg/' + iconName + '.svg';
+                iconEl.innerHTML = '<img src="' + iconUrl + '" alt="" width="56" height="56" style="display:block;" />';
             }
 
             widget.classList.add('is-loaded');
         })
         .catch(function () {
-            // Fail silently — widget stays in loading/placeholder state
             if (widget) widget.classList.add('is-unavailable');
         });
 
     /**
-     * Simple weather icon mapping.
-     * Returns an SVG string for common Weatherbit icon codes.
+     * Map Weatherbit icon codes to Basmilius Meteocon names.
+     * https://www.weatherbit.io/api/codes
      */
-    function getWeatherIcon(code) {
-        // Sun icons
-        if (code === 'c01d') return '<svg aria-hidden="true" viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>';
-        // Moon icon (clear night)
-        if (code === 'c01n') return '<svg aria-hidden="true" viewBox="0 0 24 24" fill="currentColor"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>';
-        // Partly cloudy
-        if (code.startsWith('c02') || code.startsWith('c03')) return '<svg aria-hidden="true" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2v2M4.93 4.93l1.41 1.41M20 12h2M17.66 17.66l1.41 1.41M2 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41M12 6a6 6 0 0 0-5.77 4.41A5 5 0 1 0 7 20h11a4 4 0 1 0-.68-7.94A6 6 0 0 0 12 6z"/></svg>';
-        // Overcast / cloudy
-        if (code.startsWith('c04')) return '<svg aria-hidden="true" viewBox="0 0 24 24" fill="currentColor"><path d="M18 10h-1.26A8 8 0 1 0 9 20h9a5 5 0 0 0 0-10z"/></svg>';
-        // Rain
-        if (code.startsWith('r') || code.startsWith('d')) return '<svg aria-hidden="true" viewBox="0 0 24 24" fill="currentColor"><path d="M18 10h-1.26A8 8 0 1 0 9 20h9a5 5 0 0 0 0-10z"/><line x1="8" y1="21" x2="8" y2="23" stroke="currentColor" stroke-width="2"/><line x1="12" y1="21" x2="12" y2="23" stroke="currentColor" stroke-width="2"/><line x1="16" y1="21" x2="16" y2="23" stroke="currentColor" stroke-width="2"/></svg>';
-        // Snow
-        if (code.startsWith('s')) return '<svg aria-hidden="true" viewBox="0 0 24 24" fill="currentColor"><path d="M18 10h-1.26A8 8 0 1 0 9 20h9a5 5 0 0 0 0-10z"/><path d="M8 22l1-2M12 22l1-2M16 22l1-2" stroke="currentColor" stroke-width="2"/></svg>';
-        // Thunderstorm
-        if (code.startsWith('t')) return '<svg aria-hidden="true" viewBox="0 0 24 24" fill="currentColor"><path d="M18 10h-1.26A8 8 0 1 0 9 20h9a5 5 0 0 0 0-10z"/><polyline points="13,16 11,20 15,20 13,24" stroke="currentColor" stroke-width="2" fill="none"/></svg>';
-        // Default: cloud
-        return '<svg aria-hidden="true" viewBox="0 0 24 24" fill="currentColor"><path d="M18 10h-1.26A8 8 0 1 0 9 20h9a5 5 0 0 0 0-10z"/></svg>';
+    function mapWeatherbitToMeteocon(code) {
+        var map = {
+            // Clear
+            'c01d': 'clear-day',
+            'c01n': 'clear-night',
+            // Few clouds
+            'c02d': 'partly-cloudy-day',
+            'c02n': 'partly-cloudy-night',
+            // Scattered clouds
+            'c03d': 'partly-cloudy-day',
+            'c03n': 'partly-cloudy-night',
+            // Overcast
+            'c04d': 'overcast-day',
+            'c04n': 'overcast-night',
+            // Drizzle
+            'd01d': 'partly-cloudy-day-drizzle', 'd01n': 'partly-cloudy-night-drizzle',
+            'd02d': 'drizzle',                   'd02n': 'drizzle',
+            'd03d': 'drizzle',                   'd03n': 'drizzle',
+            // Rain
+            'r01d': 'partly-cloudy-day-rain',    'r01n': 'partly-cloudy-night-rain',
+            'r02d': 'rain',                      'r02n': 'rain',
+            'r03d': 'extreme-rain',              'r03n': 'extreme-rain',
+            // Snow
+            's01d': 'partly-cloudy-day-snow',    's01n': 'partly-cloudy-night-snow',
+            's02d': 'sleet',                     's02n': 'sleet',
+            's03d': 'snow',                      's03n': 'snow',
+            's04d': 'extreme-sleet',             's04n': 'extreme-sleet',
+            's05d': 'extreme-snow',              's05n': 'extreme-snow',
+            's06d': 'snow',                      's06n': 'snow',
+            // Thunderstorm
+            't01d': 'thunderstorms-day',         't01n': 'thunderstorms-night',
+            't02d': 'thunderstorms-day-rain',    't02n': 'thunderstorms-night-rain',
+            't03d': 'thunderstorms-day-extreme', 't03n': 'thunderstorms-night-extreme',
+            't04d': 'thunderstorms-rain',        't04n': 'thunderstorms-rain',
+            't05d': 'thunderstorms',             't05n': 'thunderstorms',
+            // Atmosphere (mist, fog, haze, smoke)
+            'a01d': 'mist',     'a01n': 'mist',
+            'a02d': 'haze-day', 'a02n': 'haze-night',
+            'a03d': 'haze-day', 'a03n': 'haze-night',
+            'a04d': 'fog-day',  'a04n': 'fog-night',
+            'a05d': 'fog',      'a05n': 'fog',
+            'a06d': 'fog',      'a06n': 'fog',
+        };
+        return map[code] || 'not-available';
     }
 
 })();

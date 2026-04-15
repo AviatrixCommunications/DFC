@@ -1,7 +1,6 @@
 const path = require('path');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const BrowserSyncPlugin = require('browser-sync-webpack-plugin');
-const { WebpackManifestPlugin } = require('webpack-manifest-plugin');
 const prefixwrap = require('postcss-prefixwrap');
 
 module.exports = {
@@ -13,9 +12,8 @@ module.exports = {
   },
   output: {
     path: path.resolve(__dirname, 'dist'),
-    filename: 'js/[name].[contenthash].js',
+    filename: 'js/[name].js',
     assetModuleFilename: 'assets/[name][ext][query]',
-    clean: true,
   },
   module: {
     rules: [
@@ -96,12 +94,7 @@ module.exports = {
 
   plugins: [
     new MiniCssExtractPlugin({
-      filename: 'css/[name].[contenthash].css', 
-    }),
-    new WebpackManifestPlugin({
-      fileName: 'manifest.json',
-      publicPath: '',
-      writeToFileEmit: true,
+      filename: 'css/[name].css', 
     }),
     new BrowserSyncPlugin(
       {
