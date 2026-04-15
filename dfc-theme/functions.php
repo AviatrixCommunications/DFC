@@ -60,35 +60,54 @@ function get_component( $slug, array $args = array(), $output = true ) {
 remove_theme_support( 'block-templates' );
 
 // ── Scripts and Styles ────────────────────────────────────────
-function dfc_get_manifest() {
-    static $manifest = null;
-    if ( $manifest !== null ) return $manifest;
 
-    $dist_path = get_template_directory() . '/dist/manifest.json';
-    if ( ! file_exists( $dist_path ) ) {
-        $manifest = false;
-        return $manifest;
+/**
+ * Resolve a dist asset path.
+ * Checks for the plain filename first (e.g. style.css, global.js).
+ * Falls back to the legacy manifest.json lookup for hashed filenames.
+ */
+function dfc_resolve_dist_asset( $key, $plain_path ) {
+    $dist      = get_template_directory() . '/dist';
+    $dist_uri  = get_template_directory_uri() . '/dist';
+    $full_path = $dist . '/' . $plain_path;
+
+    // Prefer plain filename (no hash)
+    if ( file_exists( $full_path ) ) {
+        return [
+            'url' => $dist_uri . '/' . $plain_path,
+            'ver' => filemtime( $full_path ),
+        ];
     }
 
-    $manifest = json_decode( file_get_contents( $dist_path ), true );
-    return $manifest;
+    // Fall back to manifest (legacy hashed filenames)
+    static $manifest = null;
+    if ( $manifest === null ) {
+        $manifest_path = $dist . '/manifest.json';
+        $manifest = file_exists( $manifest_path )
+            ? json_decode( file_get_contents( $manifest_path ), true )
+            : false;
+    }
+    if ( $manifest && isset( $manifest[ $key ] ) ) {
+        return [
+            'url' => $dist_uri . '/' . $manifest[ $key ],
+            'ver' => null,
+        ];
+    }
+
+    return false;
 }
 
 function dfc_enqueue_assets() {
-    $manifest = dfc_get_manifest();
-
-    if ( ! $manifest ) {
-        wp_enqueue_style( 'dfc-style', get_template_directory_uri() . '/dist/css/style.css', [], null );
-        wp_enqueue_script( 'dfc-script', get_template_directory_uri() . '/dist/js/global.js', [], null, true );
-        return;
+    // Frontend CSS
+    $css = dfc_resolve_dist_asset( 'style.css', 'css/style.css' );
+    if ( $css ) {
+        wp_enqueue_style( 'dfc-style', $css['url'], [], $css['ver'] );
     }
 
-    if ( isset( $manifest['style.css'] ) ) {
-        wp_enqueue_style( 'dfc-style', get_template_directory_uri() . '/dist/' . $manifest['style.css'], [], null );
-    }
-
-    if ( isset( $manifest['global.js'] ) ) {
-        wp_enqueue_script( 'dfc-script', get_template_directory_uri() . '/dist/' . $manifest['global.js'], [], null, true );
+    // Frontend JS
+    $js = dfc_resolve_dist_asset( 'global.js', 'js/global.js' );
+    if ( $js ) {
+        wp_enqueue_script( 'dfc-script', $js['url'], [], $js['ver'], true );
 
         // Pass search config + fuel quick-look data to JS
         $fuel_data = [];
@@ -153,15 +172,13 @@ add_action( 'wp_enqueue_scripts', 'dfc_localize_scripts' );
 
 // ── Editor assets ─────────────────────────────────────────────
 function dfc_enqueue_block_editor_assets() {
-    $manifest = dfc_get_manifest();
-    if ( ! $manifest ) return;
-
-    if ( isset( $manifest['editor-style.css'] ) ) {
+    $editor_css = dfc_resolve_dist_asset( 'editor-style.css', 'css/editor-style.css' );
+    if ( $editor_css ) {
         wp_enqueue_style(
             'dfc-editor-style',
-            get_template_directory_uri() . '/dist/' . $manifest['editor-style.css'],
+            $editor_css['url'],
             [],
-            null
+            $editor_css['ver']
         );
     }
 
