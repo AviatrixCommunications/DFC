@@ -1,7 +1,7 @@
 {
   "global.js": "js/global.42c2b1066a9a2e81cf42.js",
   "style.js": "js/style.31d6cfe0d16ae931b73c.js",
-  "style.css": "css/style.0cd0595152e35f169488.css",
+  "style.css": "css/style.c59d8a7817391698c58d.css",
   "editor-style.js": "js/editor-style.31d6cfe0d16ae931b73c.js",
   "editor-style.css": "css/editor-style.f2668e3a2bd2d957b1a4.css",
   "images/caret-down-white.svg": "images/caret-down-white.svg",
@@ -19,6 +19,6 @@
   "fonts/open-sans-v44-latin-italic.woff2": "fonts/open-sans-v44-latin-italic.woff2",
   "fonts/open-sans-v44-latin-regular.woff2": "fonts/open-sans-v44-latin-regular.woff2",
   "global.js.map": "js/global.42c2b1066a9a2e81cf42.js.map",
-  "style.css.map": "css/style.0cd0595152e35f169488.css.map",
+  "style.css.map": "css/style.c59d8a7817391698c58d.css.map",
   "editor-style.css.map": "css/editor-style.f2668e3a2bd2d957b1a4.css.map"
 }
