@@ -984,3 +984,471 @@ html, body {
     width: auto !important;
     align-self: flex-start;
 }
+
+/* ============================================================
+   21. INFO BAR — COMPACT SPACING (Figma match)
+   ============================================================ */
+
+.info-bar__col {
+    padding: 14px 38px 16px !important;
+    justify-content: flex-start !important;
+    gap: 0 !important;
+}
+
+@media screen and (max-width: 1023px) {
+    .info-bar__col {
+        padding: 14px 24px 16px !important;
+    }
+}
+
+/* Row 1: Titles */
+.info-bar__title {
+    margin: 0 !important;
+    padding: 0 !important;
+    line-height: 32px !important;
+}
+
+/* Row 2: Content — 12px below title */
+.info-bar__fuel-prices {
+    margin: 12px 0 0 !important;
+    padding: 0 !important;
+}
+
+.info-bar__fuel-price {
+    margin: 0 !important;
+}
+
+.info-bar__desc {
+    margin: 10px 0 0 !important;
+    padding: 0 !important;
+}
+
+/* Row 3: Links — auto push to bottom for alignment */
+.info-bar__link {
+    margin-top: auto !important;
+    display: block !important;
+    padding-top: 4px !important;
+}
+
+/* ── 21b. WEATHER BOX — MATCH PADDING WITH OTHER BOXES ───── */
+
+.weather-widget.info-bar__col--weather {
+    padding: 10px 24px 12px !important;
+}
+
+@media screen and (max-width: 1023px) {
+    .weather-widget.info-bar__col--weather {
+        padding: 10px 24px 12px !important;
+    }
+}
+
+/* Badge — minimal margin */
+.weather-widget__badge {
+    margin: 0 0 2px !important;
+}
+
+/* Data row */
+.weather-widget__data {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+    gap: 8px !important;
+    margin: 0 !important;
+    padding: 0 !important;
+}
+
+.weather-widget__icon-condition {
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: flex-end !important;
+    gap: 0 !important;
+}
+
+.weather-widget__data > .weather-widget__icon {
+    flex-shrink: 0;
+}
+
+.weather-widget__data > .weather-widget__condition {
+    text-align: right;
+}
+
+/* Meta row — tight to data, pushed to bottom */
+.weather-widget__meta {
+    display: flex !important;
+    justify-content: space-between !important;
+    align-items: baseline !important;
+    gap: 8px !important;
+    margin-top: auto !important;
+    padding-top: 2px !important;
+}
+
+.weather-widget__date {
+    text-align: right !important;
+}
+
+/* ============================================================
+   22. SERVICES TABS — CENTERED TABS + SPACING FIX
+   ============================================================
+   Tabs centered below intro. Content vertically centered
+   with image. Airplane text overlap prevented.
+   ============================================================ */
+
+/* Body wrapper: no grid, just centered container */
+.services-tabs__body {
+    max-width: 1200px !important;
+    margin: 0 auto !important;
+    padding: 0 24px !important;
+    display: block !important;
+}
+
+/* Tab controls: centered, below intro text */
+.aviatrix-block--services-tabs .services-tabs__controls {
+    display: flex !important;
+    justify-content: center !important;
+    margin-bottom: 32px !important;
+    grid-column: unset !important;
+    grid-row: unset !important;
+}
+
+/* Panels: two-column layout */
+@media screen and (min-width: 782px) {
+    .aviatrix-block--services-tabs .services-tabs__panel {
+        display: grid !important;
+        grid-template-columns: 1fr 1fr !important;
+        gap: 40px !important;
+        align-items: center !important;
+        grid-column: unset !important;
+        grid-row: unset !important;
+    }
+}
+
+@media screen and (max-width: 781px) {
+    .aviatrix-block--services-tabs .services-tabs__panel {
+        display: flex !important;
+        flex-direction: column !important;
+        gap: 24px !important;
+    }
+}
+
+.services-tabs__panel[hidden] {
+    display: none !important;
+}
+
+/* Content column: gap between text group and CTA */
+.services-tabs__content {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 28px !important;
+}
+
+/* H3 to paragraph: tight 8px gap */
+.services-tabs__text-group {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 8px !important;
+}
+
+.services-tabs__content h3 {
+    margin: 0 0 8px !important;
+}
+
+.services-tabs__text-group h3 {
+    margin: 0 !important;
+}
+
+/* Prevent airplane tail from overlapping text */
+@media screen and (min-width: 1140px) {
+    .services-tabs__content {
+        padding-right: 100px !important;
+    }
+}
+
+@media screen and (min-width: 782px) and (max-width: 1139px) {
+    .services-tabs__content {
+        padding-right: 24px !important;
+    }
+}
+
+/* Airplane deco positioning */
+.services-tabs__deco {
+    right: 0 !important;
+    overflow: hidden !important;
+}
+
+.services-tabs__deco img {
+    width: 567px !important;
+    max-width: none !important;
+}
+
+/* Smooth parallax transition on the airplane */
+.services-tabs__deco {
+    transition: transform 0.1s linear;
+    will-change: transform;
+}
+
+/* ============================================================
+   23. TAB BUTTONS — DOUBLE BORDER FIX
+   ============================================================
+   Adjacent tabs each have 0.75px border, creating 1.5px in the
+   middle. Collapse by pulling the second tab 1px left.
+   ============================================================ */
+
+.services-tabs__tab + .services-tabs__tab {
+    margin-left: -1px !important;
+}
+
+/* Keep selected tab on top so its border isn't hidden */
+.services-tabs__tab[aria-selected="true"] {
+    position: relative;
+    z-index: 1;
+}
+
+/* ============================================================
+   24. BUTTON HOVER — DARKER RED + UNDERLINE
+   ============================================================
+   Figma shows darker red on hover. We use #D42B36 which is
+   ~10% darker. Black text on #D42B36 = ~4.2:1 contrast.
+   The underline provides a non-color-dependent hover cue
+   for WCAG compliance.
+   ============================================================ */
+
+/* Primary button hover — darker red + underline */
+.button:hover,
+.wp-block-button__link:hover,
+.wp-element-button:hover,
+input[type="submit"]:hover {
+    background-color: #D42B36 !important;
+    color: #000 !important;
+    text-decoration: underline !important;
+}
+
+/* Override the services-tabs white hover — use darker red instead */
+.services-tabs__content .button:hover {
+    background-color: #D42B36 !important;
+    color: #000 !important;
+    text-decoration: underline !important;
+}
+
+/* Split content callout buttons (Customs, Get Directions, etc.) */
+.aviatrix-block--split-content-callout .button:hover,
+.aviatrix-block--full-width-cta .button:hover {
+    background-color: #D42B36 !important;
+    color: #000 !important;
+    text-decoration: underline !important;
+}
+
+/* Secondary button hover — keep distinct */
+.button--secondary:hover,
+.wp-block-button.is-style-outline .wp-block-button__link:hover {
+    background-color: #f1f1f1 !important;
+    color: #000 !important;
+    text-decoration: underline !important;
+}
+
+/* Header CTA hover — keep existing red-to-dark treatment */
+.header__cta:hover {
+    background-color: #D42B36 !important;
+    text-decoration: underline !important;
+}
+
+/* ============================================================
+   25. SEARCH / 404 — MATCH INTERIOR PAGE STYLING
+   ============================================================
+   Zero out .main padding. Sections sit at top. Dark headers
+   use their original padding only — black bg blends with nav.
+   ============================================================ */
+
+body.error404 .main,
+body.search .main,
+body.search-results .main {
+    padding-top: 0 !important;
+}
+
+.error-404,
+.dfc-search-page {
+    margin-top: 0 !important;
+}
+
+/* ── 25b. SEARCH FIELD FOCUS — LIGHTER, BLACK ──────────────── */
+
+.dfc-search-form__field:focus-within {
+    border-color: #000 !important;
+    box-shadow: none !important;
+}
+
+.dfc-search-form__input:focus,
+.dfc-search-form__input:focus-visible {
+    box-shadow: none !important;
+    outline: 1px solid #000 !important;
+    outline-offset: -1px !important;
+}
+
+.dfc-search-page__input:focus,
+.dfc-search-page__input:focus-visible {
+    outline: 1px solid #000 !important;
+    outline-offset: -1px !important;
+    box-shadow: none !important;
+}
+
+/* ── 25c. SEARCH RESULTS — NARROWER CONTAINER ──────────────── */
+
+.dfc-search-page__inner {
+    max-width: 40rem !important;
+}
+
+/* ── 25d. SEARCH RESULT HOVER — UNDERLINE ──────────────────── */
+
+.dfc-search-results__item a:hover .dfc-search-results__item-title {
+    text-decoration: underline;
+}
+
+.dfc-search-page__result-link:hover .dfc-search-page__result-title {
+    text-decoration: underline;
+}
+
+/* ── 25e. 404 SEARCH BUTTON — FLUSH + SAME HEIGHT ─────────── */
+
+.error-404__search-field {
+    display: flex !important;
+    gap: 0 !important;
+    align-items: stretch !important;
+}
+
+.error-404__search-field input[type="search"] {
+    height: auto !important;
+    min-height: 47px !important;
+    flex: 1;
+    border: 1px solid #D3D3D3 !important;
+    border-right: none !important;
+    padding: 8px 16px !important;
+    margin: 0 !important;
+}
+
+.error-404__search-field .button {
+    height: auto !important;
+    min-height: 47px !important;
+    align-self: stretch !important;
+    border-radius: 0 !important;
+    white-space: nowrap;
+    padding: 8px 24px !important;
+    margin: 0 !important;
+}
+
+/* ── 25f. SEARCH PAGE SUBMIT — FILL CONTAINER ─────────────── */
+
+.dfc-search-page__form-wrap {
+    border: 1px solid #D3D3D3 !important;
+    overflow: hidden !important;
+}
+
+.dfc-search-page__submit {
+    width: 3.5rem !important;
+    height: auto !important;
+    align-self: stretch !important;
+    margin: 0 !important;
+}
+
+/* ============================================================
+   26. WEATHER ICON — DARK + SIZED
+   ============================================================
+   Weatherbit CDN icons darkened via CSS filter for visibility
+   on the grey weather box background.
+   ============================================================ */
+
+.weather-widget__icon {
+    width: 56px !important;
+    height: 56px !important;
+}
+
+.weather-widget__icon img {
+    display: block !important;
+    width: 56px !important;
+    height: 56px !important;
+    filter: saturate(0) brightness(0.25) contrast(1.2) !important;
+}
+
+/* ============================================================
+   27. TAB IMAGES — NATURAL SIZING
+   ============================================================
+   Recommended upload size: 1200x800 (3:2 landscape).
+   Images fill their column naturally with object-fit cover.
+   ============================================================ */
+
+.services-tabs__image img {
+    width: 100% !important;
+    height: 100% !important;
+    object-fit: cover !important;
+    aspect-ratio: auto !important;
+    max-height: none !important;
+}
+
+@media screen and (min-width: 782px) {
+    .services-tabs__image {
+        max-height: none !important;
+    }
+}
+
+/* ============================================================
+   28. WCAG — TAB BUTTON HOVER STATES
+   ============================================================
+   Inactive tabs need a visible hover indicator (SC 1.4.13).
+   Active tab shouldn't show pointer cursor since clicking
+   it does nothing.
+   ============================================================ */
+
+/* Inactive tab: visible hover — darken background */
+.services-tabs__tab:hover {
+    background-color: #E8E8E8 !important;
+}
+
+/* Active tab: already selected, no pointer needed */
+.services-tabs__tab[aria-selected="true"] {
+    cursor: default !important;
+}
+
+/* Active tab hover: keep the selected state, no visual change */
+.services-tabs__tab[aria-selected="true"]:hover {
+    background-color: #D3D3D3 !important;
+}
+
+/* ============================================================
+   29. WCAG — LINK UNDERLINE PERSISTENCE (SC 1.4.1)
+   ============================================================
+   Links must keep underline visible at all times. Hover signal
+   uses a background highlight — text color stays untouched so
+   contrast ratio is never degraded.
+   ============================================================ */
+
+/* Info bar links — keep underline, add subtle bg highlight on hover */
+.info-bar__link:hover {
+    text-decoration: underline !important;
+    opacity: 1 !important;
+}
+
+/* Fuel column: white link on black — light highlight */
+.info-bar__col--fuel .info-bar__link:hover {
+    background-color: rgba(255, 255, 255, 0.15) !important;
+    padding: 2px 4px !important;
+    margin: -2px -4px !important;
+}
+
+/* Services column: black link on red — dark highlight */
+.info-bar__col--services .info-bar__link:hover {
+    background-color: rgba(0, 0, 0, 0.1) !important;
+    padding: 2px 4px !important;
+    margin: -2px -4px !important;
+}
+
+/* Footer legal/policy links — keep underline, bg highlight */
+.footer__bottom a:hover {
+    text-decoration: underline !important;
+    color: #000 !important;
+    background-color: rgba(0, 0, 0, 0.08) !important;
+    padding: 2px 4px !important;
+    margin: -2px -4px !important;
+}
+
+/* Footer contact links — keep underline */
+.footer__top a:hover {
+    text-decoration: underline !important;
+}

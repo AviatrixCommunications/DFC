@@ -49,45 +49,49 @@ $template = [
         </div>
 
         <?php if ($tabs) : ?>
-            <div class="services-tabs__controls" role="tablist">
+            <div class="services-tabs__body">
+                <div class="services-tabs__controls" role="tablist">
+                    <?php foreach ($tabs as $i => $tab) : ?>
+                        <button class="services-tabs__tab"
+                                role="tab"
+                                id="<?php echo esc_attr( $uid . '-tab-' . $i ); ?>"
+                                aria-selected="<?php echo $i === 0 ? 'true' : 'false'; ?>"
+                                aria-controls="<?php echo esc_attr( $uid . '-panel-' . $i ); ?>">
+                            <?php echo esc_html($tab['tab_label']); ?>
+                        </button>
+                    <?php endforeach; ?>
+                </div>
+
                 <?php foreach ($tabs as $i => $tab) : ?>
-                    <button class="services-tabs__tab"
-                            role="tab"
-                            id="<?php echo esc_attr( $uid . '-tab-' . $i ); ?>"
-                            aria-selected="<?php echo $i === 0 ? 'true' : 'false'; ?>"
-                            aria-controls="<?php echo esc_attr( $uid . '-panel-' . $i ); ?>">
-                        <?php echo esc_html($tab['tab_label']); ?>
-                    </button>
+                    <div class="services-tabs__panel js-fadein-up"
+                         role="tabpanel"
+                         id="<?php echo esc_attr( $uid . '-panel-' . $i ); ?>"
+                         aria-labelledby="<?php echo esc_attr( $uid . '-tab-' . $i ); ?>"
+                         <?php echo $i !== 0 ? 'hidden' : ''; ?>>
+                        <?php if (!empty($tab['tab_image'])) :
+                            $tab_img_alt = $tab['tab_image']['alt'] ?: ( $tab['tab_image']['title'] ?: '' );
+                        ?>
+                            <div class="services-tabs__image">
+                                <img src="<?php echo esc_url($tab['tab_image']['sizes']['slider-large'] ?? $tab['tab_image']['url']); ?>"
+                                     alt="<?php echo esc_attr($tab_img_alt); ?>"
+                                     loading="lazy" />
+                            </div>
+                        <?php endif; ?>
+                        <div class="services-tabs__content">
+                            <div class="services-tabs__text-group">
+                                <h3><?php echo esc_html($tab['tab_heading'] ?? ''); ?></h3>
+                                <div><?php echo wp_kses_post($tab['tab_content'] ?? ''); ?></div>
+                            </div>
+                            <?php if (!empty($tab['tab_button'])) : ?>
+                                <a class="button" href="<?php echo esc_url($tab['tab_button']['url']); ?>"
+                                   <?php if ($tab['tab_button']['target']) : ?>target="<?php echo esc_attr($tab['tab_button']['target']); ?>" rel="noopener noreferrer"<?php endif; ?>>
+                                    <?php echo esc_html($tab['tab_button']['title']); ?><?php if ( ! empty( $tab['tab_button']['target'] ) && $tab['tab_button']['target'] === '_blank' ) : ?><span class="u-sr-only"> (opens in new tab)</span><?php endif; ?>
+                                </a>
+                            <?php endif; ?>
+                        </div>
+                    </div>
                 <?php endforeach; ?>
             </div>
-
-            <?php foreach ($tabs as $i => $tab) : ?>
-                <div class="services-tabs__panel js-fadein-up"
-                     role="tabpanel"
-                     id="<?php echo esc_attr( $uid . '-panel-' . $i ); ?>"
-                     aria-labelledby="<?php echo esc_attr( $uid . '-tab-' . $i ); ?>"
-                     <?php echo $i !== 0 ? 'hidden' : ''; ?>>
-                    <?php if (!empty($tab['tab_image'])) :
-                        $tab_img_alt = $tab['tab_image']['alt'] ?: ( $tab['tab_image']['title'] ?: '' );
-                    ?>
-                        <div class="services-tabs__image">
-                            <img src="<?php echo esc_url($tab['tab_image']['sizes']['slider-large'] ?? $tab['tab_image']['url']); ?>"
-                                 alt="<?php echo esc_attr($tab_img_alt); ?>"
-                                 loading="lazy" />
-                        </div>
-                    <?php endif; ?>
-                    <div class="services-tabs__content">
-                        <h3><?php echo esc_html($tab['tab_heading'] ?? ''); ?></h3>
-                        <div><?php echo wp_kses_post($tab['tab_content'] ?? ''); ?></div>
-                        <?php if (!empty($tab['tab_button'])) : ?>
-                            <a class="button" href="<?php echo esc_url($tab['tab_button']['url']); ?>"
-                               <?php if ($tab['tab_button']['target']) : ?>target="<?php echo esc_attr($tab['tab_button']['target']); ?>" rel="noopener noreferrer"<?php endif; ?>>
-                                <?php echo esc_html($tab['tab_button']['title']); ?><?php if ( ! empty( $tab['tab_button']['target'] ) && $tab['tab_button']['target'] === '_blank' ) : ?><span class="u-sr-only"> (opens in new tab)</span><?php endif; ?>
-                            </a>
-                        <?php endif; ?>
-                    </div>
-                </div>
-            <?php endforeach; ?>
         <?php endif; ?>
     </section>
 <?php endif; ?>

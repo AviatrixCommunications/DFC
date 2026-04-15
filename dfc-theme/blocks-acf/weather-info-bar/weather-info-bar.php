@@ -35,10 +35,12 @@ $attrs = get_block_wrapper_attributes( [ 'class' => $base_class ] );
             </div>
             <div class="weather-widget__data">
                 <span class="weather-widget__temp" aria-label="Temperature">--°F</span>
-                <span class="weather-widget__icon" aria-hidden="true">
-                    <svg viewBox="0 0 24 24" fill="currentColor" width="41" height="41"><circle cx="12" cy="12" r="5"/></svg>
+                <span class="weather-widget__icon-condition">
+                    <span class="weather-widget__icon" aria-hidden="true">
+                        <svg viewBox="0 0 24 24" fill="currentColor" width="41" height="41"><circle cx="12" cy="12" r="5"/></svg>
+                    </span>
+                    <span class="weather-widget__condition">Loading...</span>
                 </span>
-                <span class="weather-widget__condition">Loading...</span>
             </div>
             <div class="weather-widget__meta">
                 <span class="weather-widget__feels">Feels like --°</span>

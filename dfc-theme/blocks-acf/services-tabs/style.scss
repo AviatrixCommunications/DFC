@@ -3,29 +3,28 @@
 
 .aviatrix-block--services-tabs {
   background-color: $hex-very-light-grey;
-  padding: clamp(48px, 6vw, 96px) 0;
+  padding: clamp(48px, 6vw, 58px) 0 clamp(48px, 6vw, 64px);
   position: relative;
-  overflow: hidden; // Clip the decorative plane at the section edges
+  overflow: hidden;
 
   // ---------- Decorative half-plane silhouette ----------
-  // Positioned at the right edge, partially off-screen.
-  // Hidden on smaller viewports where it would overlap content.
   .services-tabs__deco {
     display: none;
     position: absolute;
-    right: -60px;    // Pushed partially off the right edge
-    top: 37%;        // Roughly 37% down from top per Figma
+    right: 0;
+    top: 37%;
     width: 347px;
     height: 450px;
+    overflow: hidden;
     pointer-events: none;
     z-index: 0;
 
     @include breakpoint(xl) {
-      display: block; // Only show on wide screens (1140px+)
+      display: block;
     }
 
     img {
-      width: 100%;
+      width: 567px;   // Wider than container — gets clipped on the right
       height: 100%;
       object-fit: contain;
       object-position: left center;
@@ -34,16 +33,18 @@
 
   // Keep actual content above the decorative layer
   .services-tabs__intro,
+  .services-tabs__body,
   .services-tabs__controls,
   .services-tabs__panel {
     position: relative;
     z-index: 1;
   }
 
+  // ---------- Intro (H1 + description) ----------
   .services-tabs__intro {
     text-align: center;
     max-width: 1204px;
-    margin: 0 auto clamp(32px, 4vw, 48px);
+    margin: 0 auto clamp(24px, 3vw, 40px);
     padding: 0 24px;
 
     h2 {
@@ -57,11 +58,37 @@
     }
   }
 
+  // ---------- Body wrapper: grid for tabs + panels ----------
+  .services-tabs__body {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 24px;
+
+    @include breakpoint(md) {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      grid-template-rows: auto 1fr;
+      gap: 0 40px;
+    }
+  }
+
+  // ---------- Tab controls ----------
   .services-tabs__controls {
     display: flex;
-    justify-content: center;
     gap: 0;
-    margin-bottom: clamp(32px, 4vw, 48px);
+    margin-bottom: 20px;
+
+    @include breakpoint(md) {
+      grid-column: 2;
+      grid-row: 1;
+      justify-content: flex-start;
+      margin-bottom: 24px;
+    }
+
+    @include breakpoint-down(md) {
+      justify-content: center;
+      margin-bottom: 24px;
+    }
   }
 
   .services-tabs__tab {
@@ -86,17 +113,21 @@
     }
   }
 
+  // ---------- Tab panels ----------
   .services-tabs__panel {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 40px;
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 0 24px;
-    align-items: start;
+    @include breakpoint(md) {
+      grid-column: 1 / -1;
+      grid-row: 2;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 40px;
+      align-items: center; // Vertically center content with image
+    }
 
     @include breakpoint-down(md) {
-      grid-template-columns: 1fr;
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
     }
 
     &[hidden] { display: none; }
@@ -109,16 +140,15 @@
       width: 100%;
       height: 100%;
       object-fit: cover;
-      // Match both tab images to the same aspect ratio
       aspect-ratio: 485 / 540;
     }
   }
 
+  // ---------- Content column ----------
   .services-tabs__content {
     display: flex;
     flex-direction: column;
-    gap: 20px;
-    justify-content: center;
+    gap: 40px; // 40px gap between text group and CTA button per Figma
 
     h3 {
       font-family: var(#{$font-heading-var});
@@ -126,34 +156,41 @@
       font-weight: 500;
       margin: 0;
     }
+  }
 
-    // CTA button — content-width, not full-width
-    .button {
-      display: inline-flex;
-      align-self: flex-start;
-      background: $hex-red;
+  // Text group: title + description with tighter 20px gap
+  .services-tabs__text-group {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  // CTA button — content-width, not full-width
+  .services-tabs__content .button {
+    display: inline-flex;
+    align-self: flex-start;
+    background: $hex-red;
+    color: $hex-black;
+    font-family: var(#{$font-body-var});
+    font-size: $text-15;
+    font-weight: 600;
+    text-decoration: none;
+    padding: 16px 24px;
+    height: 47px;
+    align-items: center;
+    justify-content: center;
+    transition: $base-transition;
+    white-space: nowrap;
+
+    &:hover {
+      background: $hex-white;
       color: $hex-black;
-      font-family: var(#{$font-body-var});
-      font-size: $text-15;
-      font-weight: 600;
-      text-decoration: none;
-      padding: 16px 24px;
-      height: 47px;
-      align-items: center;
-      justify-content: center;
-      transition: $base-transition;
-      white-space: nowrap;
+      text-decoration: underline;
+    }
 
-      &:hover {
-        background: $hex-white;
-        color: $hex-black;
-        text-decoration: underline;
-      }
-
-      &:focus-visible {
-        outline: 2px solid $hex-red;
-        outline-offset: 2px;
-      }
+    &:focus-visible {
+      outline: 2px solid $hex-red;
+      outline-offset: 2px;
     }
   }
 }
