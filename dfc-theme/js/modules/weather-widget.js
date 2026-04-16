@@ -4,8 +4,8 @@
  * Fetches weather data from the cached REST endpoint (Weatherbit.io)
  * and renders it in the homepage weather bar.
  *
- * Icons: Basmilius Meteocons — outlined, animated SVGs.
- * https://github.com/basmilius/weather-icons
+ * Icons: Inline SVGs — flat, outlined, bold stroke style matching Figma.
+ * Zero CDN dependency — all icons are self-contained.
  */
 
 (function () {
@@ -35,9 +35,7 @@
             if (dateEl)  dateEl.textContent  = data.date || '';
 
             if (iconEl && data.icon) {
-                var iconName = mapWeatherbitToMeteocon(data.icon);
-                var iconUrl = 'https://basmilius.github.io/weather-icons/production/line/svg/' + iconName + '.svg';
-                iconEl.innerHTML = '<img src="' + iconUrl + '" alt="" width="56" height="56" style="display:block;" />';
+                iconEl.innerHTML = getWeatherSVG(data.icon);
             }
 
             widget.classList.add('is-loaded');
@@ -47,53 +45,53 @@
         });
 
     /**
-     * Map Weatherbit icon codes to Basmilius Meteocon names.
-     * https://www.weatherbit.io/api/codes
+     * Return inline SVG markup for a Weatherbit icon code.
+     * Flat, outlined, bold stroke — matches Figma "streamline-ultimate:weather-sun-bold".
+     * All 41x41, stroke-based, currentColor.
      */
-    function mapWeatherbitToMeteocon(code) {
+    function getWeatherSVG(code) {
+        var prefix = code.substring(0, 3);
+        var isDay = code.endsWith('d');
         var map = {
-            // Clear
-            'c01d': 'clear-day',
-            'c01n': 'clear-night',
-            // Few clouds
-            'c02d': 'partly-cloudy-day',
-            'c02n': 'partly-cloudy-night',
-            // Scattered clouds
-            'c03d': 'partly-cloudy-day',
-            'c03n': 'partly-cloudy-night',
-            // Overcast
-            'c04d': 'overcast-day',
-            'c04n': 'overcast-night',
-            // Drizzle
-            'd01d': 'partly-cloudy-day-drizzle', 'd01n': 'partly-cloudy-night-drizzle',
-            'd02d': 'drizzle',                   'd02n': 'drizzle',
-            'd03d': 'drizzle',                   'd03n': 'drizzle',
-            // Rain
-            'r01d': 'partly-cloudy-day-rain',    'r01n': 'partly-cloudy-night-rain',
-            'r02d': 'rain',                      'r02n': 'rain',
-            'r03d': 'extreme-rain',              'r03n': 'extreme-rain',
-            // Snow
-            's01d': 'partly-cloudy-day-snow',    's01n': 'partly-cloudy-night-snow',
-            's02d': 'sleet',                     's02n': 'sleet',
-            's03d': 'snow',                      's03n': 'snow',
-            's04d': 'extreme-sleet',             's04n': 'extreme-sleet',
-            's05d': 'extreme-snow',              's05n': 'extreme-snow',
-            's06d': 'snow',                      's06n': 'snow',
-            // Thunderstorm
-            't01d': 'thunderstorms-day',         't01n': 'thunderstorms-night',
-            't02d': 'thunderstorms-day-rain',    't02n': 'thunderstorms-night-rain',
-            't03d': 'thunderstorms-day-extreme', 't03n': 'thunderstorms-night-extreme',
-            't04d': 'thunderstorms-rain',        't04n': 'thunderstorms-rain',
-            't05d': 'thunderstorms',             't05n': 'thunderstorms',
-            // Atmosphere (mist, fog, haze, smoke)
-            'a01d': 'mist',     'a01n': 'mist',
-            'a02d': 'haze-day', 'a02n': 'haze-night',
-            'a03d': 'haze-day', 'a03n': 'haze-night',
-            'a04d': 'fog-day',  'a04n': 'fog-night',
-            'a05d': 'fog',      'a05n': 'fog',
-            'a06d': 'fog',      'a06n': 'fog',
+            'c01': clearSky(isDay),  'c02': partlyCloudy(isDay),
+            'c03': mostlyCloudy(),   'c04': overcast(),
+            'd01': drizzle(),        'd02': drizzle(),  'd03': drizzle(),
+            'r01': rain(),           'r02': rain(),     'r03': heavyRain(),
+            's01': snow(),           's02': sleet(),    's03': snow(),
+            's04': sleet(),          's05': heavySnow(),'s06': snow(),
+            't01': thunderstorm(),   't02': thunderstorm(), 't03': thunderstorm(),
+            't04': thunderstorm(),   't05': thunderstorm(),
+            'a01': mist(),           'a02': haze(),     'a03': haze(),
+            'a04': fog(),            'a05': fog(),      'a06': fog(),
         };
-        return map[code] || 'not-available';
+        return map[prefix] || overcast();
     }
+
+    function w(d) {
+        return '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 41 41" width="41" height="41" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="display:block">' + d + '</svg>';
+    }
+
+    function clearSky(day) {
+        if (!day) return w('<path d="M27 18.5a10 10 0 1 1-10-10 7 7 0 0 0 10 10z"/>');
+        return w('<circle cx="20.5" cy="20.5" r="6"/><line x1="20.5" y1="7" x2="20.5" y2="10"/><line x1="20.5" y1="31" x2="20.5" y2="34"/><line x1="7" y1="20.5" x2="10" y2="20.5"/><line x1="31" y1="20.5" x2="34" y2="20.5"/><line x1="11" y1="11" x2="13.1" y2="13.1"/><line x1="27.9" y1="27.9" x2="30" y2="30"/><line x1="30" y1="11" x2="27.9" y2="13.1"/><line x1="13.1" y1="27.9" x2="11" y2="30"/>');
+    }
+    function partlyCloudy(day) {
+        var top = day
+            ? '<circle cx="26" cy="13" r="5"/><line x1="26" y1="4" x2="26" y2="6"/><line x1="35" y1="13" x2="33" y2="13"/><line x1="32.4" y1="6.6" x2="31" y2="8"/><line x1="19.6" y1="6.6" x2="21" y2="8"/><line x1="32.4" y1="19.4" x2="31" y2="18"/>'
+            : '<path d="M32 12a6 6 0 1 1-6-6 4.2 4.2 0 0 0 6 6z"/>';
+        return w(top + '<path d="M10 33h18a7 7 0 0 0 0-14h-1a8 8 0 1 0-15 4h-2a5 5 0 0 0 0 10z"/>');
+    }
+    function mostlyCloudy() { return w('<path d="M10 33h18a7 7 0 0 0 0-14h-1a8 8 0 1 0-15 4h-2a5 5 0 0 0 0 10z"/><path d="M24 11h6a4 4 0 0 1 0 8" opacity="0.4"/>'); }
+    function overcast() { return w('<path d="M10 33h18a7 7 0 0 0 0-14h-1a8 8 0 1 0-15 4h-2a5 5 0 0 0 0 10z"/>'); }
+    function drizzle() { return w('<path d="M10 27h18a7 7 0 0 0 0-14h-1a8 8 0 1 0-15 4h-2a5 5 0 0 0 0 10z"/><line x1="14" y1="30" x2="14" y2="32"/><line x1="20.5" y1="30" x2="20.5" y2="32"/><line x1="27" y1="30" x2="27" y2="32"/>'); }
+    function rain() { return w('<path d="M10 25h18a7 7 0 0 0 0-14h-1a8 8 0 1 0-15 4h-2a5 5 0 0 0 0 10z"/><line x1="14" y1="28" x2="12" y2="34"/><line x1="20.5" y1="28" x2="18.5" y2="34"/><line x1="27" y1="28" x2="25" y2="34"/>'); }
+    function heavyRain() { return w('<path d="M10 23h18a7 7 0 0 0 0-14h-1a8 8 0 1 0-15 4h-2a5 5 0 0 0 0 10z"/><line x1="12" y1="26" x2="9" y2="35"/><line x1="18" y1="26" x2="15" y2="35"/><line x1="24" y1="26" x2="21" y2="35"/><line x1="30" y1="26" x2="27" y2="35"/>'); }
+    function snow() { return w('<path d="M10 25h18a7 7 0 0 0 0-14h-1a8 8 0 1 0-15 4h-2a5 5 0 0 0 0 10z"/><circle cx="14" cy="30" r="1.2" fill="currentColor" stroke="none"/><circle cx="20.5" cy="32" r="1.2" fill="currentColor" stroke="none"/><circle cx="27" cy="30" r="1.2" fill="currentColor" stroke="none"/><circle cx="17" cy="34" r="1.2" fill="currentColor" stroke="none"/><circle cx="24" cy="35" r="1.2" fill="currentColor" stroke="none"/>'); }
+    function heavySnow() { return w('<path d="M10 23h18a7 7 0 0 0 0-14h-1a8 8 0 1 0-15 4h-2a5 5 0 0 0 0 10z"/><circle cx="12" cy="28" r="1.2" fill="currentColor" stroke="none"/><circle cx="18" cy="30" r="1.2" fill="currentColor" stroke="none"/><circle cx="24" cy="28" r="1.2" fill="currentColor" stroke="none"/><circle cx="30" cy="30" r="1.2" fill="currentColor" stroke="none"/><circle cx="15" cy="33" r="1.2" fill="currentColor" stroke="none"/><circle cx="21" cy="35" r="1.2" fill="currentColor" stroke="none"/><circle cx="27" cy="33" r="1.2" fill="currentColor" stroke="none"/>'); }
+    function sleet() { return w('<path d="M10 25h18a7 7 0 0 0 0-14h-1a8 8 0 1 0-15 4h-2a5 5 0 0 0 0 10z"/><line x1="14" y1="28" x2="12.5" y2="33"/><circle cx="21" cy="31" r="1.2" fill="currentColor" stroke="none"/><line x1="27" y1="28" x2="25.5" y2="33"/><circle cx="17" cy="34" r="1.2" fill="currentColor" stroke="none"/>'); }
+    function thunderstorm() { return w('<path d="M10 23h18a7 7 0 0 0 0-14h-1a8 8 0 1 0-15 4h-2a5 5 0 0 0 0 10z"/><polyline points="19 26 16 32 21 32 18 38"/>'); }
+    function mist() { return w('<path d="M5 14h31"/><path d="M8 20h25"/><path d="M5 26h31"/><path d="M8 32h25"/>'); }
+    function haze() { return w('<circle cx="20.5" cy="14" r="5"/><line x1="20.5" y1="5" x2="20.5" y2="7"/><line x1="29" y1="14" x2="31" y2="14"/><line x1="10" y1="14" x2="12" y2="14"/><path d="M8 24h25"/><path d="M5 30h31"/><path d="M8 36h25"/>'); }
+    function fog() { return w('<path d="M10 20h18a7 7 0 0 0 0-14h-1a8 8 0 1 0-15 4h-2a5 5 0 0 0 0 10z"/><path d="M6 26h29"/><path d="M9 32h23"/><path d="M6 38h29"/>'); }
 
 })();

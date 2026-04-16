@@ -961,247 +961,16 @@ html, body {
     line-height: 42px;
 }
 
-/* ── 19. WEATHER/FUEL/SERVICES BAR — COLOR FIXES ──────────── */
-/* Global h3 { color: black } overrides parent color inheritance.
-   Force the correct text colors for each column. */
-
-.info-bar__col--fuel .info-bar__title,
-.info-bar__col--fuel .info-bar__fuel-price,
-.info-bar__col--fuel .info-bar__fuel-prices {
-    color: #fff !important;
-}
-
-.info-bar__col--services .info-bar__title,
-.info-bar__col--services .info-bar__desc {
-    color: #000;
-}
-
-/* ── 20. SERVICES TABS — BUTTON WIDTH FIX ─────────────────── */
-/* CTA button inside tab panels should be content-width, not full */
-
-.services-tabs__content .button {
-    display: inline-flex !important;
-    width: auto !important;
-    align-self: flex-start;
-}
 
 /* ============================================================
-   21. INFO BAR — COMPACT SPACING (Figma match)
+   19-23. REMOVED — These overrides are now in source SCSS:
+   - Weather/fuel/services color fixes → weather-info-bar/style.scss
+   - Services tabs button width → services-tabs/style.scss
+   - Info bar compact spacing → weather-info-bar/style.scss
+   - Weather box padding → weather-info-bar/style.scss
+   - Services tabs centering → services-tabs/style.scss
+   - Tab border collapse → services-tabs/style.scss
    ============================================================ */
-
-.info-bar__col {
-    padding: 14px 38px 16px !important;
-    justify-content: flex-start !important;
-    gap: 0 !important;
-}
-
-@media screen and (max-width: 1023px) {
-    .info-bar__col {
-        padding: 14px 24px 16px !important;
-    }
-}
-
-/* Row 1: Titles */
-.info-bar__title {
-    margin: 0 !important;
-    padding: 0 !important;
-    line-height: 32px !important;
-}
-
-/* Row 2: Content — 12px below title */
-.info-bar__fuel-prices {
-    margin: 12px 0 0 !important;
-    padding: 0 !important;
-}
-
-.info-bar__fuel-price {
-    margin: 0 !important;
-}
-
-.info-bar__desc {
-    margin: 10px 0 0 !important;
-    padding: 0 !important;
-}
-
-/* Row 3: Links — auto push to bottom for alignment */
-.info-bar__link {
-    margin-top: auto !important;
-    display: block !important;
-    padding-top: 4px !important;
-}
-
-/* ── 21b. WEATHER BOX — MATCH PADDING WITH OTHER BOXES ───── */
-
-.weather-widget.info-bar__col--weather {
-    padding: 10px 24px 12px !important;
-}
-
-@media screen and (max-width: 1023px) {
-    .weather-widget.info-bar__col--weather {
-        padding: 10px 24px 12px !important;
-    }
-}
-
-/* Badge — minimal margin */
-.weather-widget__badge {
-    margin: 0 0 2px !important;
-}
-
-/* Data row */
-.weather-widget__data {
-    display: flex !important;
-    align-items: center !important;
-    justify-content: space-between !important;
-    gap: 8px !important;
-    margin: 0 !important;
-    padding: 0 !important;
-}
-
-.weather-widget__icon-condition {
-    display: flex !important;
-    flex-direction: column !important;
-    align-items: flex-end !important;
-    gap: 0 !important;
-}
-
-.weather-widget__data > .weather-widget__icon {
-    flex-shrink: 0;
-}
-
-.weather-widget__data > .weather-widget__condition {
-    text-align: right;
-}
-
-/* Meta row — tight to data, pushed to bottom */
-.weather-widget__meta {
-    display: flex !important;
-    justify-content: space-between !important;
-    align-items: baseline !important;
-    gap: 8px !important;
-    margin-top: auto !important;
-    padding-top: 2px !important;
-}
-
-.weather-widget__date {
-    text-align: right !important;
-}
-
-/* ============================================================
-   22. SERVICES TABS — CENTERED TABS + SPACING FIX
-   ============================================================
-   Tabs centered below intro. Content vertically centered
-   with image. Airplane text overlap prevented.
-   ============================================================ */
-
-/* Body wrapper: no grid, just centered container */
-.services-tabs__body {
-    max-width: 1200px !important;
-    margin: 0 auto !important;
-    padding: 0 24px !important;
-    display: block !important;
-}
-
-/* Tab controls: centered, below intro text */
-.aviatrix-block--services-tabs .services-tabs__controls {
-    display: flex !important;
-    justify-content: center !important;
-    margin-bottom: 32px !important;
-    grid-column: unset !important;
-    grid-row: unset !important;
-}
-
-/* Panels: two-column layout */
-@media screen and (min-width: 782px) {
-    .aviatrix-block--services-tabs .services-tabs__panel {
-        display: grid !important;
-        grid-template-columns: 1fr 1fr !important;
-        gap: 40px !important;
-        align-items: center !important;
-        grid-column: unset !important;
-        grid-row: unset !important;
-    }
-}
-
-@media screen and (max-width: 781px) {
-    .aviatrix-block--services-tabs .services-tabs__panel {
-        display: flex !important;
-        flex-direction: column !important;
-        gap: 24px !important;
-    }
-}
-
-.services-tabs__panel[hidden] {
-    display: none !important;
-}
-
-/* Content column: gap between text group and CTA */
-.services-tabs__content {
-    display: flex !important;
-    flex-direction: column !important;
-    gap: 28px !important;
-}
-
-/* H3 to paragraph: tight 8px gap */
-.services-tabs__text-group {
-    display: flex !important;
-    flex-direction: column !important;
-    gap: 8px !important;
-}
-
-.services-tabs__content h3 {
-    margin: 0 0 8px !important;
-}
-
-.services-tabs__text-group h3 {
-    margin: 0 !important;
-}
-
-/* Prevent airplane tail from overlapping text */
-@media screen and (min-width: 1140px) {
-    .services-tabs__content {
-        padding-right: 100px !important;
-    }
-}
-
-@media screen and (min-width: 782px) and (max-width: 1139px) {
-    .services-tabs__content {
-        padding-right: 24px !important;
-    }
-}
-
-/* Airplane deco positioning */
-.services-tabs__deco {
-    right: 0 !important;
-    overflow: hidden !important;
-}
-
-.services-tabs__deco img {
-    width: 567px !important;
-    max-width: none !important;
-}
-
-/* Smooth parallax transition on the airplane */
-.services-tabs__deco {
-    transition: transform 0.1s linear;
-    will-change: transform;
-}
-
-/* ============================================================
-   23. TAB BUTTONS — DOUBLE BORDER FIX
-   ============================================================
-   Adjacent tabs each have 0.75px border, creating 1.5px in the
-   middle. Collapse by pulling the second tab 1px left.
-   ============================================================ */
-
-.services-tabs__tab + .services-tabs__tab {
-    margin-left: -1px !important;
-}
-
-/* Keep selected tab on top so its border isn't hidden */
-.services-tabs__tab[aria-selected="true"] {
-    position: relative;
-    z-index: 1;
-}
 
 /* ============================================================
    24. BUTTON HOVER — DARKER RED + UNDERLINE
@@ -1355,16 +1124,17 @@ body.search-results .main {
    on the grey weather box background.
    ============================================================ */
 
+/* Icons are now inline SVGs (no CDN) at 41x41 per Figma.
+   stroke: currentColor inherits the box text color. */
 .weather-widget__icon {
-    width: 56px !important;
-    height: 56px !important;
+    width: 41px !important;
+    height: 41px !important;
 }
 
-.weather-widget__icon img {
+.weather-widget__icon svg {
     display: block !important;
-    width: 56px !important;
-    height: 56px !important;
-    filter: saturate(0) brightness(0.25) contrast(1.2) !important;
+    width: 41px !important;
+    height: 41px !important;
 }
 
 /* ============================================================
@@ -1374,17 +1144,17 @@ body.search-results .main {
    Images fill their column naturally with object-fit cover.
    ============================================================ */
 
+/* Tab images: fill column, cap at 540px tall.
+   Upload portrait (970x1080) for best results, or landscape (1200x800)
+   will work too — just more cropping at top/bottom. */
 .services-tabs__image img {
     width: 100% !important;
-    height: 100% !important;
     object-fit: cover !important;
-    aspect-ratio: auto !important;
-    max-height: none !important;
 }
 
 @media screen and (min-width: 782px) {
-    .services-tabs__image {
-        max-height: none !important;
+    .services-tabs__image img {
+        max-height: 540px !important;
     }
 }
 

@@ -11,7 +11,7 @@
   .services-tabs__deco {
     display: none;
     position: absolute;
-    right: 0;
+    right: -20px;    // Pulled in so more of the tail is visible
     top: 37%;
     width: 347px;
     height: 450px;
@@ -24,7 +24,7 @@
     }
 
     img {
-      width: 567px;   // Wider than container — gets clipped on the right
+      width: 567px;
       height: 100%;
       object-fit: contain;
       object-position: left center;
@@ -76,23 +76,23 @@
   .services-tabs__controls {
     display: flex;
     gap: 0;
-    margin-bottom: 20px;
+    margin-bottom: 16px;
 
     @include breakpoint(md) {
       grid-column: 2;
       grid-row: 1;
       justify-content: flex-start;
-      margin-bottom: 24px;
+      margin-bottom: 20px;
     }
 
     @include breakpoint-down(md) {
       justify-content: center;
-      margin-bottom: 24px;
+      margin-bottom: 20px;
     }
   }
 
   .services-tabs__tab {
-    padding: 24px 28px;
+    padding: 14px 28px;
     font-family: var(#{$font-body-var});
     font-size: $text-16;
     font-weight: 600;
@@ -138,9 +138,18 @@
 
     img {
       width: 100%;
-      height: 100%;
+      height: auto;
       object-fit: cover;
-      aspect-ratio: 485 / 540;
+      // Use a max-height to prevent oversized images, but let natural
+      // proportions breathe. Upload images at roughly 970×1080 (portrait)
+      // or 1200×800 (landscape) — both will look good.
+      max-height: 540px;
+
+      @include breakpoint(md) {
+        // On desktop, fill the column height but cap at 540px
+        height: 100%;
+        max-height: 540px;
+      }
     }
   }
 
@@ -149,6 +158,7 @@
     display: flex;
     flex-direction: column;
     gap: 40px; // 40px gap between text group and CTA button per Figma
+    justify-content: center;
 
     h3 {
       font-family: var(#{$font-heading-var});
