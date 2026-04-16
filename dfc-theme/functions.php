@@ -165,7 +165,7 @@ function dfc_localize_scripts() {
     wp_localize_script( 'dfc-script', 'DFC', array(
         'ajaxurl' => admin_url( 'admin-ajax.php' ),
         'resturl' => get_rest_url(),
-        'themeurl' => get_template_directory_uri(),
+        'themeurl' => trailingslashit( get_template_directory_uri() ),
     ) );
 }
 add_action( 'wp_enqueue_scripts', 'dfc_localize_scripts' );
