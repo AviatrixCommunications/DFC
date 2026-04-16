@@ -49,19 +49,19 @@ $template = [
         </div>
 
         <?php if ($tabs) : ?>
-            <div class="services-tabs__body">
-                <div class="services-tabs__controls" role="tablist">
-                    <?php foreach ($tabs as $i => $tab) : ?>
-                        <button class="services-tabs__tab"
-                                role="tab"
-                                id="<?php echo esc_attr( $uid . '-tab-' . $i ); ?>"
-                                aria-selected="<?php echo $i === 0 ? 'true' : 'false'; ?>"
-                                aria-controls="<?php echo esc_attr( $uid . '-panel-' . $i ); ?>">
-                            <?php echo esc_html($tab['tab_label']); ?>
-                        </button>
-                    <?php endforeach; ?>
-                </div>
+            <div class="services-tabs__controls" role="tablist">
+                <?php foreach ($tabs as $i => $tab) : ?>
+                    <button class="services-tabs__tab"
+                            role="tab"
+                            id="<?php echo esc_attr( $uid . '-tab-' . $i ); ?>"
+                            aria-selected="<?php echo $i === 0 ? 'true' : 'false'; ?>"
+                            aria-controls="<?php echo esc_attr( $uid . '-panel-' . $i ); ?>">
+                        <?php echo esc_html($tab['tab_label']); ?>
+                    </button>
+                <?php endforeach; ?>
+            </div>
 
+            <div class="services-tabs__body">
                 <?php foreach ($tabs as $i => $tab) : ?>
                     <div class="services-tabs__panel js-fadein-up"
                          role="tabpanel"
@@ -70,9 +70,10 @@ $template = [
                          <?php echo $i !== 0 ? 'hidden' : ''; ?>>
                         <?php if (!empty($tab['tab_image'])) :
                             $tab_img_alt = $tab['tab_image']['alt'] ?: ( $tab['tab_image']['title'] ?: '' );
+                            $tab_img_url = $tab['tab_image']['sizes']['large'] ?? $tab['tab_image']['url'];
                         ?>
                             <div class="services-tabs__image">
-                                <img src="<?php echo esc_url($tab['tab_image']['sizes']['slider-large'] ?? $tab['tab_image']['url']); ?>"
+                                <img src="<?php echo esc_url( $tab_img_url ); ?>"
                                      alt="<?php echo esc_attr($tab_img_alt); ?>"
                                      loading="lazy" />
                             </div>

@@ -1,6 +1,14 @@
 @use '../../sass/settings/variables' as *;
 @use '../../sass/settings/mixins' as *;
 
+// ============================================================
+// WEATHER / INFO BAR
+// ============================================================
+// Figma reference: 3 columns × 480 × 160 at 1440px viewport
+// Boxes: grey (#D3D3D3), black (#000), red (#EF3340)
+// Content top: 18px from box top.  Content bottom: ~22px from box bottom.
+// ============================================================
+
 .aviatrix-block--weather-info-bar {
   width: 100%;
 }
@@ -13,10 +21,9 @@
     grid-template-columns: 1fr;
   }
 
+  // ── Individual columns ────────────────────────────────────
   &__col {
-    // Figma: content starts ~17px from top, boxes are 160px total.
-    // flex-start + explicit padding keeps content at the top like Figma.
-    padding: 18px 24px 18px;
+    padding: 18px 24px 22px;
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
@@ -24,8 +31,8 @@
     min-height: 160px;
 
     @include breakpoint-down(lg) {
-      padding: 18px 24px;
-      min-height: auto;
+      min-height: 0;
+      padding: 20px 24px;
     }
   }
 
@@ -44,22 +51,27 @@
     color: $hex-black;
   }
 
-  &__title {
+  // ── Title (Fuel + Services headings) ──────────────────────
+  // Scoped under .info-bar to override :root :where(h3) { margin-top: 32px }
+  // from WordPress theme.json which has (0,1,0) specificity.
+  &__col &__title {
     font-family: var(#{$font-heading-var});
     font-size: $text-24;
     font-weight: 500;
-    line-height: $line-height-h3; // 32px
+    line-height: 1.25;
     margin: 0 0 8px;
     color: inherit;
   }
 
-  &__desc {
+  // ── Description text (Services col) ───────────────────────
+  &__col &__desc {
     font-size: $text-16;
-    line-height: $line-height-body; // 27px
+    line-height: $line-height-body;
     margin: 0 0 8px;
     color: inherit;
   }
 
+  // ── Fuel price row ────────────────────────────────────────
   &__fuel-prices {
     display: flex;
     gap: 24px;
@@ -75,14 +87,14 @@
     color: inherit;
   }
 
+  // ── Links (bottom of each col) ────────────────────────────
+  // No margin-top:auto — content flows naturally within fixed 160px height.
   &__link {
     font-size: $text-16;
     text-decoration: underline;
     transition: opacity 0.15s ease-in-out;
-    margin-top: auto; // Push link to bottom of column
 
     &:hover {
-      // Simple opacity dim — no layout shift, no background jump
       opacity: 0.75;
     }
 
@@ -96,16 +108,21 @@
   &__col--services &__link { color: $hex-black; }
 }
 
-// Weather widget specifics
+// ============================================================
+// WEATHER WIDGET (column 1 internals)
+// ============================================================
+
 .weather-widget {
+
+  // ── Badge pill ────────────────────────────────────────────
   &__badge {
     display: inline-flex;
     align-items: center;
     gap: 8px;
-    margin-bottom: 8px;
+    margin-bottom: 6px;
     background-color: $hex-dark-grey-tone;
     border-radius: 20px;
-    padding: 3px 14px;
+    padding: 2px 14px;
     width: fit-content;
     color: $hex-white;
   }
@@ -127,13 +144,13 @@
     line-height: 1.5;
   }
 
-  // Main data row: temp on left, icon+condition on right
+  // ── Main data row ─────────────────────────────────────────
   &__data {
     display: flex;
     align-items: center;
     justify-content: space-between;
     gap: 12px;
-    margin-bottom: 4px;
+    margin-bottom: 2px;
   }
 
   &__temp {
@@ -142,24 +159,31 @@
     line-height: 1;
   }
 
-  // Icon stacked above condition text, right-aligned
   &__icon-condition {
     display: flex;
     flex-direction: column;
     align-items: flex-end;
-    gap: 2px;
+    gap: 0;
   }
 
+  // Meteocons 128×128 viewBox — 100px container with negative margins
+  // to match Figma visual weight without growing the box.
+  // Note: dfc-fixes.css also sets these with !important.
   &__icon {
     display: flex;
-    width: 48px;
-    height: 48px;
+    width: 100px;
+    height: 100px;
     flex-shrink: 0;
-    color: $hex-black; // Explicit color for SVG currentColor
+    color: $hex-black;
+    margin-top: -35px;
+    margin-bottom: -18px;
 
     svg {
-      width: 100%;
-      height: 100%;
+      // !important overrides width="48" height="48" attributes
+      // set by the webpack-bundled JS (can't change without rebuild)
+      width: 56px !important;
+      height: 56px !important;
+      display: block;
     }
   }
 
@@ -170,6 +194,7 @@
     line-height: 1.25;
   }
 
+  // ── Meta row ──────────────────────────────────────────────
   &__meta {
     display: flex;
     justify-content: space-between;

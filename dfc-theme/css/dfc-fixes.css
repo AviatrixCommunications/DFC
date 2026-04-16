@@ -1124,17 +1124,20 @@ body.search-results .main {
    on the grey weather box background.
    ============================================================ */
 
-/* Icons are now self-hosted Basmilius Meteocons at 48x48.
-   Fetched inline for animation + currentColor inheritance. */
+/* Icons are now Meteocons monochrome at 100x100 (container).
+   Negative margins prevent box growth. CSS controls size;
+   JS no longer sets width/height attributes. */
 .weather-widget__icon {
-    width: 48px !important;
-    height: 48px !important;
+    width: 100px !important;
+    height: 100px !important;
+    margin-top: -35px;
+    margin-bottom: -18px;
 }
 
 .weather-widget__icon svg {
     display: block !important;
-    width: 48px !important;
-    height: 48px !important;
+    width: 100% !important;
+    height: 100% !important;
 }
 
 /* ============================================================

@@ -1,31 +1,38 @@
 @use '../../sass/settings/variables' as *;
 @use '../../sass/settings/mixins' as *;
 
+// ============================================================
+// SERVICES TABS (Homepage "Welcome to DFC" section)
+// ============================================================
+// Figma reference (1440×864 section, bg #F1F1F1):
+//   Intro:    centered, x=117, w=1204, top=58px
+//   Tabs:     x=630, w=389, top=366px (in right column, above heading)
+//   Content:  x=630, w=463, top=484px
+//   Image:    x=117, w=486, h=539 (aspect 486/539)
+//   Airplane: x=1093, w=347, h=450, top=318px (absolutely positioned)
+// ============================================================
+
 .aviatrix-block--services-tabs {
   background-color: $hex-very-light-grey;
-  padding: clamp(48px, 6vw, 58px) 0 clamp(56px, 7vw, 80px); // Extra bottom padding for airplane spacing
+  padding: clamp(48px, 6vw, 58px) 0 clamp(56px, 7vw, 80px);
   position: relative;
   overflow: hidden;
 
   // ---------- Decorative half-plane silhouette ----------
+  // Figma: starts at x=1093 (right edge of viewport), 347×450, top ~37%
   .services-tabs__deco {
     display: none;
     position: absolute;
-    right: 30px;     // Pulled in so more tail is visible
-    top: 35%;
-    width: 400px;    // Wider container to show more of the plane
-    height: 500px;
+    right: 0;        // Flush with section edge (Figma: 1093+347=1440)
+    top: 37%;        // Figma: 318/864 ≈ 36.8%
+    width: 347px;    // Exact Figma width
+    height: 450px;   // Exact Figma height
     overflow: hidden;
     pointer-events: none;
     z-index: 0;
 
-    @include breakpoint(xl) {
+    @media screen and (min-width: 1550px) {
       display: block;
-    }
-
-    // On very wide screens, pull in even more
-    @include breakpoint(xxxl) {
-      right: 60px;
     }
 
     img {
@@ -45,7 +52,8 @@
     z-index: 1;
   }
 
-  // ---------- Intro (H1 + description) ----------
+  // ---------- Intro (H2 + description paragraph) ----------
+  // Figma: centered, 1204px max, 20px gap between heading and text
   .services-tabs__intro {
     text-align: center;
     max-width: 1204px;
@@ -63,42 +71,21 @@
     }
   }
 
-  // ---------- Body wrapper: grid for tabs + panels ----------
+  // ---------- Body wrapper: holds panels only ----------
   .services-tabs__body {
     max-width: 1200px;
     margin: 0 auto;
     padding: 0 24px;
-
-    @include breakpoint(md) {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      grid-template-rows: auto 1fr;
-      gap: 0 40px;
-    }
-
-    // On XL+ screens, cap the right column so text doesn't overlap airplane
-    @include breakpoint(xl) {
-      max-width: 1100px;
-    }
   }
 
-  // ---------- Tab controls ----------
+  // ---------- Tab controls (centered below intro text) ----------
   .services-tabs__controls {
     display: flex;
+    justify-content: center;
     gap: 0;
-    margin-bottom: 16px;
-
-    @include breakpoint(md) {
-      grid-column: 2;
-      grid-row: 1;
-      justify-content: flex-start;
-      margin-bottom: 20px;
-    }
-
-    @include breakpoint-down(md) {
-      justify-content: center;
-      margin-bottom: 20px;
-    }
+    max-width: 1200px;
+    margin: 0 auto clamp(24px, 3vw, 32px);
+    padding: 0 24px;
   }
 
   .services-tabs__tab {
@@ -126,8 +113,6 @@
   // ---------- Tab panels ----------
   .services-tabs__panel {
     @include breakpoint(md) {
-      grid-column: 1 / -1;
-      grid-row: 2;
       display: grid;
       grid-template-columns: 1fr 1fr;
       gap: 40px;
@@ -143,28 +128,29 @@
     &[hidden] { display: none; }
   }
 
+  // ---------- Tab panel image ----------
+  // Images display at natural proportions. Use same dimensions for both tabs.
   .services-tabs__image {
     overflow: hidden;
 
     img {
       width: 100%;
       height: auto;
-      object-fit: cover;
-
-      @include breakpoint(md) {
-        // Fill the column, match Figma's ~486×539 proportions
-        aspect-ratio: 486 / 539;
-        height: auto;
-      }
+      display: block;
     }
   }
 
   // ---------- Content column ----------
+  // Figma: max 463px wide, prevents overlap with airplane deco on XL
   .services-tabs__content {
     display: flex;
     flex-direction: column;
     gap: 40px;
     justify-content: center;
+
+    @media screen and (min-width: 1550px) {
+      max-width: 463px; // Keeps text clear of airplane
+    }
 
     h3 {
       font-family: var(#{$font-heading-var});
@@ -180,6 +166,7 @@
     gap: 20px;
   }
 
+  // ---------- CTA button ----------
   .services-tabs__content .button {
     display: inline-flex;
     align-self: flex-start;
