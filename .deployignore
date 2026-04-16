@@ -1,0 +1,27 @@
+# Build tools — not needed on production
+node_modules/
+.cache/
+package.json
+package-lock.json
+webpack.config.js
+build-block-css.js
+.babelrc
+.browserslistrc
+
+# Source SCSS — compiled CSS is already in dist/ and block style.css files
+sass/
+
+# Source JS modules — compiled bundle is in dist/js/
+js/
+
+# Git & editor files
+.git/
+.gitignore
+.editorconfig
+.DS_Store
+Thumbs.db
+
+# Documentation
+README.md
+CHANGELOG.md
+LICENSE

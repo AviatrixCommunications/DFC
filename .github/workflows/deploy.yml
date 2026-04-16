@@ -1,0 +1,42 @@
+name: Deploy DFC Theme to WP Engine
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      # Only deploy when theme files change (not README, docs, etc.)
+      - 'dfc-theme/**'
+
+jobs:
+  deploy:
+    name: Deploy to WP Engine
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Deploy to WP Engine
+        uses: wpengine/github-action-wpe-site-deploy@v3
+        with:
+          # SSH key for WP Engine SSH Gateway (NOT GitPush)
+          WPE_SSHG_KEY_PRIVATE: ${{ secrets.WPE_SSHG_KEY_PRIVATE }}
+
+          # WP Engine install name (from your WP Engine dashboard)
+          WPE_ENV: ${{ secrets.WPE_ENV }}
+
+          # Source: deploy only the theme directory from the repo
+          SRC_PATH: "dfc-theme/"
+
+          # Destination: theme directory on WP Engine
+          REMOTE_PATH: "wp-content/themes/dfc-theme/"
+
+          # Run PHP lint before deploying (catches syntax errors)
+          PHP_LINT: TRUE
+
+          # Clear WP Engine page + CDN cache after deploy
+          CACHE_CLEAR: TRUE
+
+          # Exclude build tooling and source files not needed in production
+          FLAGS: -azvr --inplace --exclude='.*' --exclude-from='.deployignore'
