@@ -419,7 +419,7 @@
 }
 
 .footer__bottom a:hover {
-    text-decoration: none;
+    opacity: 0.75;
 }
 
 @media (max-width: 782px) {
@@ -1124,17 +1124,17 @@ body.search-results .main {
    on the grey weather box background.
    ============================================================ */
 
-/* Icons are now inline SVGs (no CDN) at 41x41 per Figma.
-   stroke: currentColor inherits the box text color. */
+/* Icons are now self-hosted Basmilius Meteocons at 48x48.
+   Fetched inline for animation + currentColor inheritance. */
 .weather-widget__icon {
-    width: 41px !important;
-    height: 41px !important;
+    width: 48px !important;
+    height: 48px !important;
 }
 
 .weather-widget__icon svg {
     display: block !important;
-    width: 41px !important;
-    height: 41px !important;
+    width: 48px !important;
+    height: 48px !important;
 }
 
 /* ============================================================
@@ -1144,9 +1144,8 @@ body.search-results .main {
    Images fill their column naturally with object-fit cover.
    ============================================================ */
 
-/* Tab images: fill column, cap at 540px tall.
-   Upload portrait (970x1080) for best results, or landscape (1200x800)
-   will work too — just more cropping at top/bottom. */
+/* Tab images: Figma shows ~486x539 (portrait).
+   Upload portrait (970x1080) for best results. */
 .services-tabs__image img {
     width: 100% !important;
     object-fit: cover !important;
@@ -1154,7 +1153,7 @@ body.search-results .main {
 
 @media screen and (min-width: 782px) {
     .services-tabs__image img {
-        max-height: 540px !important;
+        aspect-ratio: 486 / 539 !important;
     }
 }
 
@@ -1182,40 +1181,32 @@ body.search-results .main {
 }
 
 /* ============================================================
-   29. WCAG — LINK UNDERLINE PERSISTENCE (SC 1.4.1)
+   29. WCAG — LINK HOVER (SC 1.4.1, SC 1.4.13)
    ============================================================
-   Links must keep underline visible at all times. Hover signal
-   uses a background highlight — text color stays untouched so
-   contrast ratio is never degraded.
+   Links are always underlined (satisfies 1.4.1). Hover uses
+   a simple opacity change — no padding/margin shift.
    ============================================================ */
 
-/* Info bar links — keep underline, add subtle bg highlight on hover */
+/* Info bar links — subtle dim on hover, no layout shift */
 .info-bar__link:hover {
     text-decoration: underline !important;
-    opacity: 1 !important;
+    opacity: 0.75 !important;
 }
 
-/* Fuel column: white link on black — light highlight */
+/* Fuel column link hover */
 .info-bar__col--fuel .info-bar__link:hover {
-    background-color: rgba(255, 255, 255, 0.15) !important;
-    padding: 2px 4px !important;
-    margin: -2px -4px !important;
+    opacity: 0.75 !important;
 }
 
-/* Services column: black link on red — dark highlight */
+/* Services column link hover */
 .info-bar__col--services .info-bar__link:hover {
-    background-color: rgba(0, 0, 0, 0.1) !important;
-    padding: 2px 4px !important;
-    margin: -2px -4px !important;
+    opacity: 0.75 !important;
 }
 
-/* Footer legal/policy links — keep underline, bg highlight */
+/* Footer legal/policy links — keep underline, no jump */
 .footer__bottom a:hover {
     text-decoration: underline !important;
-    color: #000 !important;
-    background-color: rgba(0, 0, 0, 0.08) !important;
-    padding: 2px 4px !important;
-    margin: -2px -4px !important;
+    opacity: 0.75 !important;
 }
 
 /* Footer contact links — keep underline */

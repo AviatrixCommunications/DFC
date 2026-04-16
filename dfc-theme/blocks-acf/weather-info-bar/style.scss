@@ -14,32 +14,31 @@
   }
 
   &__col {
-    padding: 16px 24px 14px;
+    // Figma: content starts ~17px from top, boxes are 160px total.
+    // flex-start + explicit padding keeps content at the top like Figma.
+    padding: 18px 24px 18px;
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    justify-content: flex-start;
     gap: 0;
     min-height: 160px;
 
     @include breakpoint-down(lg) {
-      padding: 16px 24px 14px;
+      padding: 18px 24px;
       min-height: auto;
     }
   }
 
-  // Weather column (grey bg)
   &__col--weather {
     background-color: $hex-light-grey;
     color: $hex-black;
   }
 
-  // Fuel prices column (black bg)
   &__col--fuel {
     background-color: $hex-black;
     color: $hex-white;
   }
 
-  // Services column (red bg)
   &__col--services {
     background-color: $hex-red;
     color: $hex-black;
@@ -72,18 +71,19 @@
     font-size: $text-24;
     font-weight: 600;
     margin: 0;
-    line-height: 1.3;
+    line-height: 1.25;
     color: inherit;
   }
 
   &__link {
     font-size: $text-16;
     text-decoration: underline;
-    transition: $link-transition;
+    transition: opacity 0.15s ease-in-out;
     margin-top: auto; // Push link to bottom of column
 
     &:hover {
-      text-decoration: none;
+      // Simple opacity dim — no layout shift, no background jump
+      opacity: 0.75;
     }
 
     &:focus-visible {
@@ -92,7 +92,6 @@
     }
   }
 
-  // Inherit column text colors for links
   &__col--fuel &__link { color: $hex-white; }
   &__col--services &__link { color: $hex-black; }
 }
@@ -103,7 +102,7 @@
     display: inline-flex;
     align-items: center;
     gap: 8px;
-    margin-bottom: 6px;
+    margin-bottom: 8px;
     background-color: $hex-dark-grey-tone;
     border-radius: 20px;
     padding: 3px 14px;
@@ -148,14 +147,15 @@
     display: flex;
     flex-direction: column;
     align-items: flex-end;
-    gap: 0;
+    gap: 2px;
   }
 
   &__icon {
     display: flex;
-    width: 41px;
-    height: 41px;
+    width: 48px;
+    height: 48px;
     flex-shrink: 0;
+    color: $hex-black; // Explicit color for SVG currentColor
 
     svg {
       width: 100%;
