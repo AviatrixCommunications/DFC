@@ -16,7 +16,6 @@
   "devDependencies": {
     "@babel/core": "^7.28.4",
     "@babel/preset-env": "^7.28.3",
-    "@bybas/weather-icons": "^2.0.0",
     "@fontsource-variable/open-sans": "^5.2.7",
     "@fontsource/open-sans": "^5.2.7",
     "@fontsource/poppins": "^5.2.7",

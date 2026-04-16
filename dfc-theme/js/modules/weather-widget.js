@@ -4,9 +4,9 @@
  * Fetches weather data from the cached REST endpoint (Weatherbit.io)
  * and renders it in the homepage weather bar.
  *
- * Icons: Basmilius Meteocons — self-hosted in /img/weather/.
- * Animated SVGs, outlined stroke, recolored to currentColor.
- * Fetched and injected inline so animations + color inheritance work.
+ * Icons: Clean flat bold SVGs, self-hosted in /img/weather/.
+ * Uses fill="currentColor" so color inherits from CSS.
+ * Fetched and injected inline so color inheritance works.
  */
 
 (function () {
@@ -22,7 +22,7 @@
     var iconEl   = widget.querySelector('.weather-widget__icon');
 
     var themeUrl = (window.DFC && window.DFC.themeurl)
-        ? window.DFC.themeurl
+        ? window.DFC.themeurl.replace(/\/?$/, '/')
         : '/wp-content/themes/dfc-theme/';
 
     var restUrl = (window.DFC && window.DFC.resturl)
@@ -43,23 +43,23 @@
                 var iconName = mapWeatherbitToMeteocon(data.icon);
                 var iconPath = themeUrl + 'img/weather/' + iconName + '.svg';
 
-                // Fetch SVG and inject inline for animation + currentColor
+                // Fetch SVG and inject inline for currentColor inheritance
                 fetch(iconPath)
                     .then(function (r) { return r.text(); })
                     .then(function (svgText) {
                         iconEl.innerHTML = svgText;
-                        // Set size attributes on the injected SVG
+                        // Let CSS control size via the .weather-widget__icon container
                         var svg = iconEl.querySelector('svg');
                         if (svg) {
-                            svg.setAttribute('width', '48');
-                            svg.setAttribute('height', '48');
+                            svg.removeAttribute('width');
+                            svg.removeAttribute('height');
                             svg.setAttribute('aria-hidden', 'true');
                             svg.style.display = 'block';
                         }
                     })
                     .catch(function () {
-                        // Fallback: simple cloud icon
-                        iconEl.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="48" height="48" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" aria-hidden="true" style="display:block"><path d="M22 51h20a14 14 0 000-28h-2a16 16 0 10-30 8h-4a10 10 0 000 20z"/></svg>';
+                        // Fallback: Meteocons-style cloud icon
+                        iconEl.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" fill="none" aria-hidden="true" style="display:block"><path d="M96 84H36a16 16 0 01-1-32A24 24 0 0182 48a14 14 0 0114 14v2a12 12 0 010 24z" stroke="currentColor" stroke-width="5" stroke-linejoin="round"/></svg>';
                     });
             }
 
