@@ -5,35 +5,110 @@
   background-color: $hex-light-grey;
   padding: clamp(48px, 6vw, 80px) 0;
 
-  .hotel-accordion__intro {
-    text-align: center;
-    max-width: 1206px;
-    margin: 0 auto 32px;
-    padding: 0 24px;
-
-    h2 {
-      font-family: var(#{$font-heading-var});
-      font-size: $h2;
-      font-weight: 500;
-      margin: 0 0 16px;
-    }
-
-    p { margin: 0; }
-  }
-
-  .hotel-accordion__items {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 0 24px;
+  .hotel-accordion__inner {
     display: flex;
     flex-direction: column;
     gap: 16px;
+
+    > .wp-block-heading {
+      text-align: center;
+      font-family: var(#{$font-heading-var});
+      font-size: $h2;
+      font-weight: 500;
+      line-height: $line-height-h2;
+      margin: 0;
+      width: 100%;
+    }
+
+    > p,
+    > .has-text-align-center {
+      text-align: center;
+      margin: 0 0 16px;
+      width: 100%;
+    }
   }
 
-  // Override accordion styles for hotel context
   .aviatrix-block--accordion {
-    .accordion__header {
-      border-bottom-color: $hex-red;
+    width: 100%;
+    margin: 0;
+  }
+
+  .accordion__items {
+    padding: 0 !important;
+  }
+
+  .wp-block-details {
+    border: none !important;
+    border-bottom: 1px solid $hex-red !important;
+    background: transparent !important;
+    padding: 8px 0 !important;
+    margin: 0;
+    width: 100%;
+
+    summary {
+      font-weight: 600;
+      font-size: $text-20;
+      line-height: $line-height-h3;
+      cursor: pointer;
+      list-style: none !important;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 4px 0;
+
+      &::-webkit-details-marker { display: none !important; }
+      &::marker { content: '' !important; }
+      svg, .wp-block-details__icon { display: none !important; }
+
+      &::after {
+        content: '';
+        width: 17px;
+        height: 10px;
+        background-image: url('../../img/caret-down.svg');
+        background-repeat: no-repeat;
+        background-size: contain;
+        background-position: center;
+        flex-shrink: 0;
+        transition: transform 0.25s ease;
+        display: block !important;
+      }
+
+      // Hover indicator
+      &:hover {
+        background-color: rgba(0, 0, 0, 0.03);
+      }
+
+      // Keyboard focus — black to avoid double-red with the bottom border
+      &:focus-visible {
+        outline: 2px solid $hex-black;
+        outline-offset: 4px;
+      }
+
+      &:focus:not(:focus-visible) {
+        outline: none;
+      }
+    }
+
+    &[open] summary::after {
+      transform: rotate(180deg);
+    }
+
+    // Expanded content card — one .wp-block-group wraps everything
+    .accordion-card {
+      background: $hex-white;
+      border: 1px solid #c0c0c0;
+      padding: $space-24;
+      margin-top: 12px;
+      margin-bottom: 8px;
+
+      p {
+        margin-bottom: 8px;
+        &:last-child { margin-bottom: 0; }
+      }
+
+      .wp-block-buttons {
+        margin-top: 12px;
+      }
     }
   }
 }

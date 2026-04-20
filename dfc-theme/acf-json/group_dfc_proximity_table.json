@@ -1,0 +1,59 @@
+{
+    "key": "group_dfc_proximity_table",
+    "title": "Block: Proximity Table",
+    "fields": [
+        {
+            "key": "field_dfc_pt_locations",
+            "label": "Locations",
+            "name": "locations",
+            "type": "repeater",
+            "instructions": "Add rows for nearby cities with their drive time and distance.",
+            "min": 1,
+            "max": 20,
+            "layout": "table",
+            "button_label": "Add Location",
+            "sub_fields": [
+                {
+                    "key": "field_dfc_pt_city",
+                    "label": "City / Location",
+                    "name": "city",
+                    "type": "text",
+                    "placeholder": "e.g. Naperville",
+                    "wrapper": { "width": "40" }
+                },
+                {
+                    "key": "field_dfc_pt_drive_time",
+                    "label": "Drive Time",
+                    "name": "drive_time",
+                    "type": "text",
+                    "placeholder": "e.g. 19 Minutes",
+                    "wrapper": { "width": "30" }
+                },
+                {
+                    "key": "field_dfc_pt_distance",
+                    "label": "Distance",
+                    "name": "distance",
+                    "type": "text",
+                    "placeholder": "e.g. 10 Miles",
+                    "wrapper": { "width": "30" }
+                }
+            ]
+        }
+    ],
+    "location": [
+        [
+            {
+                "param": "block",
+                "operator": "==",
+                "value": "acf/proximity-table"
+            }
+        ]
+    ],
+    "menu_order": 0,
+    "position": "normal",
+    "style": "default",
+    "label_placement": "top",
+    "instruction_placement": "label",
+    "active": true,
+    "show_in_rest": 0
+}

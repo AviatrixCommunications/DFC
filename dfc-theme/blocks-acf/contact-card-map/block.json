@@ -1,0 +1,11 @@
+{
+    "name": "acf/contact-card-map",
+    "title": "Contact Card + Map",
+    "description": "Split layout: grey contact info card on the left, map image on the right. Used on Contact Us page.",
+    "category": "aviatrix-blocks",
+    "icon": "location-alt",
+    "keywords": ["contact", "map", "address", "phone", "location"],
+    "acf": { "mode": "preview", "renderTemplate": "contact-card-map.php" },
+    "supports": { "align": false, "anchor": true, "jsx": false },
+    "style": "file:./style.css"
+}

@@ -11,7 +11,16 @@
             "preview_size": "medium",
             "min": 1,
             "max": 12,
-            "instructions": "First image displays large. Remaining images appear as clickable thumbnails below."
+            "instructions": "Upload gallery images. In default mode, the first image displays large with thumbnails below. In grid-only mode, all images display as equal-sized thumbnails."
+        },
+        {
+            "key": "field_dfc_slider_grid_only",
+            "label": "Grid Only (no large preview image)",
+            "name": "grid_only",
+            "type": "true_false",
+            "default_value": 0,
+            "ui": 1,
+            "instructions": "Enable to show only the thumbnail grid without a large preview image above. Images open in lightbox when clicked."
         }
     ],
     "location": [[{ "param": "block", "operator": "==", "value": "acf/image-slider" }]],

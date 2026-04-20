@@ -19,11 +19,13 @@
   }
 
   .image-slider__thumbs {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
+    display: flex;
     gap: 12px;
+    overflow: hidden;
 
-    @include breakpoint-down(sm) { grid-template-columns: repeat(2, 1fr); }
+    @include breakpoint-down(sm) {
+      gap: 8px;
+    }
   }
 
   .image-slider__thumb {
@@ -31,6 +33,14 @@
     overflow: hidden;
     border: 2px solid transparent;
     transition: $base-transition;
+    aspect-ratio: 382 / 236;
+    // Show exactly 3 per view: (100% - 2 gaps of 12px) / 3
+    flex: 0 0 calc((100% - 24px) / 3);
+
+    @include breakpoint-down(sm) {
+      // Show 2 per view on small screens
+      flex: 0 0 calc((100% - 8px) / 2);
+    }
 
     &.is-active,
     &:focus-visible {
@@ -40,10 +50,8 @@
 
     img {
       width: 100%;
-      height: 236px;
+      height: 100%;
       object-fit: cover;
-
-      @include breakpoint-down(md) { height: 160px; }
     }
   }
 
@@ -53,12 +61,135 @@
     transform: translateY(-50%);
     z-index: 5;
 
-    &--prev { left: -25px; }
-    &--next { right: -25px; }
+    &--prev { left: -58px; }
+    &--next { right: -58px; }
 
     @include breakpoint-down(lg) {
+      &--prev { left: -8px; }
+      &--next { right: -8px; }
+    }
+
+    @include breakpoint-down(md) {
       &--prev { left: 8px; }
       &--next { right: 8px; }
     }
   }
+
+  // Grid-only mode: arrows sit outside thumbnails per Figma
+  &.image-slider--grid-only {
+    // Pad the block so arrows have room outside the thumbnails
+    padding: 0 58px;
+
+    @include breakpoint-down(lg) { padding: 0 8px; }
+    @include breakpoint-down(md) { padding: 0; }
+
+    .image-slider__main {
+      display: none;
+    }
+
+    .image-slider__nav {
+      top: 50%;
+
+      &--prev { left: 0; }
+      &--next { right: 0; }
+    }
+
+    .image-slider__thumb {
+      border-color: transparent;
+
+      &:hover,
+      &:focus-visible {
+        border-color: $hex-red;
+      }
+    }
+  }
+}
+
+// ── Lightbox ──────────────────────────────────────────────────
+.dfc-lightbox {
+  position: fixed;
+  inset: 0;
+  z-index: 10000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.25s ease, visibility 0.25s ease;
+
+  &.is-open {
+    opacity: 1;
+    visibility: visible;
+  }
+
+  &__overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.85);
+    cursor: pointer;
+  }
+
+  &__close {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    z-index: 2;
+    background: none;
+    border: none;
+    color: $hex-white;
+    cursor: pointer;
+    width: 48px;
+    height: 48px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    &:hover { opacity: 0.7; }
+    &:focus-visible {
+      outline: 2px solid $hex-red;
+      outline-offset: 2px;
+    }
+  }
+
+  &__img {
+    position: relative;
+    z-index: 1;
+    max-width: 90vw;
+    max-height: 85vh;
+    object-fit: contain;
+  }
+
+  // Lightbox prev/next arrows
+  &__prev,
+  &__next {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 2;
+    background: $hex-red;
+    border: none;
+    color: $hex-black;
+    cursor: pointer;
+    width: 50px;
+    height: 50px;
+    border-radius: $border-radius-pill;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: $base-transition;
+
+    &:hover { background: darken($hex-red, 8%); }
+    &:focus-visible {
+      outline: 2px solid $hex-white;
+      outline-offset: 2px;
+    }
+
+    svg {
+      width: 22px;
+      height: auto;
+    }
+  }
+
+  &__prev { left: 24px; }
+  &__next { right: 24px; }
 }

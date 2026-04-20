@@ -1,7 +1,7 @@
 {
     "name": "acf/page-header",
     "title": "Page Header",
-    "description": "Black header bar with page title and optional description. Auto-inserted on pages.",
+    "description": "Automatic hero banner + title bar. Title from page name, description from Excerpt field, hero from Featured Image.",
     "category": "aviatrix-blocks",
     "icon": "heading",
     "keywords": ["header", "title", "page"],
@@ -12,7 +12,7 @@
     "supports": {
         "align": false,
         "anchor": true,
-        "jsx": true,
+        "jsx": false,
         "color": {
             "background": false,
             "text": false

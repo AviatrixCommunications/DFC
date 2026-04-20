@@ -1,0 +1,95 @@
+{
+    "key": "group_dfc_contact_card_map",
+    "title": "Block: Contact Card + Map",
+    "fields": [
+        {
+            "key": "field_dfc_ccm_company_name",
+            "label": "Company Name",
+            "name": "company_name",
+            "type": "text",
+            "default_value": "DuPage Flight Center",
+            "placeholder": "e.g. DuPage Flight Center"
+        },
+        {
+            "key": "field_dfc_ccm_address_line_1",
+            "label": "Address Line 1",
+            "name": "address_line_1",
+            "type": "text",
+            "default_value": "2700 International Drive",
+            "placeholder": "Street address"
+        },
+        {
+            "key": "field_dfc_ccm_address_line_2",
+            "label": "Address Line 2",
+            "name": "address_line_2",
+            "type": "text",
+            "default_value": "West Chicago, IL 60185",
+            "placeholder": "City, State ZIP"
+        },
+        {
+            "key": "field_dfc_ccm_toll_free_phone",
+            "label": "Toll Free Phone",
+            "name": "toll_free_phone",
+            "type": "text",
+            "default_value": "+1 (800) 208-5690",
+            "placeholder": "+1 (800) 000-0000"
+        },
+        {
+            "key": "field_dfc_ccm_local_phone",
+            "label": "Local Phone",
+            "name": "local_phone",
+            "type": "text",
+            "default_value": "+1 (630) 208-5600",
+            "placeholder": "+1 (630) 000-0000"
+        },
+        {
+            "key": "field_dfc_ccm_fax_number",
+            "label": "Fax Number",
+            "name": "fax_number",
+            "type": "text",
+            "default_value": "+1 (630) 443-9077",
+            "placeholder": "+1 (630) 000-0000"
+        },
+        {
+            "key": "field_dfc_ccm_email",
+            "label": "Email",
+            "name": "email",
+            "type": "email",
+            "default_value": "dfcfuel@dupageflightcenter.com",
+            "placeholder": "email@example.com"
+        },
+        {
+            "key": "field_dfc_ccm_google_maps_embed_url",
+            "label": "Google Maps Embed URL",
+            "name": "google_maps_embed_url",
+            "type": "url",
+            "instructions": "Paste the Google Maps embed URL. Go to Google Maps → Share → Embed a map → copy the src URL from the iframe code. If provided, this takes priority over the static map image.",
+            "placeholder": "https://www.google.com/maps/embed?pb=..."
+        },
+        {
+            "key": "field_dfc_ccm_map_image",
+            "label": "Map Image (fallback)",
+            "name": "map_image",
+            "type": "image",
+            "return_format": "array",
+            "preview_size": "medium",
+            "instructions": "Only used if no Google Maps embed URL is provided. Upload a static map screenshot."
+        }
+    ],
+    "location": [
+        [
+            {
+                "param": "block",
+                "operator": "==",
+                "value": "acf/contact-card-map"
+            }
+        ]
+    ],
+    "menu_order": 0,
+    "position": "normal",
+    "style": "default",
+    "label_placement": "top",
+    "instruction_placement": "label",
+    "active": true,
+    "show_in_rest": 0
+}

@@ -1,0 +1,119 @@
+@use '../../sass/settings/variables' as *;
+@use '../../sass/settings/mixins' as *;
+
+.aviatrix-block--contact-card-map {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+
+  @include breakpoint(md) {
+    flex-direction: row;
+  }
+}
+
+.contact-card-map__card {
+  background-color: $hex-light-grey;
+  padding: 48px 32px 48px 120px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+
+  @include breakpoint-down(lg) {
+    padding: 32px 24px;
+  }
+
+  @include breakpoint(md) {
+    flex: 0 0 40%;
+  }
+}
+
+.contact-card-map__name {
+  font-family: var(#{$font-heading-var});
+  font-size: $h3;
+  font-weight: 500;
+  line-height: $line-height-h3;
+  color: $hex-black;
+  margin: 0 0 16px;
+}
+
+.contact-card-map__address {
+  font-style: normal;
+  font-family: var(#{$font-body-var});
+  font-size: $text-16;
+  line-height: $line-height-body;
+  color: $hex-black;
+  margin-bottom: 16px;
+}
+
+.contact-card-map__details {
+  margin: 0;
+}
+
+.contact-card-map__detail-row {
+  display: flex;
+  gap: 4px;
+  align-items: baseline;
+  margin-bottom: 4px;
+
+  dt {
+    font-family: var(#{$font-body-var});
+    font-size: $text-16;
+    font-weight: 400;
+    line-height: $line-height-body;
+    color: $hex-black;
+    white-space: nowrap;
+  }
+
+  dd {
+    margin: 0;
+
+    a {
+      font-family: var(#{$font-body-var});
+      font-size: $text-16;
+      font-weight: 600;
+      line-height: $line-height-hyperlink;
+      color: $hex-black;
+      text-decoration: underline;
+      transition: $link-transition;
+
+      &:hover,
+      &:focus-visible {
+        color: $hex-red;
+      }
+    }
+  }
+}
+
+.contact-card-map__map {
+  @include breakpoint(md) {
+    flex: 1 1 60%;
+  }
+
+  img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    min-height: 320px;
+
+    @include breakpoint(md) {
+      min-height: 528px;
+    }
+  }
+
+  iframe {
+    display: block;
+    width: 100%;
+    height: 100%;
+    min-height: 400px;
+
+    @include breakpoint(md) {
+      min-height: 528px;
+    }
+  }
+}
+
+// Remove top gap when contact-card-map directly follows page header
+.aviatrix-block--page-header + .aviatrix-block--contact-card-map {
+  margin-top: 0 !important;
+}

@@ -9,6 +9,12 @@
   padding: clamp(80px, 10vw, 130px) 0;
   text-align: center;
 
+  // Always has a visual background, so override the last-child margin
+  // from _content.scss that adds space-96 before the footer.
+  &:last-child {
+    margin-bottom: 0 !important;
+  }
+
   .full-width-cta__overlay {
     position: absolute;
     inset: 0;

@@ -3,10 +3,13 @@
  * Hotel Accordion Block
  *
  * Grey background section with intro text and accordion items for hotel listings.
- * Uses InnerBlocks to contain accordion blocks.
+ * Uses InnerBlocks (jsx mode) for heading, description, and accordion blocks.
+ *
+ * Editor: <InnerBlocks /> renders the React component.
+ * Frontend: $content is the saved HTML, wrapped in a structural container.
  */
 
-$base_class = 'aviatrix-block aviatrix-block--hotel-accordion';
+$base_class = 'aviatrix-block aviatrix-block--hotel-accordion has-background';
 $attrs = get_block_wrapper_attributes(['class' => $base_class]);
 
 $template = [
@@ -20,15 +23,13 @@ $template = [
 $allowed = ['core/heading', 'core/paragraph', 'acf/accordion', 'acf/accordion-item'];
 ?>
 
-<?php if ($is_preview) : ?>
-    <section <?php echo $attrs; ?>>
-        <div class="hotel-accordion__intro">
+<section <?php echo $attrs; ?>>
+    <div class="hotel-accordion__inner wrapper">
+        <?php if ($is_preview) : ?>
             <InnerBlocks template="<?php echo esc_attr(wp_json_encode($template)); ?>"
                          allowedBlocks="<?php echo esc_attr(wp_json_encode($allowed)); ?>" />
-        </div>
-    </section>
-<?php else : ?>
-    <section <?php echo $attrs; ?>>
-        <?php echo $content; ?>
-    </section>
-<?php endif; ?>
+        <?php else : ?>
+            <?php echo $content; ?>
+        <?php endif; ?>
+    </div>
+</section>

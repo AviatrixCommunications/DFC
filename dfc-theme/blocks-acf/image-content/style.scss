@@ -14,6 +14,16 @@
         }
     }
 
+    // Third-image layouts: top-align image with content (Crew Services pattern)
+    &.is-style-third-image-left,
+    &.is-style-third-image-right {
+        .image-content__columns.wp-block-columns {
+            @include media-above("md") {
+                align-items: flex-start !important;
+            }
+        }
+    }
+
     &.is-style-half-image-right,
     &.is-style-third-image-right,
     &.is-style-quarter-image-right {

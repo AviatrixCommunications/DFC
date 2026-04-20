@@ -1,0 +1,90 @@
+@use '../../sass/settings/variables' as *;
+@use '../../sass/settings/mixins' as *;
+
+.aviatrix-block--proximity-table {
+  margin-top: $space-48;
+  margin-bottom: $space-48;
+}
+
+.proximity-table__header {
+  margin-bottom: $space-32;
+}
+
+.proximity-table__body {
+  max-width: 894px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.proximity-table__sr-header {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+}
+
+.proximity-table__row {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 16px 24px;
+  font-family: var(#{$font-body-var});
+  font-size: $text-20;
+  font-weight: 600;
+  line-height: $line-height-body-lg;
+  color: $hex-black;
+
+  @include breakpoint-down(md) {
+    flex-wrap: wrap;
+    font-size: $text-16;
+    padding: 12px 16px;
+    gap: 8px;
+  }
+
+  &--grey {
+    background-color: $hex-light-grey;
+  }
+
+  &--white {
+    background-color: $hex-white;
+  }
+}
+
+.proximity-table__city {
+  flex: 0 0 45%;
+  min-width: 0;
+
+  @include breakpoint-down(md) {
+    flex: 1 1 100%;
+  }
+}
+
+.proximity-table__time,
+.proximity-table__distance {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex: 0 0 auto;
+  white-space: nowrap;
+}
+
+.proximity-table__time {
+  flex: 0 0 25%;
+  min-width: 0;
+
+  @include breakpoint-down(md) {
+    flex: 0 0 auto;
+  }
+}
+
+.proximity-table__distance {
+  flex: 0 0 auto;
+}
+
+.proximity-table__icon {
+  flex-shrink: 0;
+  width: 19px;
+  height: 19px;
+  color: $hex-black;
+}

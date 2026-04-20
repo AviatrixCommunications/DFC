@@ -1,0 +1,11 @@
+{
+    "name": "acf/proximity-table",
+    "title": "Proximity Table",
+    "description": "Alternating-row table showing nearby cities with drive time and distance. Used on Contact Us page.",
+    "category": "aviatrix-blocks",
+    "icon": "car",
+    "keywords": ["proximity", "distance", "drive", "location", "table", "cities"],
+    "acf": { "mode": "preview", "renderTemplate": "proximity-table.php" },
+    "supports": { "align": false, "anchor": true, "jsx": true },
+    "style": "file:./style.css"
+}
