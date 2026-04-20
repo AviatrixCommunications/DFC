@@ -391,6 +391,10 @@ function dfc_theme_supports() {
         'gallery',
         'caption',
     ) );
+
+    // Ensure excerpt field is available on pages (used by Page Header block
+    // to display the description below the page title).
+    add_post_type_support( 'page', 'excerpt' );
 }
 
 // ── Menus ─────────────────────────────────────────────────────
