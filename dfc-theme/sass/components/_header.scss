@@ -61,6 +61,7 @@
 // Space for the fixed header
 .main {
   margin-top: $header-height-desktop;
+  padding-bottom: 0 !important; // Override WP core global styles padding
 }
 
 // ── Alert banner adjustment ───────────────────────────────────

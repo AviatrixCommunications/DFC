@@ -53,7 +53,7 @@ blockquote {
   transition: $base-transition;
   &:hover,
   &:focus {
-    text-decoration-color: transparent;
+    color: $hex-red;
   }
 }
 

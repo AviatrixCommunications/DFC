@@ -113,7 +113,7 @@ button[type="submit"] {
   justify-content: center;
   width: 50px;
   height: 50px;
-  padding: 20px;
+  padding: 0;
   border-radius: $border-radius-pill;
   background-color: $hex-red;
   color: $hex-black;
@@ -131,7 +131,7 @@ button[type="submit"] {
   }
 
   svg {
-    width: 20px;
+    width: 22px;
     height: auto;
   }
 }
