@@ -69,11 +69,21 @@ $description = has_excerpt() ? get_the_excerpt() : '';
     <div <?php echo $attrs; ?>>
         <?php if ( $featured_img_url ) : ?>
             <div class="page-header__hero">
-                <img src="<?php echo esc_url( $featured_img_url ); ?>"
-                     alt="<?php echo esc_attr( $featured_img_alt ); ?>"
-                     width="1920" height="400"
-                     loading="eager"
-                     fetchpriority="high" />
+                <?php
+                /**
+                 * Use wp_get_attachment_image so WordPress emits srcset +
+                 * sizes covering all registered widths (hero=1920, large=1024,
+                 * medium_large=768, medium=300, thumbnail=150). Mobile users
+                 * get a much smaller variant than the full hero file.
+                 */
+                echo wp_get_attachment_image( $featured_img_id, 'hero', false, [
+                    'alt'           => $featured_img_alt,
+                    'loading'       => 'eager',
+                    'fetchpriority' => 'high',
+                    'decoding'      => 'async',
+                    'sizes'         => '100vw',
+                ] );
+                ?>
             </div>
         <?php endif; ?>
         <div class="page-header__bar">

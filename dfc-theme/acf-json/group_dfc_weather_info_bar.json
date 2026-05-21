@@ -3,6 +3,38 @@
     "title": "Weather & Info Bar",
     "fields": [
         {
+            "key": "field_dfc_wib_weather_label",
+            "label": "Weather Column Label",
+            "name": "weather_label",
+            "type": "text",
+            "default_value": "DuPage Airport Weather",
+            "instructions": "Heading shown above the weather data (column 1)."
+        },
+        {
+            "key": "field_dfc_wib_fuel_title",
+            "label": "Fuel Prices Title",
+            "name": "fuel_title",
+            "type": "text",
+            "default_value": "Current Retail Fuel Prices",
+            "instructions": "Heading for the fuel prices column (column 2). Prices and link URL are managed at Dashboard → Fuel Prices."
+        },
+        {
+            "key": "field_dfc_wib_fuel_link_text",
+            "label": "Fuel Link Text",
+            "name": "fuel_link_text",
+            "type": "text",
+            "default_value": "View all Fuel Prices",
+            "instructions": "Button text below the fuel prices. Link URL is set at Dashboard → Fuel Prices → Fuel Prices Page Link."
+        },
+        {
+            "key": "field_dfc_wib_services_title",
+            "label": "Services Title",
+            "name": "services_title",
+            "type": "text",
+            "default_value": "Request for Services",
+            "instructions": "Heading for the services request column (column 3)."
+        },
+        {
             "key": "field_dfc_wib_services_desc",
             "label": "Services Description",
             "name": "services_description",
@@ -15,7 +47,8 @@
             "label": "Services Link",
             "name": "services_link",
             "type": "link",
-            "return_format": "array"
+            "return_format": "array",
+            "instructions": "URL and button text for the services CTA (e.g. 'Make a Reservation')."
         }
     ],
     "location": [[{ "param": "block", "operator": "==", "value": "acf/weather-info-bar" }]],

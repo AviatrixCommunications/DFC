@@ -1,22 +1,61 @@
 /* ── ALERT BANNER — Override SASS height:0 ──────────────────── */
-/* The compiled SASS sets .notification-banner { height: 0; overflow: hidden; }
-   which was designed for JS slideDown reveal. We want it visible immediately. */
+/* Disabled: slide-down JS animation is restored in the SCSS+JS, so this
+   override is no longer needed (and was breaking the animation). Kept
+   here commented for reference.
 .notification-banner {
     height: auto !important;
     overflow: visible !important;
 }
+*/
 
 /* ============================================================
    DFC VISUAL FIXES — v3
    ============================================================ */
 
-/* ── 1. HEADER — ORIGINAL FIGMA SIZING ─────────────────────── */
+/* ── 1. HEADER — FIXED / STICKY AT TOP ─────────────────────── */
 
 .header {
     background: #000;
-    position: relative;
+    position: fixed;
+    top: var(--dfc-alert-height, 0px);
+    left: 0;
+    right: 0;
     z-index: 100;
+    /* Make the header itself a flex container so the .wrapper
+       inside (which has no explicit height) gets vertically
+       centered, and the components row inherits proper height
+       through the chain. Without this, .wrapper collapses to
+       content height and sits at the top of the 96px header. */
+    display: flex !important;
+    align-items: center !important;
+    /* Subtle shadow fades in after you've scrolled past the top.
+       body.is-scrolled is toggled by js/dfc-header-scroll.js. */
+    transition: box-shadow 0.2s ease;
 }
+
+/* The wrapper inside the header should fill width and let the
+   nav row sit naturally vertically centered via the .header flex. */
+.header > .wrapper,
+.header .wrapper--xl {
+    width: 100% !important;
+    height: auto !important;
+    flex: 1 1 auto !important;
+}
+
+body.is-scrolled .header {
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+}
+
+/* Alert banner also fixes to the top, above the header. */
+/* Disabled: moved into sass/components/_alert-banner.scss. Kept commented for reference.
+.notification-banner {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 101;
+}
+*/
 
 .header__components {
     display: flex;
@@ -49,6 +88,16 @@
     margin-right: 0;
     padding: 0;
     border: none;
+    /* All top-level items get the same flex layout so the anchor's
+       bottom edge (where the active/hover underline sits) lands at
+       the same y-position whether the item has a submenu caret or
+       not. Without this, items with .menu-item-has-children (which
+       get display:flex from the SCSS for caret layout) end up
+       vertically centering the anchor while items without children
+       sit on the line baseline — a 1-2px difference visible when
+       comparing their red underlines side by side. */
+    display: flex !important;
+    align-items: center !important;
 }
 
 /* Nav items — Figma spacing restored */
@@ -256,12 +305,13 @@
     flex-direction: column;
 }
 
+/* Disabled: directly contradicted the SCSS position:fixed. Kept commented for reference.
 .notification-banner {
     position: relative;
     z-index: 200;
     width: 100%;
-    /* No absolute positioning — sits in normal flow above header */
 }
+*/
 
 .notification-banner[aria-hidden="true"] {
     display: none;
@@ -651,14 +701,24 @@
 }
 
 /* ── 10a. HEADER / CONTENT FLUSH ALIGNMENT ────────────────────
-   Use padding-top on .main instead of margin-top so the page-header
-   hero image can extend behind the fixed nav (top 96px hidden,
-   rest visible). Pages without a hero still start below the nav. */
+   Use padding-top on .main so the page-header hero image can
+   extend behind the fixed nav (top portion hidden, rest visible).
+   Pages without a hero still start below the nav.
 
-/* Non-homepage pages: pad top so content sits below fixed nav */
+   HEADER HEIGHT is driven by the --dfc-header-height CSS variable
+   set in Section 31 (varies by viewport). Alert banner JS can
+   bump --dfc-alert-height to push content down when an alert is
+   active — .main accounts for both. */
+
+:root {
+    --dfc-alert-height: 0px;
+}
+
+/* Non-homepage pages: pad top so content sits below fixed nav
+   (plus active alert banner, if any) */
 .main {
     margin-top: 0 !important;
-    padding-top: 96px;
+    padding-top: calc(var(--dfc-header-height, 96px) + var(--dfc-alert-height, 0px));
 }
 
 /* Homepage: no top padding — hero extends behind nav via front-page.scss */
@@ -666,9 +726,15 @@ body.home .main {
     padding-top: 0 !important;
 }
 
-/* Pull the page-header block up into the padding so hero sits behind nav */
-.dfc-page-content > .aviatrix-block--page-header:first-child {
-    margin-top: -96px !important;
+/* Pull the page-header block up into the padding so hero sits behind nav.
+   ONLY when the page has a featured/hero image — the no-hero variant
+   (just the black title bar, used on policy pages without a featured
+   image) has no image to extend behind the nav, and would otherwise
+   end up with its title bar hidden behind the fixed header.
+   The .has-hero-image class is added by page-header.php when a
+   featured image exists. */
+.dfc-page-content > .aviatrix-block--page-header.has-hero-image:first-child {
+    margin-top: calc(-1 * var(--dfc-header-height, 96px)) !important;
 }
 
 /* ── 10b. CONSISTENT PAGE SPACING ─────────────────────────────
@@ -848,11 +914,12 @@ html, body {
         padding: 0;
     }
 
-    /* Alert bar: sits above header in flow, not covering */
+    /* Disabled: mobile no longer overrides position to relative. Kept commented for reference.
     .notification-banner {
         position: relative;
         z-index: 200;
     }
+    */
 
     .site-banner .wrapper {
         flex-wrap: wrap;
@@ -1124,20 +1191,25 @@ body.search-results .main {
    on the grey weather box background.
    ============================================================ */
 
-/* Icons are now Meteocons monochrome at 100x100 (container).
-   Negative margins prevent box growth. CSS controls size;
-   JS no longer sets width/height attributes. */
+/* Icons are now Meteocons monochrome.
+   v2: Smaller container (80×80) with proper SVG sizing and a real
+   gap between the icon and the "Clear sky" condition text. */
 .weather-widget__icon {
-    width: 100px !important;
-    height: 100px !important;
-    margin-top: -35px;
-    margin-bottom: -18px;
+    width: 80px !important;
+    height: 80px !important;
+    margin-top: -22px !important;
+    margin-bottom: -8px !important;
 }
 
 .weather-widget__icon svg {
     display: block !important;
     width: 100% !important;
     height: 100% !important;
+}
+
+/* Add breathing room between icon and condition text */
+.weather-widget__icon-condition {
+    gap: 6px !important;
 }
 
 /* ============================================================
@@ -1215,4 +1287,622 @@ body.search-results .main {
 /* Footer contact links — keep underline */
 .footer__top a:hover {
     text-decoration: underline !important;
+}
+
+/* ============================================================
+   30. STICKY FOOTER + iOS SAFARI VIEWPORT FIX
+   ============================================================
+   Fixes the white gap below footer on iOS Safari. The page
+   needs to fill the viewport even when content is short.
+   100svh (small viewport height) handles iOS URL bar correctly.
+   ============================================================ */
+
+html {
+    min-height: 100%;
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;       /* fallback */
+    min-height: 100svh;      /* iOS-aware */
+}
+
+.site-top {
+    flex-shrink: 0;
+}
+
+.main {
+    flex: 1 0 auto;
+}
+
+.newsletter,
+.footer {
+    flex-shrink: 0;
+}
+
+/* Cancel the legacy main { min-height: 50vh } on short pages —
+   the flex layout above ensures footer sticks to bottom anyway. */
+main.main {
+    min-height: 0;
+}
+
+/* ============================================================
+   31. MOBILE HEADER — LARGER LOGO + HAMBURGER PADDING (v4)
+   ============================================================
+   v3 problem: I set .main { margin-top } on mobile, but
+   Section 10a sets .main { margin-top: 0 !important;
+   padding-top: 96px } — which wins and produced a grey gap
+   equal to the difference between 96px and my mobile header
+   height. Page-header hero also still pulled itself up by a
+   hard-coded -96px.
+   v4: drive header height, main padding-top, AND the page-
+   header pull-up via a single --dfc-header-height CSS variable.
+   Update the variable at each breakpoint and everything stays
+   in sync. Alert banner JS can bump the same variable if/when
+   a banner is active.
+   ============================================================ */
+
+/* One source of truth for header height */
+:root {
+    --dfc-header-height: 96px;
+}
+
+/* Header always uses the variable (with explicit fallback so if the
+   variable is ever lost the header still renders at a sane size). */
+.header {
+    height: var(--dfc-header-height, 96px) !important;
+}
+
+/* Desktop logo — explicit height so intrinsic SVG dims can't stretch
+   the flex row. 50px tall in a 96px header = 23px top/bottom. */
+.header .header__logo-img,
+.header__logo .header__logo-img {
+    height: 50px !important;
+    width: auto !important;
+    max-width: none !important;
+    display: block !important;
+}
+
+/* Force vertical centering on the header components row. */
+.header .header__components,
+.wrapper .header__components {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+    height: 100% !important;
+}
+
+/* The logo anchor — flex it too so the img centers */
+.header .header__logo {
+    display: flex !important;
+    align-items: center !important;
+    height: 100%;
+}
+.header .header__logo a {
+    display: flex !important;
+    align-items: center !important;
+    height: 100%;
+}
+
+@media (max-width: 1280px) {
+    :root { --dfc-header-height: 80px; }
+    .header .header__logo-img,
+    .header__logo .header__logo-img {
+        height: 48px !important;
+    }
+}
+
+@media (max-width: 768px) {
+    :root { --dfc-header-height: 72px; }
+    .header .header__logo-img,
+    .header__logo .header__logo-img {
+        height: 44px !important;
+    }
+    .header .header__components {
+        padding: 0 !important;
+    }
+    .header .js-hamburger,
+    .header .hamburger,
+    .js-hamburger,
+    .hamburger {
+        padding: 8px !important;
+        margin-right: 16px !important;
+    }
+}
+
+@media (max-width: 480px) {
+    :root { --dfc-header-height: 64px; }
+    .header .header__logo-img,
+    .header__logo .header__logo-img {
+        height: 38px !important;
+    }
+    .header .js-hamburger,
+    .header .hamburger,
+    .js-hamburger,
+    .hamburger {
+        margin-right: 12px !important;
+    }
+}
+
+/* Front page hero pulls itself up by header-height-desktop (96px) per
+   _front-page.scss — which is a hard-coded value. Override with the
+   variable so the hero sits flush at every viewport. */
+body.home .dfc-page-content > .aviatrix-block--hero-slider:first-child {
+    margin-top: calc(-1 * var(--dfc-header-height)) !important;
+}
+
+/* ============================================================
+   32. MOBILE FOOTER — COMPRESS, REALIGN, NO HUGE LINE-HEIGHTS
+   ============================================================
+   The desktop CSS uses line-height: 42px for that "row" look —
+   on mobile that becomes a tower of whitespace. Reset all of
+   it and tighten the stack.
+   ============================================================ */
+
+@media (max-width: 768px) {
+
+    /* Top section: reduce padding, tighter rhythm */
+    .footer__top {
+        padding: 32px 0 28px !important;
+    }
+
+    .footer__top-inner {
+        gap: 28px !important;
+    }
+
+    /* Logo column: center the logo + social row on phones */
+    .footer__col--logo {
+        text-align: center;
+    }
+    .footer__logo {
+        display: inline-block;
+    }
+    .footer__logo-img {
+        max-width: 200px;
+        height: auto;
+        margin: 0 auto;
+    }
+    .footer__social {
+        margin-top: 16px !important;
+    }
+    .nav--social ul {
+        justify-content: center !important;
+        gap: 12px;
+    }
+
+    /* Contact: kill the 42px line-height that towers on mobile.
+       Tight 1.5 line-height, smaller font, label inline w/ value
+       where possible, modest gap between rows. */
+    .footer__contact p,
+    .footer__contact p a,
+    .footer__contact strong {
+        line-height: 1.5 !important;
+        font-size: 15px !important;
+    }
+    .footer__contact p {
+        margin: 0 0 10px !important;
+        padding: 0 !important;
+        display: flex;
+        flex-wrap: wrap;
+        align-items: baseline;
+        gap: 4px 6px;
+    }
+    .footer__contact p:last-child {
+        margin-bottom: 0 !important;
+    }
+    .footer__contact strong {
+        white-space: nowrap;
+    }
+
+    /* External links: tighter, no 42px line-height carryover */
+    .footer__links {
+        gap: 10px !important;
+    }
+    .footer__links a {
+        line-height: 1.4 !important;
+        font-size: 16px !important;
+        padding: 4px 0;
+        display: inline-block;
+    }
+
+    /* Partner logos: centered, modest top gap */
+    .footer__partners {
+        margin-top: 20px !important;
+        justify-content: center;
+        gap: 20px;
+    }
+    .footer__partners img {
+        max-height: 36px;
+    }
+
+    /* Bottom legal bar — tighter */
+    .footer__bottom {
+        padding: 16px 0 20px !important;
+    }
+    .footer__bottom .wrapper {
+        gap: 4px !important;
+    }
+    .footer__bottom a {
+        font-size: 15px !important;
+        line-height: 1.6 !important;
+        padding: 4px 0;
+    }
+}
+
+/* Even tighter on phones */
+@media (max-width: 480px) {
+    .footer__top {
+        padding: 28px 0 24px !important;
+    }
+    .footer__contact p,
+    .footer__contact p a {
+        font-size: 14px !important;
+    }
+    .footer__links a {
+        font-size: 15px !important;
+    }
+}
+
+/* ============================================================
+   33. MOBILE NAV — HIDE SCROLLBAR, KEEP CLOSE VISIBLE
+   ============================================================
+   The mobile nav rarely overflows — current site has 5-6 items.
+   Hide the scrollbar (still scrolls if needed). Make the close
+   button always reachable by pinning the hamburger above the
+   nav while open.
+   ============================================================ */
+
+.nav--mobile__main {
+    scrollbar-width: none;          /* Firefox */
+    -ms-overflow-style: none;       /* IE/Edge */
+}
+.nav--mobile__main::-webkit-scrollbar {
+    display: none;                  /* WebKit */
+}
+/* Also kill scrollbar on the inner wrapper if present */
+.nav--mobile,
+.nav--mobile__inner {
+    scrollbar-width: none;
+}
+.nav--mobile::-webkit-scrollbar,
+.nav--mobile__inner::-webkit-scrollbar {
+    display: none;
+}
+
+/* When the mobile nav is open, pin the hamburger (close X) to
+   the top-right of the viewport so it never scrolls out of view
+   regardless of nav scroll position or iOS Safari URL bar.    */
+@media (max-width: 1280px) {
+    .js-hamburger.is-active,
+    .hamburger.is-active {
+        position: fixed !important;
+        top: 18px;
+        right: 18px;
+        z-index: 9999 !important;
+    }
+    /* Account for WP admin bar */
+    .admin-bar .js-hamburger.is-active,
+    .admin-bar .hamburger.is-active {
+        top: 64px;
+    }
+}
+
+/* ============================================================
+   34. IMAGE SLIDER — DEPRECATED
+   ============================================================
+   Earlier version reserved internal padding for arrows. This
+   approach was wrong — designer wanted images to fill the full
+   container width with arrows OUTSIDE. See section 37 for the
+   current implementation. Keeping the focus-ring rules; padding
+   rules removed.
+   ============================================================ */
+
+.aviatrix-block--image-slider {
+    position: relative;
+}
+
+/* Tight red ring on focus/active — see section 37 for the
+   current implementation (uses inset box-shadow). The outline
+   rules below are intentionally neutral so section 37 wins. */
+.aviatrix-block--image-slider .image-slider__thumb {
+    border: none !important;
+}
+
+/* ============================================================
+   35. NAV — EXTERNAL LINK INDICATOR (WCAG 2.4.4 / 4.1.2)
+   ============================================================
+   Top-level nav items linking off-site get a small arrow icon
+   so sighted users see the link is external before clicking.
+   Screen readers get " (opens in new tab)" via .u-sr-only span
+   injected by the walker_nav_menu_start_el filter.
+   ============================================================ */
+
+.nav--main .menu-item--external > a,
+.nav--mobile .menu-item--external > a {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.menu-item__external-icon {
+    flex-shrink: 0;
+    width: 10px;
+    height: 10px;
+    opacity: 0.85;
+    margin-left: 2px;
+    vertical-align: baseline;
+    transform: translateY(-1px);
+}
+
+/* Hide the down-caret pseudo on external parent items (they don't
+   open submenus — the caret would be misleading). */
+.nav--main .menu-item--external.menu-item-has-children::after,
+.nav--mobile .menu-item--external.menu-item-has-children > a::after {
+    display: none;
+}
+
+/* ============================================================
+   36. MOBILE NAV — CONSISTENT SPACING (round 2)
+   ============================================================
+   The legacy SCSS uses inline-flex for parent items (which adds
+   padding to layout) and inline for leaf items (where padding
+   doesn't lay out vertically) — leading to inconsistent gaps
+   between items. Force every link to be block-level so spacing
+   is predictable.
+   ============================================================ */
+
+@media (max-width: 1280px) {
+    .nav--mobile .nav__list {
+        padding: 24px 24px 32px !important;
+    }
+    .nav--mobile .nav__list > .menu-item {
+        margin: 0 0 4px !important;
+    }
+    .nav--mobile .nav__list > .menu-item:last-child {
+        margin-bottom: 0 !important;
+    }
+    .nav--mobile .nav__list > .menu-item > a {
+        display: flex !important;
+        align-items: center;
+        justify-content: space-between;
+        padding: 14px 0 !important;
+        border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+        line-height: 1.3;
+        font-size: 18px;
+    }
+    .nav--mobile .nav__list > .menu-item:last-child > a {
+        border-bottom: none;
+    }
+    /* Caret on parent items: keep right-aligned via gap */
+    .nav--mobile .nav__list > .menu-item-has-children > a:after {
+        margin-left: auto;
+    }
+    /* Mobile current-page underline: kill the random red bar
+       on Contact Us etc., use just a heavier weight instead */
+    .nav--mobile .nav__list > .current-menu-item > a {
+        border-bottom-color: rgba(0, 0, 0, 0.08) !important;
+        font-weight: 700;
+    }
+}
+
+/* ============================================================
+   37. IMAGE SLIDER — IMAGES FILL CONTAINER, ARROWS OUTSIDE
+   ============================================================
+   Per Figma: images fill the page container's full inner width
+   (1248px), and arrows sit just OUTSIDE the container in the
+   natural body margin. Below 1384px viewport, arrows fall back
+   to overlaying the image edges (no room outside).
+   ============================================================ */
+
+.dfc-page-content > .aviatrix-block.aviatrix-block--image-slider,
+.aviatrix-block.aviatrix-block--image-slider {
+    max-width: 1248px !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
+    /* Match the standard content container: 24px side padding so
+       gallery edges align with text/heading edges above + below. */
+    padding-left: 24px !important;
+    padding-right: 24px !important;
+    overflow: visible !important;       /* arrows must escape the box */
+    box-sizing: border-box;
+    position: relative;
+}
+
+/* Parent must allow arrows to overflow too */
+.dfc-page-content {
+    overflow-x: clip;                   /* allow Y overflow, clip horiz */
+}
+
+/* Default: viewport ≥ 1384px — arrows sit outside the 1248px box.
+   Inner content edge is at (24px padding) so arrow at -44px puts
+   it ~20px out from the image edge. */
+.aviatrix-block.aviatrix-block--image-slider .image-slider__nav--prev {
+    left: -44px !important;
+}
+.aviatrix-block.aviatrix-block--image-slider .image-slider__nav--next {
+    right: -44px !important;
+}
+
+/* Mid viewports: arrows hug the inside edges of the images */
+@media (max-width: 1383px) {
+    .aviatrix-block.aviatrix-block--image-slider .image-slider__nav--prev {
+        left: 32px !important;
+    }
+    .aviatrix-block.aviatrix-block--image-slider .image-slider__nav--next {
+        right: 32px !important;
+    }
+}
+
+/* Re-affirm tight red ring (specificity safety).
+   Use inset box-shadow instead of outline-offset for pixel-perfect
+   placement that hugs the image edge consistently across browsers.
+   IMPORTANT: in grid-only mode (no main preview), .is-active is
+   meaningless — only show the ring on hover/focus there. */
+.aviatrix-block.aviatrix-block--image-slider .image-slider__thumb {
+    border: none !important;
+    outline: none !important;
+    box-shadow: none !important;
+    transition: box-shadow 0.15s ease;
+}
+
+/* Hover + keyboard focus — always show ring (both modes) */
+.aviatrix-block.aviatrix-block--image-slider .image-slider__thumb:hover,
+.aviatrix-block.aviatrix-block--image-slider .image-slider__thumb:focus-visible {
+    box-shadow: inset 0 0 0 2px #EF3340 !important;
+}
+
+/* Active state — ONLY in default mode (with main preview).
+   In grid-only mode, never show .is-active outline. */
+.aviatrix-block.aviatrix-block--image-slider:not(.image-slider--grid-only)
+    .image-slider__thumb.is-active {
+    box-shadow: inset 0 0 0 2px #EF3340 !important;
+}
+
+/* ============================================================
+   38. IMAGE SLIDER — NATIVE TOUCH SWIPE / SCROLL-SNAP
+   ============================================================
+   The thumb strip in grid-only mode should scroll horizontally
+   with momentum on touch devices. Native overflow-x: auto +
+   scroll-snap is more reliable than JS touch handlers.
+   ============================================================ */
+
+.aviatrix-block--image-slider .image-slider__thumbs {
+    overflow-x: auto !important;
+    overflow-y: hidden;
+    -webkit-overflow-scrolling: touch;
+    scroll-snap-type: x mandatory;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+}
+.aviatrix-block--image-slider .image-slider__thumbs::-webkit-scrollbar {
+    display: none;
+}
+.aviatrix-block--image-slider .image-slider__thumb {
+    scroll-snap-align: start;
+}
+
+/* ============================================================
+   39. NEWSLETTER FORM — EQUAL FIELD WIDTHS (v2 — desktop only)
+   ============================================================
+   v1 problem: applied flex:2 to Name field globally, including
+   on mobile where fields wrap. Combined with the default
+   align-content:stretch on flex-wrap:wrap, each wrapped line
+   stretched to fill the form's vertical space — creating a
+   huge red gap between Name and Email.
+   v2: scope flex:2 to desktop (≥768px), kill line-stretching
+   with align-content:flex-start, and on mobile stack the
+   first/last name inputs cleanly with no extra gap.
+   ============================================================ */
+
+/* Stop wrapped flex lines from stretching to fill the container.
+   This is the root cause of the giant gap on mobile. */
+.newsletter .gform_wrapper .gform_fields,
+.newsletter .gform-theme .gform_fields {
+    align-content: flex-start !important;
+    align-items: flex-start !important;
+}
+
+/* Desktop only: balance Name + Email widths so both name inputs
+   match Email's single input. */
+@media (min-width: 768px) {
+    .newsletter .gform_wrapper .gfield--type-name,
+    .newsletter .gform-theme .gfield--type-name {
+        flex: 2 1 240px !important;
+    }
+}
+
+/* Mobile: Name and Email each take full width with normal flex:1.
+   First + Last sub-inputs stack vertically (one per row) for
+   easier tap targets on small screens.
+   Aggressive reset on every wrapper Gravity Forms inserts so
+   all three inputs land at the same x-position flush with the
+   form's left/right edges. */
+@media (max-width: 767px) {
+    .newsletter .gform_wrapper .gform_fields,
+    .newsletter .gform-theme .gform_fields {
+        display: flex !important;
+        flex-direction: column !important;
+        flex-wrap: nowrap !important;
+        gap: 12px !important;
+        width: 100% !important;
+        padding: 0 !important;
+        margin: 0 !important;
+    }
+
+    /* Every .gfield is full width, no offset */
+    .newsletter .gform_wrapper .gfield,
+    .newsletter .gform-theme .gfield {
+        flex: 0 0 auto !important;
+        width: 100% !important;
+        max-width: 100% !important;
+        min-width: 0 !important;
+        margin: 0 !important;
+        padding: 0 !important;
+        grid-column: 1 / -1 !important;   /* kill any GF grid-column span */
+    }
+
+    /* Every inner container Gravity Forms wraps around the input */
+    .newsletter .ginput_container,
+    .newsletter .ginput_complex,
+    .newsletter .ginput_container_name,
+    .newsletter .ginput_container_email,
+    .newsletter .ginput_container_text {
+        width: 100% !important;
+        max-width: 100% !important;
+        padding: 0 !important;
+        margin: 0 !important;
+        box-sizing: border-box !important;
+    }
+
+    /* Name field: first + last stack vertically, each full width */
+    .newsletter .ginput_complex {
+        display: flex !important;
+        flex-direction: column !important;
+        gap: 12px !important;
+    }
+    .newsletter .ginput_complex .name_first,
+    .newsletter .ginput_complex .name_last {
+        flex: 0 0 auto !important;
+        width: 100% !important;
+        max-width: 100% !important;
+        padding: 0 !important;
+        margin: 0 !important;
+    }
+
+    /* Inputs fill their container edge to edge */
+    .newsletter .gform_wrapper input[type="text"],
+    .newsletter .gform_wrapper input[type="email"],
+    .newsletter .gform-theme input[type="text"],
+    .newsletter .gform-theme input[type="email"] {
+        width: 100% !important;
+        max-width: 100% !important;
+        box-sizing: border-box !important;
+        margin: 0 !important;
+    }
+}
+
+/* ============================================================
+   40. IMAGE SLIDER — ONE THUMB PER VIEW ON MOBILE
+   ============================================================
+   Block SCSS sets `flex: 0 0 calc((100% - 8px) / 2)` at ≤sm,
+   showing ~2 thumbs. On phones that hides the affordance —
+   you can't tell there's more without seeing arrows. Going to
+   one-per-view at ≤600px makes the strip's scrollWidth always
+   exceed clientWidth when there's more than 1 image, so the
+   JS in dfc-slider-enhance.js will show the arrows.
+   ============================================================ */
+
+@media (max-width: 600px) {
+    .image-slider--grid-only .image-slider__thumb {
+        flex: 0 0 100% !important;
+        max-width: 100% !important;
+    }
+}
+
+/* Disabled arrow state from dfc-slider-enhance.js */
+.image-slider__nav.is-disabled {
+    opacity: 0.35;
+    pointer-events: none;
+    cursor: default;
 }

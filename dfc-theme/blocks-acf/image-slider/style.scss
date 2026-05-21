@@ -1,3 +1,4 @@
+@use 'sass:color';
 @use '../../sass/settings/variables' as *;
 @use '../../sass/settings/mixins' as *;
 
@@ -178,7 +179,7 @@
     justify-content: center;
     transition: $base-transition;
 
-    &:hover { background: darken($hex-red, 8%); }
+    &:hover { background: color.adjust($hex-red, $lightness: -8%); }
     &:focus-visible {
       outline: 2px solid $hex-white;
       outline-offset: 2px;

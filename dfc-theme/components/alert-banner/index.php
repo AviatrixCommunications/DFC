@@ -8,7 +8,7 @@ $active_alerts = dfc_get_active_alerts();
 if ( empty($active_alerts) ) return;
 ?>
 
-<aside id="custom-notification-tray" class="notification-banner" aria-label="Site Notifications"><?php
+<aside id="custom-notification-tray" class="notification-banner" aria-label="Site Notifications" aria-hidden="true"><?php
 	foreach ( $active_alerts as $alert ) : ?>
 	<div class="site-banner js-banner-<?php echo esc_attr( $alert['display_frequency'] ); ?>" data-alert-id="alert-<?php echo esc_attr( $alert['alert_id'] ); ?>" <?php echo $alert['aria']; ?> style="background-color:<?php echo esc_attr( $alert['severity_color'] ); ?>;">
 		<div class="wrapper wrapper--xl">

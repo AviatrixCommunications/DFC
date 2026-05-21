@@ -63,15 +63,31 @@ $attrs = get_block_wrapper_attributes( [ 'class' => $base_class ] );
                     <?php endif; ?>
                 <?php elseif ( $image ) :
                     $alt = $image['alt'] ?: ( $image['title'] ?: 'DuPage Flight Center' );
-                ?>
-                    <img class="hero-slider__img"
-                         src="<?php echo esc_url( $image['sizes']['hero'] ?? $image['url'] ); ?>"
-                         alt="<?php echo esc_attr( $alt ); ?>"
-                         width="<?php echo esc_attr( $image['width'] ); ?>"
-                         height="<?php echo esc_attr( $image['height'] ); ?>"
-                         loading="<?php echo $i === 0 ? 'eager' : 'lazy'; ?>"
-                         fetchpriority="<?php echo $i === 0 ? 'high' : 'auto'; ?>" />
-                <?php endif; ?>
+                    /**
+                     * Use wp_get_attachment_image so the browser receives
+                     * srcset + sizes and picks the right variant per viewport.
+                     * Falls back to plain <img> if for some reason the
+                     * attachment ID isn't on the array (very rare with ACF).
+                     */
+                    if ( ! empty( $image['ID'] ) ) {
+                        echo wp_get_attachment_image( $image['ID'], 'hero', false, [
+                            'class'         => 'hero-slider__img',
+                            'alt'           => $alt,
+                            'loading'       => $i === 0 ? 'eager' : 'lazy',
+                            'fetchpriority' => $i === 0 ? 'high' : 'auto',
+                            'decoding'      => 'async',
+                            'sizes'         => '100vw',
+                        ] );
+                    } else { ?>
+                        <img class="hero-slider__img"
+                             src="<?php echo esc_url( $image['sizes']['hero'] ?? $image['url'] ); ?>"
+                             alt="<?php echo esc_attr( $alt ); ?>"
+                             width="<?php echo esc_attr( $image['width'] ); ?>"
+                             height="<?php echo esc_attr( $image['height'] ); ?>"
+                             loading="<?php echo $i === 0 ? 'eager' : 'lazy'; ?>"
+                             fetchpriority="<?php echo $i === 0 ? 'high' : 'auto'; ?>" />
+                    <?php }
+                endif; ?>
 
                 <?php if ( $overlay > 0 ) : ?>
                     <div class="hero-slider__overlay" style="opacity: <?php echo $overlay / 100; ?>" aria-hidden="true"></div>

@@ -1,3 +1,4 @@
+@use 'sass:color';
 @use '../../sass/settings/variables' as *;
 @use '../../sass/settings/mixins' as *;
 
@@ -118,6 +119,6 @@
   transition: $base-transition;
   white-space: nowrap;
 
-  &:hover { background: darken($hex-white, 5%); }
+  &:hover { background: color.adjust($hex-white, $lightness: -5%); }
   &:focus-visible { outline: 2px solid $hex-black; outline-offset: 2px; }
 }

@@ -15,8 +15,14 @@
 $jet_price   = function_exists('get_field') ? ( get_field( 'jet_fuel_retail_pretax', 'option' ) ?: get_field( 'homepage_jet_a_price', 'option' ) ) : '$5.60';
 $avgas_price = function_exists('get_field') ? ( get_field( 'avgas_retail_pretax', 'option' ) ?: get_field( 'homepage_avgas_price', 'option' ) ) : '$6.40';
 $fuel_page   = function_exists('get_field') ? get_field( 'fuel_prices_page_link', 'option' ) : '/current-fuel-price/';
-$services_text = get_field( 'services_description' ) ?: 'Utilize the link below to access our FlightBridge booking page.';
-$services_link = get_field( 'services_link' ) ?: ['url' => 'https://flightbridge.com/go/DuPage', 'title' => 'Make a Reservation', 'target' => '_blank'];
+
+// Editable column labels (block-level fields, with safe defaults)
+$weather_label  = get_field( 'weather_label' )   ?: 'DuPage Airport Weather';
+$fuel_title     = get_field( 'fuel_title' )      ?: 'Current Retail Fuel Prices';
+$fuel_link_text = get_field( 'fuel_link_text' )  ?: 'View all Fuel Prices';
+$services_title = get_field( 'services_title' )  ?: 'Request for Services';
+$services_text  = get_field( 'services_description' ) ?: 'Utilize the link below to access our FlightBridge booking page.';
+$services_link  = get_field( 'services_link' )   ?: ['url' => 'https://flightbridge.com/go/DuPage', 'title' => 'Make a Reservation', 'target' => '_blank'];
 
 $base_class = 'aviatrix-block aviatrix-block--weather-info-bar';
 $attrs = get_block_wrapper_attributes( [ 'class' => $base_class ] );
@@ -31,7 +37,7 @@ $attrs = get_block_wrapper_attributes( [ 'class' => $base_class ] );
                 <span class="weather-widget__badge-icon" aria-hidden="true">
                     <svg viewBox="0 0 24 24" fill="currentColor" width="20" height="20"><path d="M21 16v-2l-8-5V3.5c0-.83-.67-1.5-1.5-1.5S10 2.67 10 3.5V9l-8 5v2l8-2.5V19l-2 1.5V22l3.5-1 3.5 1v-1.5L13 19v-5.5l8 2.5z"/></svg>
                 </span>
-                <span class="weather-widget__label">DuPage Airport Weather</span>
+                <span class="weather-widget__label"><?php echo esc_html( $weather_label ); ?></span>
             </div>
             <div class="weather-widget__data">
                 <span class="weather-widget__temp" aria-label="Temperature">--°F</span>
@@ -50,19 +56,19 @@ $attrs = get_block_wrapper_attributes( [ 'class' => $base_class ] );
 
         <!-- Column 2: Fuel Prices -->
         <div class="info-bar__col info-bar__col--fuel" aria-label="Current retail fuel prices">
-            <h3 class="info-bar__title">Current Retail Fuel Prices</h3>
+            <h3 class="info-bar__title"><?php echo esc_html( $fuel_title ); ?></h3>
             <div class="info-bar__fuel-prices">
                 <p class="info-bar__fuel-price">Jet A: <strong><?php echo esc_html( $jet_price ); ?></strong></p>
                 <p class="info-bar__fuel-price">AvGas: <strong><?php echo esc_html( $avgas_price ); ?></strong></p>
             </div>
             <?php if ( $fuel_page ) : ?>
-                <a href="<?php echo esc_url( $fuel_page ); ?>" class="info-bar__link">View all Fuel Prices</a>
+                <a href="<?php echo esc_url( $fuel_page ); ?>" class="info-bar__link"><?php echo esc_html( $fuel_link_text ); ?></a>
             <?php endif; ?>
         </div>
 
         <!-- Column 3: Request for Services -->
         <div class="info-bar__col info-bar__col--services" aria-label="Request for services">
-            <h3 class="info-bar__title">Request for Services</h3>
+            <h3 class="info-bar__title"><?php echo esc_html( $services_title ); ?></h3>
             <p class="info-bar__desc"><?php echo esc_html( $services_text ); ?></p>
             <?php if ( $services_link ) : ?>
                 <a href="<?php echo esc_url( $services_link['url'] ); ?>"
