@@ -137,6 +137,28 @@ function dfc_enqueue_assets() {
             'restUrl'  => esc_url_raw( rest_url( 'wp/v2/' ) ),
             'fuelData' => $fuel_data,
         ] );
+
+        // Slider enhancement patch — overrides bundled grid-only logic so
+        // arrows show on overflow (any viewport) rather than count > 3.
+        // Once the next webpack rebuild ships, this can be removed.
+        wp_enqueue_script(
+            'dfc-slider-enhance',
+            get_template_directory_uri() . '/js/dfc-slider-enhance.js',
+            [ 'dfc-script' ],
+            filemtime( get_template_directory() . '/js/dfc-slider-enhance.js' ),
+            true
+        );
+
+        // Header scroll enhancement — adds shadow on scroll + keeps
+        // --dfc-alert-height in sync with the notification banner's
+        // live rendered height.
+        wp_enqueue_script(
+            'dfc-header-scroll',
+            get_template_directory_uri() . '/js/dfc-header-scroll.js',
+            [ 'dfc-script' ],
+            filemtime( get_template_directory() . '/js/dfc-header-scroll.js' ),
+            true
+        );
     }
 }
 add_action( 'wp_enqueue_scripts', 'dfc_enqueue_assets' );
@@ -169,6 +191,50 @@ function dfc_localize_scripts() {
     ) );
 }
 add_action( 'wp_enqueue_scripts', 'dfc_localize_scripts' );
+
+// ── Defer non-critical scripts ────────────────────────────────
+/**
+ * Add `defer` attribute to non-critical frontend scripts.
+ *
+ * All theme scripts are footer-loaded already, so the win for our
+ * own bundles is small. The bigger gain is deferring third-party
+ * scripts (Gravity Forms frontend, ACF blocks runtime, plugins)
+ * that may be enqueued in the head with default blocking behavior.
+ *
+ * Skipped:
+ *   - jQuery family — other inline scripts and plugins assume it's
+ *     ready synchronously, deferring it breaks them.
+ *   - WP polyfills — same reason, dependency for other scripts.
+ *   - Anything that already has async or defer set.
+ *   - Admin / login / customizer requests.
+ *
+ * Localized data (wp_localize_script output) is unaffected because
+ * WordPress prints the inline `<script>` BEFORE the deferred
+ * `<script src>`, so the data is in scope when the deferred script
+ * eventually runs.
+ */
+add_filter( 'script_loader_tag', 'dfc_defer_scripts', 10, 2 );
+function dfc_defer_scripts( $tag, $handle ) {
+    if ( is_admin() ) return $tag;
+
+    // Don't touch the customizer preview or login screen.
+    if ( function_exists( 'is_customize_preview' ) && is_customize_preview() ) return $tag;
+    if ( isset( $GLOBALS['pagenow'] ) && $GLOBALS['pagenow'] === 'wp-login.php' ) return $tag;
+
+    // Handles to leave alone — anything depending on synchronous availability.
+    $no_defer = [
+        'jquery',
+        'jquery-core',
+        'jquery-migrate',
+        'wp-polyfill',
+    ];
+    if ( in_array( $handle, $no_defer, true ) ) return $tag;
+
+    // Already async or deferred? Don't double up.
+    if ( strpos( $tag, ' defer' ) !== false || strpos( $tag, ' async' ) !== false ) return $tag;
+
+    return preg_replace( '/(?<!\w)src=/', 'defer src=', $tag, 1 );
+}
 
 // ── Editor assets ─────────────────────────────────────────────
 function dfc_enqueue_block_editor_assets() {
@@ -422,6 +488,61 @@ function dfc_footer_nav_btm() {
         'container'      => false,
         'menu_id'        => 'footer-menu-btm',
     ) );
+}
+
+// ── Nav: external link accessibility (WCAG 2.4.4 + 4.1.2) ─────
+/**
+ * For nav menu items linking off-site (or explicitly marked
+ * "Open in new tab" in the WP menu UI), append a visually-hidden
+ * " (opens in new tab)" so screen readers announce the change of
+ * context, and ensure target=_blank gets rel="noopener noreferrer".
+ *
+ * Also adds .menu-item--external for CSS targeting (small icon).
+ */
+add_filter( 'nav_menu_link_attributes', 'dfc_external_link_attrs', 10, 4 );
+function dfc_external_link_attrs( $atts, $item, $args, $depth ) {
+    $home = wp_parse_url( home_url(), PHP_URL_HOST );
+    $url  = isset( $atts['href'] ) ? $atts['href'] : '';
+    $host = wp_parse_url( $url, PHP_URL_HOST );
+
+    $is_external_target = isset( $atts['target'] ) && $atts['target'] === '_blank';
+    $is_offsite         = $host && $home && strcasecmp( $host, $home ) !== 0;
+
+    if ( $is_external_target || $is_offsite ) {
+        // Always add safe rel attributes
+        $rel  = isset( $atts['rel'] ) ? $atts['rel'] : '';
+        $need = [ 'noopener', 'noreferrer' ];
+        $have = preg_split( '/\s+/', trim( $rel ) );
+        foreach ( $need as $r ) {
+            if ( ! in_array( $r, $have, true ) ) $have[] = $r;
+        }
+        $atts['rel'] = trim( implode( ' ', array_filter( $have ) ) );
+    }
+    return $atts;
+}
+
+add_filter( 'nav_menu_css_class', 'dfc_external_link_class', 10, 4 );
+function dfc_external_link_class( $classes, $item, $args, $depth ) {
+    $home = wp_parse_url( home_url(), PHP_URL_HOST );
+    $host = wp_parse_url( $item->url, PHP_URL_HOST );
+    $is_external_target = isset( $item->target ) && $item->target === '_blank';
+    $is_offsite         = $host && $home && strcasecmp( $host, $home ) !== 0;
+
+    if ( $is_external_target || $is_offsite ) {
+        $classes[] = 'menu-item--external';
+    }
+    return $classes;
+}
+
+add_filter( 'walker_nav_menu_start_el', 'dfc_external_link_sr_text', 10, 4 );
+function dfc_external_link_sr_text( $item_output, $item, $depth, $args ) {
+    if ( in_array( 'menu-item--external', (array) $item->classes, true ) ) {
+        // Inject SR-only text + visible external icon BEFORE the closing </a>
+        $sr   = '<span class="u-sr-only"> (opens in new tab)</span>';
+        $icon = '<svg class="menu-item__external-icon" aria-hidden="true" focusable="false" width="11" height="11" viewBox="0 0 11 11" xmlns="http://www.w3.org/2000/svg"><path d="M3 1h7v7M9.5 1.5L1 10" stroke="currentColor" stroke-width="1.5" fill="none" stroke-linecap="round"/></svg>';
+        $item_output = preg_replace( '/(<\/a>)/', $icon . $sr . '$1', $item_output, 1 );
+    }
+    return $item_output;
 }
 
 // ── Image sizes ───────────────────────────────────────────────

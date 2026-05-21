@@ -269,7 +269,15 @@ function dfc_import_fuel_data( $data ) {
         }
     }
 
-    return "Imported {$counts['jet']} Jet Fuel rows and {$counts['avgas']} AvGas rows.";
+    $msg = "Imported {$counts['jet']} Jet Fuel rows and {$counts['avgas']} AvGas rows.";
+
+    /**
+     * Fires after a fuel CSV import finishes writing data.
+     * Listeners (e.g. cache purge) use this to react to imports.
+     */
+    do_action( 'dfc_after_fuel_import', $data, $counts );
+
+    return $msg;
 }
 
 // ── CSV Template Download ─────────────────────────────────────
@@ -290,6 +298,72 @@ function dfc_fuel_download_template() {
     fputcsv( $output, [ 'avgas', 'Self Fuel', 'Any uplift quantity', '$1.00', '$6.38', '$6.81' ] );
     fclose( $output );
 }
+
+// ── Cache Purge ───────────────────────────────────────────────
+/**
+ * Purge caches that serve fuel-pricing content.
+ *
+ * WP Engine's GES stack has three relevant caches:
+ *   1. Varnish / full-page cache — holds rendered HTML for anonymous
+ *      visitors. This is what causes stale fuel prices after an
+ *      update. `WpeCommon::purge_varnish_cache()` flushes the full
+ *      page cache for the site.
+ *   2. Memcached / object cache — WP Engine's persistent object
+ *      cache. `WpeCommon::purge_memcached()` clears it.
+ *   3. CDN (if enabled) — handled by WP Engine's own invalidation
+ *      in response to the page cache purge.
+ *
+ * We also call `wp_cache_flush()` as a belt-and-suspenders for any
+ * local object cache (useful when WPE methods are unavailable, e.g.
+ * in staging or local dev).
+ */
+function dfc_purge_fuel_cache() {
+    // Short-circuit if we're in a WP install without WP Engine.
+    // The wp_cache_flush() call at the end still runs.
+    if ( class_exists( 'WpeCommon' ) ) {
+        if ( method_exists( 'WpeCommon', 'purge_memcached' ) ) {
+            \WpeCommon::purge_memcached();
+        }
+        if ( method_exists( 'WpeCommon', 'purge_varnish_cache' ) ) {
+            // Full-site purge is the safest approach because fuel data
+            // appears in multiple places (homepage widget, fuel page,
+            // any page using [dfc_fuel_homepage] or [dfc_fuel_full]).
+            \WpeCommon::purge_varnish_cache();
+        }
+    }
+    wp_cache_flush();
+}
+
+/**
+ * Fire cache purge when fuel data is saved via the ACF options page.
+ *
+ * Priority 20 runs after ACF has finished writing all fields, so the
+ * purge reflects the fully-saved state rather than a partial write.
+ */
+add_action( 'acf/save_post', 'dfc_maybe_purge_fuel_cache', 20 );
+function dfc_maybe_purge_fuel_cache( $post_id ) {
+    // ACF options pages always save against the string 'options'.
+    if ( $post_id !== 'options' ) return;
+    if ( ! is_admin() ) return;
+
+    // Narrow to just the fuel prices options page (don't purge the
+    // whole site whenever someone saves any options page).
+    $screen = function_exists( 'get_current_screen' ) ? get_current_screen() : null;
+    if ( ! $screen || strpos( (string) $screen->id, 'dfc-fuel-prices' ) === false ) {
+        return;
+    }
+
+    dfc_purge_fuel_cache();
+}
+
+/**
+ * Fire cache purge after a CSV import completes.
+ *
+ * We hook `dfc_after_fuel_import` (custom action fired at the end of
+ * `dfc_import_fuel_data`) rather than watching for the POST directly
+ * so the purge runs AFTER all ACF writes are committed.
+ */
+add_action( 'dfc_after_fuel_import', 'dfc_purge_fuel_cache' );
 
 // ── Shortcode: Homepage widget ────────────────────────────────
 add_shortcode( 'dfc_fuel_homepage', 'dfc_fuel_homepage_shortcode' );
