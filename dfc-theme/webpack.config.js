@@ -1,5 +1,6 @@
 const path = require('path');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const RemoveEmptyScriptsPlugin = require('webpack-remove-empty-scripts');
 const BrowserSyncPlugin = require('browser-sync-webpack-plugin');
 const prefixwrap = require('postcss-prefixwrap');
 
@@ -14,6 +15,7 @@ module.exports = {
     path: path.resolve(__dirname, 'dist'),
     filename: 'js/[name].js',
     assetModuleFilename: 'assets/[name][ext][query]',
+    clean: true,
   },
   module: {
     rules: [
@@ -93,8 +95,9 @@ module.exports = {
   },
 
   plugins: [
+    new RemoveEmptyScriptsPlugin(),
     new MiniCssExtractPlugin({
-      filename: 'css/[name].css', 
+      filename: 'css/[name].css',
     }),
     new BrowserSyncPlugin(
       {

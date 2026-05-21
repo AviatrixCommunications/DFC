@@ -6,7 +6,6 @@
  */
 
 import initMobileNav from './modules/mobile-nav';
-import initAccordion from './modules/accordion';
 import initFadeIn from './modules/fade-in';
 import initAlertBanner from './modules/alert-banner';
 
@@ -21,6 +20,5 @@ import './modules/airplane-parallax';
 
 // Initialize DAA-ported modules that export init functions
 initMobileNav();
-initAccordion();
 initFadeIn();
 initAlertBanner();

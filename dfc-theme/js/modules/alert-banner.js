@@ -62,8 +62,11 @@ function initAlertBanner() {
     return;
   }
 
-  // Banner starts visible in the HTML (no aria-hidden).
-  // JS only manages dismissal — no reveal animation needed.
+  // Slide the tray open after a 2-second delay
+  setTimeout(() => {
+    tray.removeAttribute("aria-hidden");
+    slideDown(tray, 400);
+  }, 2000);
 
   // Dismiss individual banners
   tray.addEventListener("click", (e) => {
