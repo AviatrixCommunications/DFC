@@ -1184,24 +1184,50 @@ function dfc_purge_fuel_cache() {
 }
 
 /**
- * Fire cache purge when fuel data is saved via the ACF options page.
- * Priority 20 runs after ACF has finished writing all fields.
+ * Reliable cache-purge trigger.
+ *
+ * The earlier approach hooked acf/save_post and only purged when
+ * get_current_screen() reported the fuel options screen. That guard is
+ * fragile: the screen id for an ACF options sub-page varies by ACF version
+ * and menu registration, and get_current_screen() isn't available during
+ * WP-Cron (scheduled changes) at all. When the guard didn't match, new
+ * prices were written to the database while the full-page cache kept
+ * serving the old ones — the stale-price symptom.
+ *
+ * Instead we watch for writes to the fuel option rows themselves. ACF stores
+ * options-page fields as wp_options rows named options_<field> (for example
+ * options_jet_fuel_tiers, options_avgas_retail_aftertax,
+ * options_fuel_effective_date). A write to any of those, from any source,
+ * queues a single purge that runs once at shutdown. That covers the ACF
+ * "Edit Prices" form, the CSV importer, the scheduled-change cron, "Apply
+ * Now", and direct update_field() calls, with no dependence on the current
+ * screen or on being in an admin or cron context.
  */
-add_action( 'acf/save_post', 'dfc_maybe_purge_fuel_cache', 20 );
-function dfc_maybe_purge_fuel_cache( $post_id ) {
-    if ( $post_id !== 'options' ) return;
-    if ( ! is_admin() ) return;
+function dfc_fuel_request_purge() {
+    static $queued = false;
+    if ( $queued ) return;
+    $queued = true;
+    // Run once, after every option write in this request has completed.
+    add_action( 'shutdown', 'dfc_purge_fuel_cache', 99 );
+}
 
-    $screen = function_exists( 'get_current_screen' ) ? get_current_screen() : null;
-    if ( ! $screen || strpos( (string) $screen->id, 'dfc-fuel-prices' ) === false ) {
+function dfc_fuel_watch_option_write( $option ) {
+    if ( strpos( (string) $option, 'options_' ) !== 0 ) return;
+
+    $name = substr( $option, 8 ); // strip ACF's "options_" prefix
+    if ( strpos( $name, 'fuel' )  === false
+        && strpos( $name, 'jet' )   === false
+        && strpos( $name, 'avgas' ) === false ) {
         return;
     }
 
-    dfc_purge_fuel_cache();
+    dfc_fuel_request_purge();
 }
+add_action( 'added_option',   'dfc_fuel_watch_option_write', 10, 1 );
+add_action( 'updated_option', 'dfc_fuel_watch_option_write', 10, 1 );
 
-/** Fire cache purge after a CSV import (or scheduled change) completes. */
-add_action( 'dfc_after_fuel_import', 'dfc_purge_fuel_cache' );
+/** CSV import / scheduled change / "Apply Now" queue the same single purge. */
+add_action( 'dfc_after_fuel_import', 'dfc_fuel_request_purge' );
 
 
 /* ═══════════════════════════════════════════════════════════════════════
