@@ -35,7 +35,7 @@ $calc_json = wp_json_encode( $calc_data );
 <div <?php echo $attrs; ?>>
 
     <!-- View Toggle -->
-    <div class="fuel-view-toggle" role="tablist" aria-label="Fuel pricing view">
+    <section class="fuel-view-toggle" role="tablist" aria-label="Fuel pricing view">
         <button class="fuel-view-toggle__btn is-active" role="tab" aria-selected="true" aria-controls="fuel-view-table" id="fuel-tab-table" data-view="table">
             <svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14,2 14,8 20,8"/><line x1="8" y1="13" x2="16" y2="13"/><line x1="8" y1="17" x2="16" y2="17"/><line x1="8" y1="9" x2="10" y2="9"/></svg>
             Full Price Sheet
@@ -44,22 +44,22 @@ $calc_json = wp_json_encode( $calc_data );
             <svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="2" width="16" height="20" rx="2"/><line x1="8" y1="6" x2="16" y2="6"/><line x1="8" y1="10" x2="10" y2="10"/><line x1="14" y1="10" x2="16" y2="10"/><line x1="8" y1="14" x2="10" y2="14"/><line x1="14" y1="14" x2="16" y2="14"/><line x1="8" y1="18" x2="10" y2="18"/><line x1="14" y1="18" x2="16" y2="18"/></svg>
             Price Calculator
         </button>
-    </div>
+    </section>
 
     <!-- Table View (original) -->
-    <div class="fuel-view" id="fuel-view-table" role="tabpanel" aria-labelledby="fuel-tab-table">
+    <section class="fuel-view" id="fuel-view-table" role="tabpanel" aria-labelledby="fuel-tab-table">
         <?php echo do_shortcode('[dfc_fuel_full]'); ?>
-    </div>
+    </section>
 
     <!-- Calculator View (interactive) -->
-    <div class="fuel-view" id="fuel-view-calc" role="tabpanel" aria-labelledby="fuel-tab-calc" hidden
+    <section class="fuel-view" id="fuel-view-calc" role="tabpanel" aria-labelledby="fuel-tab-calc" hidden
          data-fuel='<?php echo esc_attr( $calc_json ); ?>'
          data-effective-date="<?php echo esc_attr( $effective_date ); ?>">
 
         <div class="fuel-calc" aria-label="Fuel price calculator">
 
             <?php if ( $effective_date ) : ?>
-                <p class="fuel-calc__date">Prices effective <?php echo esc_html( wp_date( 'F d, Y', strtotime( $effective_date ) ) ); ?></p>
+                <p class="fuel-calc__date">Prices effective <?php echo esc_html( dfc_fuel_format_date( $effective_date, 'F d, Y' ) ); ?></p>
             <?php endif; ?>
 
             <!-- Step 1: Fuel Type -->
@@ -111,5 +111,5 @@ $calc_json = wp_json_encode( $calc_data );
             </div>
 
         </div>
-    </div>
+    </section>
 </div>

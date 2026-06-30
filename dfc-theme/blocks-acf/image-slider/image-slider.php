@@ -20,7 +20,7 @@ if ($grid_only) {
 $attrs = get_block_wrapper_attributes(['class' => $base_class]);
 ?>
 
-<div <?php echo $attrs; ?> aria-label="Image gallery" aria-roledescription="carousel">
+<section <?php echo $attrs; ?> aria-label="Image gallery" aria-roledescription="carousel">
     <?php if ($images) : ?>
         <?php if (!$grid_only) : ?>
             <div class="image-slider__main">
@@ -56,4 +56,4 @@ $attrs = get_block_wrapper_attributes(['class' => $base_class]);
     <?php elseif ($is_preview) : ?>
         <p style="color:#999;text-align:center;">Select images in the block settings &rarr;</p>
     <?php endif; ?>
-</div>
+</section>

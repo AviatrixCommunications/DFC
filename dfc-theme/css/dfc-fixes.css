@@ -684,6 +684,16 @@ body.is-scrolled .header {
     clear: both;
 }
 
+.newsletter .gform-theme--framework .gform_validation_errors .gform_submission_error,
+.newsletter .gform-theme--framework .gform_validation_errors .gform-icon,
+.newsletter .gform-theme--framework .gfield_validation_message:where(:not(.gform-theme__disable):not(.gform-theme__disable *):not(.gform-theme__disable-framework):not(.gform-theme__disable-framework *)) {
+    color: black;
+}
+.newsletter .gform-theme--framework .gform_validation_errors,
+.newsletter .gform-theme--framework .gform_validation_errors:focus {
+    border-color: black;
+}
+
 @media (max-width: 1024px) {
     .newsletter__inner {
         flex-direction: column;
