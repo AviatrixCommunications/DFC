@@ -109,7 +109,7 @@ add_filter( 'menu_order', function ( $menu_order ) {
 
         // ── Manage ──
         'dfc-section-manage',
-        'dfc-fuel-prices',                      // Fuel Prices
+        'dfc-fuel-center',                      // Fuel Center (dashboard, prices, schedule, import)
         'dfc-alert-banner',                     // Alert Banner
         'gf_edit_forms',                        // Forms
         'acf-options',                          // Theme Settings

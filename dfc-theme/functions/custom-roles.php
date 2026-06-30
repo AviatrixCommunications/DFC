@@ -19,7 +19,17 @@ defined( 'ABSPATH' ) || exit;
  * ROLE DEFINITIONS
  * ═══════════════════════════════════════════════════════════════════════ */
 
-define( 'DFC_ROLE_VERSION', '1.0.0' );
+define( 'DFC_ROLE_VERSION', '1.1.0' );
+
+/**
+ * The canonical capability that gates everything fuel-pricing-related:
+ *   - ACF Fuel Prices options page
+ *   - CSV Import / Export / Template download
+ *   - Schedule, apply, and cancel scheduled price changes
+ *
+ * Granted to: administrator, dfc_client_admin, dfc_fuel_editor.
+ */
+const DFC_CAP_FUEL = 'dfc_manage_fuel_prices';
 
 add_action( 'admin_init', 'dfc_register_custom_roles' );
 function dfc_register_custom_roles() {
@@ -72,6 +82,9 @@ function dfc_register_custom_roles() {
         // Theme options — needed for nav menu management + ACF options pages
         'edit_theme_options'         => true,
 
+        // ── DFC custom capabilities ───────────────────────────────
+        DFC_CAP_FUEL                 => true,
+
         // ── Gravity Forms ─────────────────────────────────────────
         'gravityforms_view_entries'     => true,
         'gravityforms_edit_entries'     => true,
@@ -106,6 +119,40 @@ function dfc_register_custom_roles() {
         'unfiltered_upload'          => false,
         'edit_files'                 => false,
     ] );
+
+    // ── Fuel Price Editor ─────────────────────────────────────────
+    // A narrowly-scoped role: log in, view the dashboard, and manage
+    // fuel pricing. Nothing else. Useful for a line-staff member at
+    // the FBO who needs to update posted prices without touching the
+    // rest of the site.
+
+    remove_role( 'dfc_fuel_editor' );
+    add_role( 'dfc_fuel_editor', __( 'Fuel Price Editor', 'dfc' ), [
+        'read'              => true,        // Required to access wp-admin at all.
+        DFC_CAP_FUEL        => true,        // The one custom cap this role exists for.
+
+        // Explicitly DENIED — belt-and-suspenders for the redirect guard.
+        'edit_posts'        => false,
+        'edit_pages'        => false,
+        'edit_others_posts' => false,
+        'edit_others_pages' => false,
+        'upload_files'      => false,
+        'list_users'        => false,
+        'manage_options'    => false,
+        'edit_theme_options'=> false,
+        'install_plugins'   => false,
+        'activate_plugins'  => false,
+        'edit_themes'       => false,
+        'switch_themes'     => false,
+        'unfiltered_html'   => false,
+    ] );
+
+    // Make sure administrators have the fuel cap too. (add_cap is
+    // idempotent — calling it on an already-granted cap is a no-op.)
+    $admin = get_role( 'administrator' );
+    if ( $admin ) {
+        $admin->add_cap( DFC_CAP_FUEL );
+    }
 
     update_option( 'dfc_role_version', DFC_ROLE_VERSION );
 }
@@ -217,9 +264,79 @@ add_filter( 'login_redirect', function ( $redirect_to, $request, $user ) {
         return $redirect_to;
     }
 
+    // Fuel Price Editor — drop them straight on the fuel pricing screen
+    // since that's literally the only thing they have access to.
+    if ( in_array( 'dfc_fuel_editor', $user->roles, true ) ) {
+        return admin_url( 'admin.php?page=dfc-fuel-prices' );
+    }
+
     if ( in_array( 'dfc_client_admin', $user->roles, true ) ) {
         return admin_url( 'index.php' );
     }
 
     return $redirect_to;
 }, 10, 3 );
+
+
+/* ═══════════════════════════════════════════════════════════════════════
+ * FUEL PRICE EDITOR — Lock down to fuel screens only
+ * ═══════════════════════════════════════════════════════════════════════ */
+
+/**
+ * If a Fuel Price Editor lands anywhere other than the fuel pricing screens,
+ * bounce them back. Belt-and-suspenders for the capability check — the menu
+ * registration already hides everything else, but URL-typers shouldn't get
+ * a half-rendered page either.
+ */
+add_action( 'admin_init', function () {
+    if ( wp_doing_ajax() || wp_doing_cron() ) return;
+
+    $user = wp_get_current_user();
+    if ( ! $user || ! in_array( 'dfc_fuel_editor', (array) $user->roles, true ) ) return;
+    if ( user_can( $user, 'administrator' ) ) return; // multi-role safety
+
+    // Allowed admin entry points for this role.
+    $allowed_pages = [ 'dfc-fuel-prices', 'dfc-fuel-import', 'dfc-fuel-schedule' ];
+
+    global $pagenow;
+
+    // The profile screen and the password/email change flow are fine.
+    $allowed_pagenow = [ 'profile.php', 'admin-ajax.php', 'admin-post.php' ];
+
+    if ( in_array( $pagenow, $allowed_pagenow, true ) ) return;
+
+    if ( $pagenow === 'admin.php' && isset( $_GET['page'] ) && in_array( $_GET['page'], $allowed_pages, true ) ) {
+        return;
+    }
+
+    // Anything else — kick them to the fuel screen.
+    wp_safe_redirect( admin_url( 'admin.php?page=dfc-fuel-prices' ) );
+    exit;
+} );
+
+/**
+ * Strip the admin bar to the essentials for fuel-only users.
+ * Removes Site Name, Updates, Comments, "+ New", etc.
+ */
+add_action( 'wp_before_admin_bar_render', function () {
+    $user = wp_get_current_user();
+    if ( ! $user || ! in_array( 'dfc_fuel_editor', (array) $user->roles, true ) ) return;
+    if ( user_can( $user, 'administrator' ) ) return;
+
+    global $wp_admin_bar;
+    foreach ( [ 'wp-logo', 'site-name', 'updates', 'comments', 'new-content', 'customize' ] as $node ) {
+        $wp_admin_bar->remove_node( $node );
+    }
+} );
+
+/**
+ * Hide the front-end admin bar for fuel-only users to avoid confusing
+ * navigation back into wp-admin.
+ */
+add_filter( 'show_admin_bar', function ( $show ) {
+    $user = wp_get_current_user();
+    if ( $user && in_array( 'dfc_fuel_editor', (array) $user->roles, true ) && ! user_can( $user, 'administrator' ) ) {
+        return is_admin(); // admin bar in wp-admin only
+    }
+    return $show;
+} );
