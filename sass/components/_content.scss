@@ -1,0 +1,346 @@
+@use '../settings/variables' as *;
+@use '../settings/mixins' as *;
+@use '../settings/functions' as *;
+
+.editor-content {
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    margin-top: $space-32;
+    margin-bottom: $space-16;
+    &:last-child {
+      margin-bottom: 0;
+    }
+    &:first-child {
+      margin-top: 0;
+    }
+  }
+  p,
+  ol,
+  ul, 
+  blockquote {
+    margin-bottom: $space-16;
+    &:last-child {
+      margin-bottom: 0;
+    }
+    @include media-above('lg') {
+      margin-bottom: $space-24;
+    }
+  }
+  ol,
+  ul {
+    list-style-position: outside !important;
+    padding-left: 24px;
+    li {
+      margin-bottom: $space-16;
+      &:last-child {
+        margin-bottom: 0;
+      }
+    }
+  }
+  ol {
+    list-style: decimal;
+  }
+  ul {
+    list-style: disc;
+  }
+  blockquote {
+    border: 6px solid $brand-black;
+    padding: $space-16;
+    font-size: $text-16;
+    line-height: 0.87;
+    letter-spacing: $letter-spacing-sm;
+    @include media-above('lg') {
+      padding: $space-16 $space-32 $space-48;
+      font-size: $text-36;
+      margin-left: -36px;
+      margin-right: -36px;
+    }
+  }
+}
+
+ol.wp-block-list {
+  list-style-type: decimal;
+  list-style-position: outside;
+  padding-left: 24px;
+}
+
+ul.wp-block-list {
+  list-style-type: disc;
+  list-style-position: outside;
+  padding-left: 24px;
+}
+
+.wp-block-list li {
+  margin-bottom: $space-8;
+
+  &:last-child {
+    margin-bottom: 0;
+  }
+}
+
+.wp-block-table td,
+.wp-block-table th {
+  border-width: 2px;
+  border-color: #D9D9D9;
+}
+
+.wp-block-columns {
+  .wp-block-column.has-background {
+    padding: $space-24;
+    @include media-above('md') {
+      padding: $space-32;
+    }
+  }
+}
+
+.wp-block-separator {
+  border-width: 1px;
+}
+
+.wp-block-file.is-visible {
+  .wp-block-file__button {
+    margin-left: 0;
+  }
+  a:not(.wp-block-file__button) {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    clip-path: inset(50%);
+    border: 0;
+    &:active,
+    &:focus {
+      position: static;
+      width: auto;
+      height: auto;
+      overflow: visible;
+      clip: auto;
+      white-space: normal;
+      clip-path: none;
+    }
+  }
+}
+
+:root :where(.wp-block-columns-is-layout-flex) {
+  gap: $space-48;
+}
+
+.is-layout-constrained> :where(:not(.aviatrix-block):not(.has-global-padding)) {
+  padding-left: $wrapper-padding;
+  padding-right: $wrapper-padding;
+  &:first-child {
+    margin-top: $space-64;
+  }
+  &:last-child {
+    margin-bottom: $space-96;
+  }
+}
+
+.is-layout-constrained .is-layout-constrained> :where(:not(.alignleft):not(.alignright):not(.alignfull):not(.aviatrix-block):not(.has-global-padding)) {
+  padding-left: 0;
+  padding-right: 0;
+}
+
+.aviatrix-block--featured-content + .wp-block-group.has-background {
+  margin-top: 0;
+}
+
+.is-layout-constrained > .wp-block-group.has-background {
+  max-width: 100% !important;
+  padding-left: 0;
+  padding-right: 0;
+  padding-top: $space-64;
+  padding-bottom: $space-64;
+  &.is-layout-constrained > :where(:not(.aviatrix-block):not(.has-global-padding)):first-child {
+    margin-top: 0;
+  }
+  &.is-layout-constrained > :where(:not(.aviatrix-block):not(.has-global-padding)):last-child {
+    margin-bottom: 0;
+  }
+  > :where(:not(.alignleft):not(.alignright):not(.alignfull):not(.aviatrix-block):not(.has-global-padding)) {
+    padding-left: $wrapper-padding;
+    padding-right: $wrapper-padding;
+  }
+}
+
+.is-layout-constrained> .aviatrix-block {
+  max-width: 100% !important;
+  margin: 0;
+}
+
+.is-layout-constrained > .wp-block-image {
+  margin-top: $space-32;
+}
+
+.wp-block-image.is-style-rounded img, 
+.wp-block-image .is-style-rounded img {
+  border-radius: 20px;
+}
+
+.aviatrix-block .has-global-padding.has-background> :where(:not(.alignleft):not(.alignright):not(.alignfull)) {
+  padding-left: $wrapper-padding;
+  padding-right: $wrapper-padding;
+}
+
+// Generic block spacing — top-level aviatrix blocks only (direct children of page content).
+.dfc-page-content > .aviatrix-block:not(.aviatrix-block--hero):not(.aviatrix-block--page-header) {
+  margin-top: $space-64;
+  &:last-child {
+    margin-bottom: $space-96; 
+  }
+  &.has-background {
+    padding: $space-64 0;
+    &:last-child {
+      margin-bottom: 0;
+    }
+  }
+}
+
+.aviatrix-block.has-background + .aviatrix-block.has-background {
+  margin-top: 0 !important;
+}
+
+// Full-width background groups in page content (e.g. Aircraft Services grey section)
+.dfc-page-content > .wp-block-group.has-background,
+.dfc-page-content > .is-layout-constrained > .wp-block-group.has-background {
+  max-width: 100% !important;
+  padding-left: 0 !important;
+  padding-right: 0 !important;
+  margin-left: 0 !important;
+  margin-right: 0 !important;
+
+  // Content inside gets wrapper padding
+  > :where(:not(.alignleft):not(.alignright):not(.alignfull):not(.aviatrix-block)) {
+    padding-left: $wrapper-padding;
+    padding-right: $wrapper-padding;
+    max-width: $wrapper-max;
+    margin-left: auto;
+    margin-right: auto;
+  }
+}
+
+// Tighten gap when slider sits directly below content (same visual section)
+// Figma: 40px from content bottom to gallery top
+.aviatrix-block--image-content + .aviatrix-block--image-slider {
+  margin-top: $space-40 !important;
+}
+
+// More space after gallery before the next section heading
+// Figma: 64px from gallery bottom to next H2
+.aviatrix-block--image-slider + .wp-block-heading {
+  margin-top: $space-64 !important;
+}
+
+// Tighten gap between standalone heading and the image-content below it
+// Figma: ~48px from H2 bottom to content top (heading margin-bottom handles this)
+.wp-block-heading + .aviatrix-block--image-content {
+  margin-top: 0 !important;
+}
+
+.aviatrix-block + .wp-block-group.has-background {
+  margin-top: $space-64;
+}
+
+.main > .is-layout-constrained {
+  > .has-background {
+    + .has-background {
+      margin-top: 0 !important;
+    }
+  }
+  > .wp-block-group {
+    .wp-block-heading {
+      margin-top: $space-32; 
+      margin-bottom: $space-24;
+      &:first-child {
+        margin-top: 0;
+      }
+      &:last-child {
+        margin-bottom: 0;
+      }
+    }
+    .wp-block-columns {
+      h3.wp-block-heading {
+        margin-bottom: 0;
+        font-size: $text-18;
+        + p {
+          margin-top: 0;
+        }
+        @include media-above('lg') {
+          font-size: $text-16;
+        }
+      }
+    }
+  }
+}
+// ── Interior page heading spacing ─────────────────────────────
+// Top-level headings directly in page content need tighter margins
+// when followed by aviatrix blocks (matching Figma spacing).
+// Reset rogue page-header + * margin (from cached/WP-generated CSS)
+.dfc-page-content .aviatrix-block--page-header + * {
+  margin-top: 0 !important;
+}
+
+// Then add back specific spacing where needed
+.dfc-page-content > .is-layout-constrained {
+  > .wp-block-heading {
+    margin-bottom: 16px;
+
+    &:not(:first-child) {
+      margin-top: $space-64;
+    }
+  }
+
+  > .aviatrix-block--page-header + .wp-block-heading {
+    margin-top: $space-40 !important;
+  }
+}
+
+// ── Grey backdrop with image overflow (Aircraft Services pattern) ──
+// Grey bg is shorter than the image — image extends 75px past the bottom.
+// Uses ::before pseudo for the grey so it can be shorter than the container.
+.dfc-page-content > .aviatrix-block--page-header + .wp-block-group.has-light-grey-background-color {
+  background: transparent !important; // Kill WP's background — we use ::before instead
+  position: relative;
+  overflow: visible !important;
+  padding-top: 60px !important;
+  padding-bottom: 0 !important;
+
+  // Grey backdrop — positioned to be 75px shorter than the full section
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 75px;
+    background-color: $hex-light-grey;
+    z-index: 0;
+  }
+
+  .wp-block-image {
+    position: relative;
+    z-index: 1;
+    margin-bottom: 0;
+  }
+}
+
+// Services list columns — tighten padding
+.dfc-page-content > .wp-block-columns,
+.dfc-page-content > .aviatrix-block--services-tabs {
+  padding-top: 0 !important;
+  padding-bottom: 0 !important;
+}
+
+// Columns blocks in page content — reset generic margins from
+// .is-layout-constrained rules but allow inline style overrides
+.dfc-page-content .wp-block-columns {
+  margin-top: 0;
+  margin-bottom: 0;
+}

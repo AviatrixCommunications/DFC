@@ -1,0 +1,29 @@
+// ============================================================
+// FRONT PAGE – flush block stacking
+// ============================================================
+//
+// On the static front page, blocks should sit edge-to-edge with
+// no default WordPress inter-block spacing. WordPress adds the
+// `home` body class when a static front page is set.
+// ============================================================
+
+@use '../settings/variables' as *;
+@use '../settings/mixins' as *;
+
+body.home {
+  // Kill default WP block spacing on the front page
+  .dfc-page-content {
+    > * {
+      margin-top: 0 !important;
+      margin-bottom: 0 !important;
+    }
+
+    // Default WP theme.json block gap can add spacing via --wp--style--block-gap
+    --wp--style--block-gap: 0px;
+  }
+
+  // The front page hero sits behind the fixed nav — pull it up
+  .dfc-page-content > .aviatrix-block--hero-slider:first-child {
+    margin-top: calc(-1 * #{$header-height-desktop}) !important;
+  }
+}
