@@ -586,6 +586,7 @@ function dfc_get_active_alerts() {
                 'alert_content'     => $content,
                 'display_frequency' => $frequency,
                 'alert_id'          => substr( md5( $content . $frequency ), 0, 8 ),
+                'severity'          => $severity,
                 'severity_color'    => $severity === 'urgent' ? '#EF3340' : '#D3D3D3',
                 'aria'              => $severity === 'urgent' ? 'role="alert"' : 'role="status" aria-live="polite"',
                 'alert_button'      => get_sub_field( 'alert_button' ),
@@ -602,3 +603,29 @@ add_filter( 'body_class', function ( $classes ) {
     }
     return $classes;
 } );
+
+/**
+ * Purge WP Engine page + CDN cache whenever the alert banners are edited.
+ *
+ * The banner is server-rendered into every cached page, so editing an alert
+ * in the ACF options screen otherwise leaves stale (banner-less) HTML in the
+ * WP Engine full-page cache + CDN until the TTL expires. Deploys already
+ * clear cache; this covers content edits, which aren't deploys.
+ */
+add_action( 'acf/save_post', function ( $post_id ) {
+    // ACF options pages save under the 'options' post id.
+    if ( 'options' !== $post_id ) {
+        return;
+    }
+    if ( class_exists( 'WpeCommon' ) ) {
+        if ( method_exists( 'WpeCommon', 'purge_memcached' ) ) {
+            WpeCommon::purge_memcached();
+        }
+        if ( method_exists( 'WpeCommon', 'purge_varnish_cache' ) ) {
+            WpeCommon::purge_varnish_cache();
+        }
+        if ( method_exists( 'WpeCommon', 'clear_maxcdn_cache' ) ) {
+            WpeCommon::clear_maxcdn_cache();
+        }
+    }
+}, 20 );

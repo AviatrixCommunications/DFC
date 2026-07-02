@@ -1,21 +1,12 @@
 /**
  * Alert Banner
- * Handles notification banner display, dismissal, and animations.
+ * Handles notification banner dismissal.
+ *
+ * The tray is rendered open on first paint and its height offset is set by an
+ * inline pre-paint script in components/alert-banner/index.php, so there is no
+ * entrance delay or slide-in on page load — the banner is simply there. This
+ * module only wires up dismissal (with a slide-up animation on user action).
  */
-
-function slideDown(el, duration = 400) {
-  const height = el.scrollHeight;
-  const anim = el.animate([{ height: "0px" }, { height: height + "px" }], {
-    duration,
-    easing: "ease-out",
-    fill: "forwards",
-  });
-  anim.onfinish = () => {
-    el.style.height = "auto";
-    el.style.overflow = "";
-    anim.cancel();
-  };
-}
 
 function slideUp(el, duration = 350, onFinish) {
   el.style.overflow = "hidden";
@@ -36,39 +27,28 @@ function initAlertBanner() {
   if (!tray) return;
 
   const header = document.querySelector(".header--main");
-  const ONE_WEEK_MS = 7 * 24 * 60 * 60 * 1000;
-  const now = Date.now();
 
-  // Remove banners already dismissed via localStorage
+  // Fallback dismissal cleanup. The inline pre-paint script in
+  // components/alert-banner/index.php normally removes dismissed banners before
+  // first paint; this repeats it in case that inline script was blocked (e.g.
+  // by a strict Content-Security-Policy).
   tray.querySelectorAll(".site-banner").forEach((banner) => {
     const id = banner.getAttribute("data-alert-id");
-
-    if (banner.classList.contains("js-banner-once")) {
+    if (id && banner.classList.contains("js-banner-once")) {
       if (localStorage.getItem(`alert_dismissed_${id}`)) {
-        banner.remove();
-      }
-    } else if (banner.classList.contains("js-banner-weekly")) {
-      const muteUntil = localStorage.getItem(`alert_mute_${id}`);
-      if (muteUntil && now < parseInt(muteUntil)) {
         banner.remove();
       }
     }
   });
 
-  // If all banners were dismissed, clean up and bail
+  // If all banners were dismissed, clean up and bail.
   if (!tray.querySelectorAll(".site-banner").length) {
     tray.remove();
     document.body.classList.remove("has-notification-banner");
     return;
   }
 
-  // Slide the tray open after a 2-second delay
-  setTimeout(() => {
-    tray.removeAttribute("aria-hidden");
-    slideDown(tray, 400);
-  }, 2000);
-
-  // Dismiss individual banners
+  // Dismiss individual banners — slide-up only on user action.
   tray.addEventListener("click", (e) => {
     const closeBtn = e.target.closest(".alert-close");
     if (!closeBtn) return;
@@ -76,11 +56,9 @@ function initAlertBanner() {
     const banner = closeBtn.closest(".site-banner");
     const alertId = banner.getAttribute("data-alert-id");
 
-    // Persist dismissal
+    // Persist dismissal for "once" banners.
     if (banner.classList.contains("js-banner-once") && alertId) {
       localStorage.setItem(`alert_dismissed_${alertId}`, "true");
-    } else if (banner.classList.contains("js-banner-weekly") && alertId) {
-      localStorage.setItem(`alert_mute_${alertId}`, now + ONE_WEEK_MS);
     }
 
     const nextBanner = banner.nextElementSibling || banner.previousElementSibling;

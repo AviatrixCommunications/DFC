@@ -15,8 +15,9 @@
     z-index: 101;
     color: $brand-black;
     font-weight: 600;
-    overflow: hidden;
-    height: 0;
+    // Rendered open on first paint — no entrance animation. Height is its
+    // natural content height; the dismiss slide-up (JS) sets overflow itself.
+    height: auto;
     font-size: $text-14;
     @include media-above('md') {
       font-size: $text-16;
@@ -40,8 +41,10 @@
         gap: $space-32;
       }
     }
+    // Solid, full-contrast divider so stacked alerts read as separate rows
+    // (works on both the gray "info" and red "urgent" backgrounds).
     & + & {
-      border-top: 2px solid rgba(255, 255, 255, 0.3);
+      border-top: 3px solid rgba(0, 0, 0, 0.35);
     }
 
     p {
@@ -75,6 +78,19 @@
         background-color: color.adjust($hex-black, $lightness: 15%) !important;
         color: $brand-white !important;
       }
+    }
+  }
+
+  // Leading severity icon (info circle / alert triangle) — anchors each row
+  // so it's obvious at a glance that alerts are stacked.
+  .banner-icon {
+    flex-shrink: 0;
+    display: inline-flex;
+    align-items: center;
+    color: $brand-black;
+
+    svg {
+      display: block;
     }
   }
 
