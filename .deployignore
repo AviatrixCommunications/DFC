@@ -8,11 +8,18 @@ build-block-css.js
 .babelrc
 .browserslistrc
 
-# Source SCSS — compiled CSS is already in dist/ and block style.css files
-sass/
+# Source SCSS — compiled CSS is already in dist/ and block style.css files.
+# Leading slash anchors to the theme root so it never matches a nested dir.
+/sass/
 
-# Source JS modules — compiled bundle is in dist/js/
-js/
+# Webpack inputs only — the compiled bundle ships in dist/js/global.js.
+# Patterns are anchored with a leading slash so they do NOT also match
+# dist/js/ (an unanchored "js/" excludes dist/js/ too, which drops the
+# compiled bundle). The other files in /js/ (dfc-header-scroll.js,
+# dfc-slider-enhance.js, acf-blocks-editor.js) are enqueued directly and
+# must ship, so they are intentionally NOT excluded.
+/js/global.js
+/js/modules/
 
 # Git & editor files
 .git/
