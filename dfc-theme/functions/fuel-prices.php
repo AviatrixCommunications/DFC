@@ -983,13 +983,21 @@ function dfc_fuel_normalize_price( $val ) {
 
 /**
  * Display helper: render a stored price (which may be "7.87" or "$7.87"
- * depending on how it was entered) with a leading $.
+ * depending on how it was entered) with a leading $ and two decimals.
+ *
+ * Numeric values are formatted to 2 decimals so round amounts keep their
+ * trailing zero (e.g. "0.2" → "$0.20", "6.5" → "$6.50"). Non-numeric
+ * values (rare — e.g. a hand-entered note) pass through unchanged with a
+ * leading $.
  */
 function dfc_fuel_format_price( $val ) {
     $val = trim( (string) $val );
     if ( $val === '' ) return '—';
-    if ( str_starts_with( $val, '$' ) ) return $val;
-    return '$' . $val;
+    $num = ltrim( $val, "$ \t" );
+    if ( is_numeric( $num ) ) {
+        return '$' . number_format( (float) $num, 2 );
+    }
+    return str_starts_with( $val, '$' ) ? $val : '$' . $val;
 }
 
 /**
