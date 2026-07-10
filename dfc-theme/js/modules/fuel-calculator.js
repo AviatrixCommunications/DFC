@@ -56,6 +56,20 @@
     var pretaxEl = document.getElementById('calc-pretax');
     var aftertaxEl = document.getElementById('calc-aftertax');
 
+    // Mirror the PHP dfc_fuel_format_price(): render a stored value with a
+    // leading $ and two decimals so round amounts keep their trailing zero
+    // ("0.2" -> "$0.20"). Non-numeric notes pass through with a leading $.
+    function formatPrice(val) {
+        if (val === null || val === undefined) return '—';
+        var s = String(val).trim();
+        if (s === '') return '—';
+        var num = s.replace(/^[$\s]+/, '');
+        if (num !== '' && !isNaN(num)) {
+            return '$' + Number(num).toFixed(2);
+        }
+        return s.charAt(0) === '$' ? s : '$' + s;
+    }
+
     function getUniqueValues(arr, key) {
         var seen = {};
         var result = [];
@@ -114,9 +128,9 @@
     }
 
     function showResult(row) {
-        discountEl.textContent = row.discount || '—';
-        pretaxEl.textContent = row.pretax || '—';
-        aftertaxEl.textContent = row.aftertax || '—';
+        discountEl.textContent = formatPrice(row.discount);
+        pretaxEl.textContent = formatPrice(row.pretax);
+        aftertaxEl.textContent = formatPrice(row.aftertax);
         resultPanel.removeAttribute('hidden');
     }
 
